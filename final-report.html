@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التقرير النهائي | مُعتمد</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
+
+    :root {
+      --navy: #071B33;
+      --navy-2: #0B2A44;
+      --navy-3: #123E6B;
+      --teal: #19A89D;
+      --teal-dark: #0F766E;
+      --gold: #C8A24A;
+      --bg: #F6F8FA;
+      --white: #FFFFFF;
+      --text: #102033;
+      --muted: #667085;
+      --line: #E5ECF2;
+      --soft: #EEF3F7;
+      --teal-soft: #E7F8F5;
+      --red: #D92D20;
+      --red-soft: #FFF1F0;
+      --orange: #F79009;
+      --orange-soft: #FFF6E6;
+      --green: #12B76A;
+      --green-soft: #ECFDF3;
+      --blue-soft: #EAF3FF;
+      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
+      --shadow-soft: 0 10px 28px rgba(7, 27, 51, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.09), transparent 28%),
+        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      direction: rtl;
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 282px 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(25,168,157,0.18), transparent 32%),
+        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
+      color: var(--white);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 8px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      margin-bottom: 20px;
+    }
+
+    .brand img {
+      width: 135px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(25,168,157,0.13);
+      color: #D7F3EE;
+      border: 1px solid rgba(25,168,157,0.25);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .role-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+    }
+
+    .nav a {
+      min-height: 46px;
+      padding: 0 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 15px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: rgba(255,255,255,0.10);
+      color: var(--white);
+    }
+
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      color: #D7F3EE;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .sidebar-card {
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .sidebar-card h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-card p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.63);
+      line-height: 1.8;
+    }
+
+    .logout {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.84);
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .logout:hover {
+      background: rgba(255,255,255,0.11);
+      color: white;
+    }
+
+    .main {
+      padding: 26px;
+      min-width: 0;
+    }
+
+    .topbar {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .page-title h1 {
+      color: var(--navy);
+      font-size: 30px;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 0 17px;
+      border-radius: 14px;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .report-shell {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .report-cover {
+      padding: 28px;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(25,168,157,0.16), transparent 28%),
+        linear-gradient(135deg, #071B33 0%, #0B2A44 70%, #123E6B 100%);
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 22px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .report-cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: 0.35;
+    }
+
+    .report-cover > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .report-logo {
+      width: 145px;
+      height: auto;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .report-cover h2 {
+      font-size: 30px;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+
+    .report-cover p {
+      color: #DCE7F2;
+      font-size: 14px;
+      line-height: 1.9;
+      max-width: 780px;
+    }
+
+    .decision-card {
+      border-radius: 24px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .decision-card span {
+      color: rgba(255,255,255,0.68);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .decision-card strong {
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .report-body {
+      padding: 24px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .summary-box {
+      border: 1px solid var(--line);
+      background: #FBFCFD;
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 112px;
+    }
+
+    .summary-box span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .summary-box strong {
+      display: block;
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .summary-box small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      margin-top: 18px;
+      background: white;
+    }
+
+    .section-head {
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #FBFCFD;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .section-head h3 {
+      color: var(--navy);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .section-body {
+      padding: 18px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .detail {
+      background: #FBFCFD;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 13px;
+      min-height: 82px;
+    }
+
+    .detail span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .detail strong {
+      display: block;
+      color: var(--navy);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .text-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .text-box {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: white;
+      min-height: 230px;
+    }
+
+    .text-box-title {
+      padding: 12px 14px;
+      background: #FBFCFD;
+      border-bottom: 1px solid var(--line);
+      color: var(--navy);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .text-box-content {
+      padding: 15px;
+      color: #344054;
+      font-size: 13px;
+      line-height: 2;
+      white-space: pre-wrap;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      border: 1px solid var(--line);
+      background: #FBFCFD;
+      border-radius: 18px;
+      padding: 13px;
+    }
+
+    .list-item strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .list-item p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+    }
+
+    .time-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .time-item strong {
+      display: block;
+      color: var(--navy);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .time-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .status,
+    .risk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .status.approved,
+    .risk.low {
+      background: var(--green-soft);
+      color: #067647;
+    }
+
+    .status.pending_compliance,
+    .risk.medium {
+      background: var(--orange-soft);
+      color: #B54708;
+    }
+
+    .status.needs_revision,
+    .status.rejected,
+    .risk.high {
+      background: var(--red-soft);
+      color: #B42318;
+    }
+
+    .status.draft,
+    .risk.unknown {
+      background: var(--soft);
+      color: var(--muted);
+    }
+
+    .empty-state {
+      min-height: 540px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow-soft);
+      padding: 40px;
+    }
+
+    .empty-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 26px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      font-weight: 900;
+      margin: 0 auto 18px;
+    }
+
+    .empty-state h2 {
+      color: var(--navy);
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      max-width: 560px;
+      font-size: 14px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .note {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.8;
+      margin-top: 18px;
+      border: 1px solid rgba(25,168,157,0.18);
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .sidebar,
+      .topbar,
+      .top-actions,
+      .btn,
+      .note {
+        display: none !important;
+      }
+
+      .app {
+        display: block;
+      }
+
+      .main {
+        padding: 0;
+      }
+
+      .report-shell {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .report-cover {
+        border-radius: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .section,
+      .summary-box,
+      .text-box,
+      .detail,
+      .list-item {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .app,
+      .report-cover {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-radius: 0 0 26px 26px;
+      }
+
+      .summary-grid,
+      .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .text-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .main {
+        padding: 16px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions,
+      .top-actions .btn {
+        width: 100%;
+      }
+
+      .summary-grid,
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .report-cover {
+        padding: 20px;
+      }
+
+      .report-cover h2 {
+        font-size: 23px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
+      </div>
+
+      <div class="role-pill">مدير المنصة</div>
+
+      <nav class="nav">
+        <a href="executive-dashboard.html">
+          <span class="nav-icon">▦</span>
+          لوحة المدير
+        </a>
+
+        <a href="reports.html">
+          <span class="nav-icon">▤</span>
+          أرشيف التقارير
+        </a>
+
+        <a class="active" href="final-report.html">
+          <span class="nav-icon">✓</span>
+          التقرير النهائي
+        </a>
+
+        <a href="admin-settings.html">
+          <span class="nav-icon">⚙️</span>
+          الإعدادات
+        </a>
+
+        <a href="index.html">
+          <span class="nav-icon">⌂</span>
+          الصفحة الرئيسية
+        </a>
+      </nav>
+
+      <div class="sidebar-card">
+        <h3>تقرير إداري</h3>
+        <p>هذا التقرير مخصص للمدير لعرض قرار الامتثال ومحتوى الحملة قبل وبعد.</p>
+      </div>
+
+      <button class="logout" onclick="logout()">تسجيل الخروج</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="page-title">
+          <h1>التقرير النهائي</h1>
+          <p>تقرير إداري للحملة المختارة من أرشيف التقارير.</p>
+        </div>
+
+        <div class="top-actions">
+          <a class="btn btn-secondary" href="reports.html">العودة للتقارير</a>
+          <button class="btn btn-secondary" onclick="saveReportRecord()">حفظ نسخة التقرير</button>
+          <button class="btn btn-primary" onclick="window.print()">طباعة / حفظ PDF</button>
+        </div>
+      </header>
+
+      <section class="empty-state" id="emptyState">
+        <div>
+          <div class="empty-icon">!</div>
+          <h2>لم يتم اختيار تقرير</h2>
+          <p>
+            افتحي صفحة أرشيف التقارير من لوحة المدير، ثم اختاري تقرير حملة لعرضه هنا.
+          </p>
+          <a class="btn btn-primary" href="reports.html">فتح أرشيف التقارير</a>
+        </div>
+      </section>
+
+      <section class="report-shell" id="reportShell" style="display:none;">
+        <div class="report-cover">
+          <div>
+            <img class="report-logo" src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
+            <h2 id="reportTitle">تقرير اعتماد حملة</h2>
+            <p id="reportIntro">—</p>
+          </div>
+
+          <div class="decision-card">
+            <span>قرار الامتثال</span>
+            <strong id="decisionText">—</strong>
+            <span id="decisionDate">—</span>
+          </div>
+        </div>
+
+        <div class="report-body">
+          <div class="summary-grid">
+            <div class="summary-box">
+              <span>درجة الجاهزية</span>
+              <strong id="summaryReadiness">0%</strong>
+              <small>تحسب من نتيجة الفحص المحفوظة</small>
+            </div>
+
+            <div class="summary-box">
+              <span>مستوى الخطر</span>
+              <strong id="summaryRisk">—</strong>
+              <small>حسب نتيجة الفحص أو الإدخال المحفوظ</small>
+            </div>
+
+            <div class="summary-box">
+              <span>حالة الحملة</span>
+              <strong id="summaryStatus">—</strong>
+              <small>آخر حالة محفوظة للحملة</small>
+            </div>
+
+            <div class="summary-box">
+              <span>رقم الحملة</span>
+              <strong id="summaryId">—</strong>
+              <small>معرّف الحملة الداخلي</small>
+            </div>
+          </div>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>بيانات الحملة</h3>
+                <p>معلومات أساسية عن المحتوى الذي تمت مراجعته.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="details-grid">
+                <div class="detail">
+                  <span>اسم الحملة</span>
+                  <strong id="campaignTitle">—</strong>
+                </div>
+
+                <div class="detail">
+                  <span>نوع المنتج</span>
+                  <strong id="productType">—</strong>
+                </div>
+
+                <div class="detail">
+                  <span>نوع المحتوى</span>
+                  <strong id="contentType">—</strong>
+                </div>
+
+                <div class="detail">
+                  <span>قناة النشر</span>
+                  <strong id="channel">—</strong>
+                </div>
+
+                <div class="detail">
+                  <span>الجمهور المستهدف</span>
+                  <strong id="audience">—</strong>
+                </div>
+
+                <div class="detail">
+                  <span>المرجع المتوقع</span>
+                  <strong id="regulator">—</strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>المحتوى قبل وبعد</h3>
+                <p>النص الأصلي والصياغة النهائية أو المقترحة بعد المراجعة.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="text-grid">
+                <div class="text-box">
+                  <div class="text-box-title">النص الأصلي</div>
+                  <div class="text-box-content" id="originalText">—</div>
+                </div>
+
+                <div class="text-box">
+                  <div class="text-box-title">الصياغة النهائية / المقترحة</div>
+                  <div class="text-box-content" id="finalText">—</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>نتيجة الفحص والملاحظات</h3>
+                <p>تعرض الملاحظات المحفوظة فقط، ولا تنشئ بيانات وهمية.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="list" id="findingsList"></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>ملاحظات الامتثال</h3>
+                <p>ملاحظات مسؤول الامتثال عند حفظ القرار.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="list-item">
+                <strong>ملاحظات القرار</strong>
+                <p id="complianceNotes">—</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>المراجع التنظيمية</h3>
+                <p>المراجع المرتبطة بنتيجة الفحص إن وجدت.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="list" id="referencesList"></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div>
+                <h3>سجل الإجراءات</h3>
+                <p>خط زمني مختصر لما تم على الحملة.</p>
+              </div>
+            </div>
+
+            <div class="section-body">
+              <div class="timeline" id="timeline"></div>
+            </div>
+          </section>
+
+          <div class="note">
+            هذا التقرير مبني على البيانات المحفوظة داخل المنصة في النسخة الحالية. عند ربط Supabase و n8n سيتم إنشاء التقرير من قاعدة البيانات ونتائج الفحص الفعلية.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "mutamad_campaigns";
+    const REPORTS_KEY = "mutamad_final_reports";
+    const REVIEW_KEY_PRIMARY = "mutamad_current_review_id";
+    const REVIEW_KEY_SECONDARY = "mutamad_review_campaign_id";
+    const DEMO_ROLE_KEY = "mutamad_demo_role";
+
+    let campaigns = [];
+    let campaign = null;
+
+    function getCampaigns() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+
+      if (!stored) return [];
+
+      try {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function safeValue(value, fallback = "—") {
+      return value && String(value).trim() !== "" ? value : fallback;
+    }
+
+    function statusLabel(status) {
+      const labels = {
+        draft: "مسودة",
+        checking: "قيد الفحص",
+        pending_compliance: "بانتظار الامتثال",
+        approved: "معتمد",
+        needs_revision: "تحتاج تعديل",
+        rejected: "مرفوض"
+      };
+
+      return labels[status] || "غير محدد";
+    }
+
+    function decisionLabel(decision, status) {
+      const labels = {
+        approved: "معتمد",
+        needs_revision: "تحتاج تعديل",
+        rejected: "مرفوض"
+      };
+
+      return labels[decision] || labels[status] || "لم يصدر قرار نهائي";
+    }
+
+    function riskLabel(risk) {
+      const labels = {
+        low: "منخفض",
+        medium: "متوسط",
+        high: "عالي",
+        unknown: "غير محدد",
+        "": "غير محدد"
+      };
+
+      return labels[risk] || "غير محدد";
+    }
+
+    function roleGuard() {
+      const role = localStorage.getItem(DEMO_ROLE_KEY);
+
+      const allowedManagerRoles = [
+        "manager",
+        "executive",
+        "admin",
+        "director",
+        "platform_manager",
+        "مدير",
+        "مدير المنصة",
+        "مدير النظام"
+      ];
+
+      if (!role) {
+        return true;
+      }
+
+      if (allowedManagerRoles.includes(role)) {
+        return true;
+      }
+
+      document.getElementById("emptyState").style.display = "grid";
+      document.getElementById("reportShell").style.display = "none";
+
+      document.querySelector("#emptyState h2").textContent = "غير مصرح بعرض التقرير";
+      document.querySelector("#emptyState p").textContent = "التقارير النهائية مخصصة لمدير المنصة فقط في هذا النموذج.";
+      document.querySelector("#emptyState a").textContent = "العودة لتسجيل الدخول";
+      document.querySelector("#emptyState a").href = "login.html";
+
+      return false;
+    }
+
+    function loadCampaign() {
+      if (!roleGuard()) return;
+
+      campaigns = getCampaigns();
+
+      const selectedId =
+        localStorage.getItem(REVIEW_KEY_PRIMARY) ||
+        localStorage.getItem(REVIEW_KEY_SECONDARY);
+
+      if (selectedId) {
+        campaign = campaigns.find(item => item.id === selectedId);
+      }
+
+      if (!campaign) {
+        showEmpty();
+        return;
+      }
+
+      document.getElementById("emptyState").style.display = "none";
+      document.getElementById("reportShell").style.display = "block";
+
+      renderReport();
+    }
+
+    function showEmpty() {
+      document.getElementById("emptyState").style.display = "grid";
+      document.getElementById("reportShell").style.display = "none";
+    }
+
+    function renderReport() {
+      const readiness = Number(campaign.readiness_score || 0);
+      const decision = decisionLabel(campaign.compliance_decision, campaign.status);
+
+      document.getElementById("reportTitle").textContent = "تقرير اعتماد: " + safeValue(campaign.title, "حملة بدون عنوان");
+      document.getElementById("reportIntro").textContent =
+        "تقرير إداري يوضح حالة الحملة، قرار الامتثال، المحتوى قبل وبعد، الملاحظات، والمراجع التنظيمية المرتبطة.";
+
+      document.getElementById("decisionText").textContent = decision;
+      document.getElementById("decisionDate").textContent = campaign.reviewed_at ? "تاريخ القرار: " + campaign.reviewed_at : "لم يتم حفظ تاريخ قرار";
+
+      document.getElementById("summaryReadiness").textContent = readiness + "%";
+      document.getElementById("summaryRisk").innerHTML = `<span class="risk ${campaign.risk_level || "unknown"}">${riskLabel(campaign.risk_level || "unknown")}</span>`;
+      document.getElementById("summaryStatus").innerHTML = `<span class="status ${campaign.status || "draft"}">${statusLabel(campaign.status)}</span>`;
+      document.getElementById("summaryId").textContent = safeValue(campaign.id);
+
+      document.getElementById("campaignTitle").textContent = safeValue(campaign.title, "حملة بدون عنوان");
+      document.getElementById("productType").textContent = safeValue(campaign.product_type_label);
+      document.getElementById("contentType").textContent = safeValue(campaign.content_type);
+      document.getElementById("channel").textContent = safeValue(campaign.channel);
+      document.getElementById("audience").textContent = safeValue(campaign.audience);
+      document.getElementById("regulator").textContent = safeValue(campaign.regulator);
+
+      document.getElementById("originalText").textContent = safeValue(campaign.content_text, "لا يوجد نص أصلي محفوظ.");
+      document.getElementById("finalText").textContent =
+        campaign.final_text ||
+        campaign.suggested_rewrite ||
+        "لا توجد صياغة نهائية أو مقترحة محفوظة بعد.";
+
+      document.getElementById("complianceNotes").textContent =
+        campaign.compliance_notes ||
+        "لا توجد ملاحظات امتثال محفوظة.";
+
+      renderFindings();
+      renderReferences();
+      renderTimeline();
+    }
+
+    function renderFindings() {
+      const findingsList = document.getElementById("findingsList");
+      findingsList.innerHTML = "";
+
+      if (!Array.isArray(campaign.findings) || campaign.findings.length === 0) {
+        findingsList.innerHTML = `
+          <div class="list-item">
+            <strong>لا توجد ملاحظات محفوظة</strong>
+            <p>لم يتم حفظ ملاحظات تنظيمية لهذه الحملة بعد.</p>
+          </div>
+        `;
+        return;
+      }
+
+      campaign.findings.forEach(function (finding, index) {
+        const item = document.createElement("div");
+        item.className = "list-item";
+
+        if (typeof finding === "string") {
+          item.innerHTML = `
+            <strong>ملاحظة ${index + 1}</strong>
+            <p>${finding}</p>
+          `;
+        } else {
+          item.innerHTML = `
+            <strong>${safeValue(finding.issue, "ملاحظة " + (index + 1))}</strong>
+            <p>${safeValue(finding.reason || finding.recommendation || finding.text, "لا توجد تفاصيل إضافية.")}</p>
+          `;
+        }
+
+        findingsList.appendChild(item);
+      });
+    }
+
+    function renderReferences() {
+      const referencesList = document.getElementById("referencesList");
+      referencesList.innerHTML = "";
+
+      if (!Array.isArray(campaign.references) || campaign.references.length === 0) {
+        referencesList.innerHTML = `
+          <div class="list-item">
+            <strong>لا توجد مراجع محفوظة</strong>
+            <p>ستظهر المراجع التنظيمية هنا بعد ربط نتيجة الفحص الذكي.</p>
+          </div>
+        `;
+        return;
+      }
+
+      campaign.references.forEach(function (reference, index) {
+        const item = document.createElement("div");
+        item.className = "list-item";
+
+        item.innerHTML = `
+          <strong>مرجع ${index + 1}</strong>
+          <p>${reference}</p>
+        `;
+
+        referencesList.appendChild(item);
+      });
+    }
+
+    function renderTimeline() {
+      const timeline = document.getElementById("timeline");
+      timeline.innerHTML = "";
+
+      const items = Array.isArray(campaign.timeline) ? campaign.timeline : [];
+
+      if (!items.length) {
+        timeline.innerHTML = `
+          <div class="time-item">
+            <div class="dot">1</div>
+            <div>
+              <strong>لا يوجد سجل إجراءات محفوظ</strong>
+              <span>سيظهر السجل عند حفظ خطوات الحملة والقرارات.</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(function (item, index) {
+        const div = document.createElement("div");
+        div.className = "time-item";
+
+        div.innerHTML = `
+          <div class="dot">${index + 1}</div>
+          <div>
+            <strong>${safeValue(item.action, "إجراء محفوظ")}</strong>
+            <span>${safeValue(item.at, "بدون تاريخ")}</span>
+          </div>
+        `;
+
+        timeline.appendChild(div);
+      });
+    }
+
+    function saveReportRecord() {
+      if (!campaign) {
+        alert("لا توجد حملة لحفظ التقرير.");
+        return;
+      }
+
+      const report = {
+        id: "RPT-" + Date.now(),
+        campaign_id: campaign.id,
+        campaign_title: campaign.title,
+        decision: campaign.compliance_decision || campaign.status || "",
+        readiness_score: Number(campaign.readiness_score || 0),
+        risk_level: campaign.risk_level || "",
+        generated_at: new Date().toISOString()
+      };
+
+      const stored = localStorage.getItem(REPORTS_KEY);
+      let reports = [];
+
+      try {
+        reports = stored ? JSON.parse(stored) : [];
+        if (!Array.isArray(reports)) reports = [];
+      } catch {
+        reports = [];
+      }
+
+      reports.unshift(report);
+      localStorage.setItem(REPORTS_KEY, JSON.stringify(reports));
+
+      alert("تم حفظ نسخة التقرير داخل بيانات المتصفح.");
+    }
+
+    function logout() {
+      localStorage.removeItem(DEMO_ROLE_KEY);
+      window.location.href = "login.html";
+    }
+
+    loadCampaign();
+  </script>
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>طلب الانضمام | مُعتمد</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
+
+    :root {
+      --navy: #071B33;
+      --navy-2: #0B2A44;
+      --navy-3: #103A5E;
+      --teal: #19A89D;
+      --teal-dark: #0F766E;
+      --gold: #C8A24A;
+      --bg: #F6F8FA;
+      --white: #FFFFFF;
+      --text: #102033;
+      --muted: #667085;
+      --line: #E5ECF2;
+      --soft: #EEF3F7;
+      --teal-soft: #E7F8F5;
+      --shadow: 0 24px 70px rgba(7, 27, 51, 0.16);
+      --shadow-soft: 0 14px 36px rgba(7, 27, 51, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(25,168,157,0.12), transparent 28%),
+        radial-gradient(circle at 8% 88%, rgba(200,162,74,0.10), transparent 25%),
+        #F6F8FA;
+      color: var(--text);
+      direction: rtl;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(7,27,51,0.12), rgba(25,168,157,0.10));
+      top: -360px;
+      right: -280px;
+      z-index: 0;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(25,168,157,0.12), rgba(200,162,74,0.08));
+      bottom: -260px;
+      left: -170px;
+      z-index: 0;
+    }
+
+    .join-shell {
+      width: min(1180px, 100%);
+      min-height: 740px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      background: rgba(255,255,255,0.80);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.82);
+      border-radius: 38px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 1;
+    }
+
+    .side {
+      position: relative;
+      padding: 42px;
+      color: white;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 22%, rgba(25,168,157,0.30), transparent 30%),
+        radial-gradient(circle at 86% 14%, rgba(200,162,74,0.16), transparent 28%),
+        linear-gradient(145deg, #06172B 0%, #071B33 55%, #0C3449 100%);
+    }
+
+    .side::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    .side > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      width: 148px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 24px rgba(0,0,0,0.20));
+    }
+
+    .home-link {
+      color: rgba(255,255,255,0.72);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 13px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .home-link:hover {
+      color: white;
+      background: rgba(255,255,255,0.10);
+    }
+
+    .side-content {
+      margin-top: 74px;
+      max-width: 560px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.20);
+      color: #D7F3EE;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .side-content h1 {
+      font-size: 42px;
+      line-height: 1.35;
+      margin-bottom: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .side-content p {
+      color: #DCE7F2;
+      font-size: 16px;
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    .process-card {
+      margin-top: 42px;
+      padding: 20px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    }
+
+    .process-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,0.86);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .process-title strong {
+      color: #D7F3EE;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 13px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(25,168,157,0.18);
+      color: #5DE0D6;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step h3 {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .step p {
+      color: rgba(255,255,255,0.64);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .side-footer {
+      position: absolute;
+      right: 42px;
+      left: 42px;
+      bottom: 34px;
+      color: rgba(255,255,255,0.56);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .form-side {
+      padding: 42px;
+      display: grid;
+      align-items: center;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 640px;
+      margin: auto;
+    }
+
+    .card-head {
+      margin-bottom: 26px;
+    }
+
+    .card-head span {
+      display: inline-flex;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .card-head h2 {
+      font-size: 32px;
+      color: var(--navy);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .card-head p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #D8E0E8;
+      border-radius: 17px;
+      background: white;
+      color: var(--text);
+      outline: none;
+      transition: 0.2s ease;
+      font-size: 14px;
+    }
+
+    .field input,
+    .field select {
+      height: 54px;
+      padding: 0 14px;
+    }
+
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      padding: 13px 14px;
+      line-height: 1.8;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(25,168,157,0.12);
+    }
+
+    .usage-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      grid-column: 1 / -1;
+    }
+
+    .usage-option input {
+      display: none;
+    }
+
+    .usage-box {
+      min-height: 92px;
+      border: 1px solid #DCE5EE;
+      border-radius: 18px;
+      background: white;
+      padding: 13px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .usage-box strong {
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .usage-box small {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .usage-box:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(25,168,157,0.35);
+    }
+
+    .usage-option input:checked + .usage-box {
+      border-color: var(--teal);
+      background: #FCFFFE;
+      box-shadow: 0 14px 32px rgba(25,168,157,0.14);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 54px;
+      border-radius: 17px;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      font-size: 15px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      flex: 1;
+      color: white;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      box-shadow: 0 16px 30px rgba(25,168,157,0.24);
+    }
+
+    .btn-secondary {
+      color: var(--navy);
+      background: white;
+      border: 1px solid var(--line);
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #FBFCFD;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .success {
+      display: none;
+      margin-top: 16px;
+      padding: 15px 16px;
+      border-radius: 18px;
+      background: #ECFDF5;
+      color: #067647;
+      border: 1px solid #ABEFC6;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1050px) {
+      .join-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        min-height: 520px;
+      }
+
+      .side-footer {
+        position: relative;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        margin-top: 34px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 14px;
+      }
+
+      .join-shell {
+        border-radius: 26px;
+      }
+
+      .side,
+      .form-side {
+        padding: 26px 20px;
+      }
+
+      .side-content {
+        margin-top: 42px;
+      }
+
+      .side-content h1,
+      .card-head h2 {
+        font-size: 29px;
+      }
+
+      .form-grid,
+      .usage-options {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .top-nav {
+        align-items: flex-start;
+      }
+
+      .logo {
+        width: 128px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="join-shell">
+      <aside class="side">
+        <div>
+          <div class="top-nav">
+            <a href="index.html">
+              <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" class="logo" />
+            </a>
+
+            <a href="index.html" class="home-link">الصفحة الرئيسية</a>
+          </div>
+
+          <div class="side-content">
+            <span class="eyebrow">طلب انضمام جهة</span>
+
+            <h1>ابدأ تفعيل مُعتمد داخل جهتك</h1>
+
+            <p>
+              أرسل بيانات الجهة والمسؤول المعتمد، وسيتم مراجعة الطلب ثم تجهيز مساحة العمل
+              الخاصة بالجهة بحسب الأدوار والصلاحيات المناسبة.
+            </p>
+          </div>
+
+          <div class="process-card">
+            <div class="process-title">
+              <span>مسار الانضمام</span>
+              <strong>3 خطوات</strong>
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>تقديم الطلب</h3>
+                  <p>تعبئة بيانات الجهة والمسؤول الرسمي.</p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>مراجعة البيانات</h3>
+                  <p>التحقق من نوع الجهة واحتياج الاستخدام.</p>
+                </div>
+              </div>
+
+              <div class="step">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>تفعيل المساحة</h3>
+                  <p>إنشاء حسابات الأدوار وربط الجهة بالمنصة.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="side-footer">
+          في النسخة التجريبية يتم حفظ الطلب محليًا للعرض فقط. لاحقًا سيتم ربط هذه الصفحة بقاعدة البيانات ونظام إدارة الجهات.
+        </p>
+      </aside>
+
+      <section class="form-side">
+        <div class="form-card">
+          <div class="card-head">
+            <span>نموذج الانضمام</span>
+            <h2>بيانات الجهة والمسؤول</h2>
+            <p>اكتبي البيانات الأساسية للجهة حتى يتم إنشاء حساب مؤسسي داخل منصة مُعتمد.</p>
+          </div>
+
+          <form id="joinForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="orgName">اسم الجهة</label>
+                <input id="orgName" type="text" placeholder="مثال: شركة / بنك / جهة حكومية" required />
+              </div>
+
+              <div class="field">
+                <label for="orgType">نوع الجهة</label>
+                <select id="orgType" required>
+                  <option value="">اختاري نوع الجهة</option>
+                  <option value="financial">جهة مالية</option>
+                  <option value="fintech">شركة تقنية مالية</option>
+                  <option value="government">جهة حكومية</option>
+                  <option value="commercial">جهة تجارية</option>
+                  <option value="other">أخرى</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="managerName">اسم المسؤول</label>
+                <input id="managerName" type="text" placeholder="اسم الشخص المسؤول عن الطلب" required />
+              </div>
+
+              <div class="field">
+                <label for="jobTitle">المسمى الوظيفي</label>
+                <input id="jobTitle" type="text" placeholder="مثال: مسؤول امتثال / مدير تسويق" required />
+              </div>
+
+              <div class="field">
+                <label for="email">البريد الرسمي</label>
+                <input id="email" type="email" placeholder="name@organization.sa" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">رقم التواصل</label>
+                <input id="phone" type="tel" placeholder="05xxxxxxxx" required />
+              </div>
+
+              <div class="field full">
+                <label>مجال الاستخدام المتوقع</label>
+
+                <div class="usage-options">
+                  <label class="usage-option">
+                    <input type="radio" name="usage" value="ads" required />
+                    <div class="usage-box">
+                      <strong>الإعلانات والحملات</strong>
+                      <small>فحص محتوى الحملات قبل النشر.</small>
+                    </div>
+                  </label>
+
+                  <label class="usage-option">
+                    <input type="radio" name="usage" value="social" required />
+                    <div class="usage-box">
+                      <strong>منشورات التواصل</strong>
+                      <small>مراجعة المحتوى اليومي والمنشورات.</small>
+                    </div>
+                  </label>
+
+                  <label class="usage-option">
+                    <input type="radio" name="usage" value="documents" required />
+                    <div class="usage-box">
+                      <strong>ملفات ونشرات</strong>
+                      <small>فحص ملفات PDF والنشرات التعريفية.</small>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field full">
+                <label for="notes">ملاحظات إضافية</label>
+                <textarea id="notes" placeholder="اكتبي أي تفاصيل تساعد في فهم احتياج الجهة..."></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">إرسال طلب الانضمام</button>
+              <a class="btn btn-secondary" href="login.html">لدي حساب بالفعل</a>
+            </div>
+
+            <div class="success" id="successBox">
+              تم حفظ طلب الانضمام تجريبيًا بنجاح. في النسخة الحقيقية سيتم إرساله إلى قاعدة البيانات.
+            </div>
+
+            <div class="note">
+              ملاحظة: لا يتم إنشاء الحساب مباشرة بعد إرسال الطلب، بل تتم مراجعة بيانات الجهة ثم تفعيل الحسابات والصلاحيات المناسبة.
+            </div>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const joinForm = document.getElementById("joinForm");
+    const successBox = document.getElementById("successBox");
+
+    joinForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const selectedUsage = document.querySelector("input[name='usage']:checked");
+
+      const request = {
+        organization_name: document.getElementById("orgName").value,
+        organization_type: document.getElementById("orgType").value,
+        manager_name: document.getElementById("managerName").value,
+        job_title: document.getElementById("jobTitle").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        usage: selectedUsage ? selectedUsage.value : "",
+        notes: document.getElementById("notes").value,
+        created_at: new Date().toISOString()
+      };
+
+      localStorage.setItem("mutamad_join_request", JSON.stringify(request));
+
+      successBox.style.display = "block";
+      joinForm.reset();
+
+      setTimeout(function () {
+        successBox.style.display = "none";
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

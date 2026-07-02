@@ -1,0 +1,874 @@
+{
+  "name": "مُعتَمَد - Multi Agent Compliance Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "mutamad-analyze",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "00dc54fe-7c5d-4dc4-b338-bae0468816b3",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        208
+      ],
+      "webhookId": "d56c91e7-d042-4d90-b685-bee6bfefb8ca"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// استخراج النص أو الصورة من الطلب الوارد\nconst body = $json.body || $json;\n\nconst adText = body.ad_text || body.chatInput || body.message || '';\nconst imageUrl = body.image_url || '';\nconst adType = imageUrl ? 'image' : 'text';\n\nreturn {\n  json: {\n    ad_text: adText,\n    image_url: imageUrl,\n    ad_type: adType,\n    timestamp: new Date().toISOString()\n  }\n};"
+      },
+      "id": "c8ed9de7-0e18-467d-ad60-8b0c8e71d4dd",
+      "name": "Input Parser",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "img",
+              "leftValue": "={{ $json.image_url }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c22fb62d-0804-450c-b75e-d8aa4d869421",
+      "name": "Has Image?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.image_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "id": "13b53932-5fe3-46d7-8e86-9a0438846a70",
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=تحليل الإعلان التالي:\n\nنص الإعلان:\n{{ $('Input Parser').first().json.ad_text }}\n\nنوع الإعلان: {{ $('Input Parser').first().json.ad_type }}\n\nإذا كان مع الرسالة صورة مرفقة، فاستخرج النص منها وحلّلها أيضاً.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "أنت وكيل متخصص في قراءة إعلانات المنتجات المالية واستخراج العبارات الحساسة.\n\nمهمتك:\n1. اقرأ نص الإعلان المقدم (وإن كان صورة فاستخرج النص منها)\n2. استخرج كل العبارات التي تحتاج مراجعة تنظيمية\n3. صنّف كل عبارة ضمن فئة: وعد_مطلق | ادعاء_رسوم | أهلية | سرعة | إفصاح_ناقص | تسويقية_مقبولة\n\nقواعد التصنيف:\n- وعد_مطلق: عبارات مثل 'مضمون'، 'بدون أي رسوم أبداً'، 'موافقة فورية للجميع'\n- ادعاء_رسوم: أي ذكر للرسوم أو العمولات أو التكاليف\n- أهلية: شروط القبول والرفض\n- سرعة: ادعاءات تتعلق بسرعة الموافقة أو الصرف\n- إفصاح_ناقص: معلومات مهمة مخفية أو غير كاملة\n- تسويقية_مقبولة: عبارات دعائية عادية لا تخالف الأنظمة\n\n4. استخرج كل الأرقام المذكورة صراحةً في الإعلان وضعها في extracted_figures: مدة التمويل (بالأشهر والسنوات)، معدل النسبة السنوية APR، الدخل الشهري، نسبة الاستقطاع DSR، مبلغ/نسبة الرسوم. إذا لم يُذكر رقم ما فاجعل قيمته null.\n5. سجّل في disclosures_present أي إفصاحات موجودة فعلاً في الإعلان (مثل: ذكر APR، اسم الجهة الممولة، الشروط والأحكام، رقم الترخيص).\n\nلا تحكم على المخالفة، فقط استخرج وصنّف. حدد نوع المنتج المالي بدقة (تمويل شخصي|بطاقة ائتمان|تقسيط|آخر).\nمهم جداً: استخرج الأرقام بدقة لأن وكيل الامتثال سيطابقها مع القواعد الكمّية (مثل: مدة التمويل يجب ألا تتجاوز 60 شهراً، نسبة الاستقطاع يجب ألا تتجاوز 33.33%)."
+        }
+      },
+      "id": "be36f01f-d03c-4707-9d0f-18731678135e",
+      "name": "Agent 1 - استخراج المحتوى",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        896,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "71a6ae8f-dd12-4ae4-ab96-476c7e92231d",
+      "name": "Model - Agent 1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        912,
+        432
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\":\"object\",\"properties\":{\"detected_claims\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"text\":{\"type\":\"string\"},\"category\":{\"type\":\"string\",\"enum\":[\"وعد_مطلق\",\"ادعاء_رسوم\",\"أهلية\",\"سرعة\",\"إفصاح_ناقص\",\"تسويقية_مقبولة\"]},\"risk_level\":{\"type\":\"string\",\"enum\":[\"عالي\",\"متوسط\",\"منخفض\"]},\"reason\":{\"type\":\"string\"}},\"required\":[\"text\",\"category\",\"risk_level\",\"reason\"]}},\"extracted_figures\":{\"type\":\"object\",\"description\":\"الأرقام المذكورة صراحةً في الإعلان. ضع 0 إن لم يُذكر الرقم، واذكر التفاصيل في other_figures\",\"properties\":{\"tenure_months\":{\"type\":\"number\",\"description\":\"مدة التمويل بالأشهر (0 إن لم تُذكر)\"},\"tenure_years\":{\"type\":\"number\",\"description\":\"مدة التمويل بالسنوات (0 إن لم تُذكر)\"},\"apr_percent\":{\"type\":\"number\",\"description\":\"معدل النسبة السنوية APR% (0 إن لم يُذكر)\"},\"monthly_income_sar\":{\"type\":\"number\",\"description\":\"الدخل الشهري بالريال (0 إن لم يُذكر)\"},\"deduction_ratio_percent\":{\"type\":\"number\",\"description\":\"نسبة الاستقطاع DSR% (0 إن لم تُذكر)\"},\"fees_amount_sar\":{\"type\":\"number\",\"description\":\"مبلغ الرسوم بالريال (0 إن لم يُذكر)\"},\"fees_percent\":{\"type\":\"number\",\"description\":\"نسبة الرسوم% (0 إن لم تُذكر)\"},\"other_figures\":{\"type\":\"string\",\"description\":\"أي أرقام أخرى ذات صلة كنص\"}},\"required\":[\"tenure_months\",\"tenure_years\",\"apr_percent\",\"monthly_income_sar\",\"deduction_ratio_percent\",\"fees_amount_sar\",\"fees_percent\",\"other_figures\"]},\"disclosures_present\":{\"type\":\"array\",\"description\":\"الإفصاحات الموجودة فعلاً في الإعلان (مثل APR، اسم الشركة، الشروط)\",\"items\":{\"type\":\"string\"}},\"ad_summary\":{\"type\":\"string\"},\"product_type\":{\"type\":\"string\"}},\"required\":[\"detected_claims\",\"extracted_figures\",\"ad_summary\",\"product_type\"]}",
+        "autoFix": true
+      },
+      "id": "30ff3c20-cf48-4f86-8832-f66caf47ee63",
+      "name": "Agent 1 Output Format",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "edb25bf1-7b7c-48d9-8a07-7b0f3682516e",
+      "name": "Fixer - Agent 1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "critical_regulations",
+        "limit": 100,
+        "filterType": "none"
+      },
+      "id": "fe4ac403-8d80-4d94-9c20-301786e4afb6",
+      "name": "Fetch SAMA Rules",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        208
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "edBhDCvsXBxSle1O",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// دمج قواعد SAMA مع مخرجات Agent 1\nconst agent1Data = $('Agent 1 - استخراج المحتوى').first().json.output || {};\nconst samaRules = $input.all().map(item => item.json);\n\nconst rulesText = samaRules.map((rule, idx) => {\n  const textAr = rule.description_ar || '';\n  const textEn = rule.description || '';\n  const ruleText = textAr || textEn;\n  return `(${idx + 1}) [خطورة: ${rule.severity ?? 'غير محدد'} | تأثير الدرجة: ${rule.compliance_score_impact ?? 0}] ${ruleText} — نوع المخالفة: ${rule.violation_type || ''} | الفئة: ${rule.category || ''} | المصدر: ${rule.source_file || 'SAMA'} | المعرّف: ${rule.id || ''}`;\n}).join('\\n');\n\nreturn [{\n  json: {\n    claims: agent1Data.detected_claims || [],\n    claims_text: JSON.stringify(agent1Data.detected_claims || [], null, 2),\n    extracted_figures: agent1Data.extracted_figures || {},\n    figures_text: JSON.stringify(agent1Data.extracted_figures || {}, null, 2),\n    disclosures_present: agent1Data.disclosures_present || [],\n    disclosures_text: JSON.stringify(agent1Data.disclosures_present || [], null, 2),\n    ad_summary: agent1Data.ad_summary || '',\n    product_type: agent1Data.product_type || 'غير محدد',\n    original_ad: $('Input Parser').first().json.ad_text,\n    rules_text: rulesText || 'لا توجد قواعد مطابقة في قاعدة البيانات.',\n    rules_count: samaRules.length\n  }\n}];"
+      },
+      "id": "2d44bb4f-30e9-4b75-adfc-eacdeb5563d1",
+      "name": "Prepare Rules Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=العبارات المستخرجة:\n{{ $json.claims_text }}\n\nالأرقام المستخرجة من الإعلان (extracted_figures):\n{{ $json.figures_text }}\n\nالإفصاحات الموجودة فعلاً:\n{{ $json.disclosures_text }}\n\nنوع المنتج: {{ $json.product_type }}\n\nقواعد SAMA المتاحة (100 قاعدة حقيقية من قاعدة البيانات):\n{{ $json.rules_text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "أنت وكيل الامتثال ومطابقة القواعد لدى البنك المركزي السعودي (SAMA). مهمتك مطابقة العبارات والأرقام المستخرجة مع قواعد SAMA الحقيقية المقدّمة لك (مصدرها قاعدة بيانات تنظيمية رسمية).\n\nعملك على مسارين:\n\nأ) المطابقة النصية: لكل عبارة في detected_claims، ابحث عن القاعدة التنظيمية ذات الصلة (مثل الادعاءات الكاذبة، الرسوم المخفية، الأساليب المضللة).\n\nب) المطابقة الكمّية (إلزامي — لا تتخطَّ هذه الخطوة): افحص كل رقم في extracted_figures رقمياً مقابل الحدود التنظيمية. هذه الفحوصات منفصلة تماماً عن العبارات النصية، ويجب أن تُنتج finding مستقل لكل رقم مخالف حتى لو لم تكن هناك عبارة نصية مرتبطة:\n\n   1. tenure: إذا (tenure_months > 60) أو (tenure_years > 5) والمنتج ليس عقارياً ← أضف finding مخالفة:\n      violation_id=SAMA_1948_N12, violation_type=tenure_exceeded, confidence=مؤكد. claim_text = الرقم نفسه (مثلاً \"مدة السداد 7 سنوات / 84 شهراً\").\n   2. DSR: إذا deduction_ratio_percent > 33.33 ← أضف finding:\n      violation_id=SAMA_1948_N11, violation_type=dsr_exceeded, confidence=مؤكد. claim_text = \"نسبة استقطاع X%\".\n   3. fees: إذا (fees_percent > 1) أو (fees_amount_sar > 5000) ← أضف finding:\n      violation_id=SAMA_1989_036, violation_type=excessive_financing_fees, confidence=مؤكد. claim_text = \"رسوم X%\".\n   4. APR: إذا المنتج تمويل/تقسيط ولم يُذكر APR (apr_percent = 0 وغير موجود في disclosures_present) ← أضف finding:\n      violation_id=SAMA_101, violation_type=missing_apr_disclosure, confidence=مؤكد.\n\n   قارن الأرقام بدقة رياضية صارمة. القيمة 0 تعني \"غير مذكور\" (لا تعدّها مخالفة كمّية إلا في فحص APR). لا تتجاهل أي رقم يتجاوز حداً كمّياً — هذه أهم وظيفة لديك.\n\nلكل مخالفة ترصدها أنتج finding يحتوي:\n- violation_id: معرّف القاعدة تماماً كما ورد (مثل SAMA_1715_215)\n- violation_type: نوع المخالفة كما ورد\n- rule_reference: نص القاعدة\n- rule_source: المصدر (source_file)\n- score_impact: قيمة تأثير الدرجة كما وردت في القاعدة المطابقة\n- confidence: مؤكد (دليل صريح أو رقم يخالف حداً) | محتمل | ضعيف\n\nثم احسب total_score_impact = مجموع score_impact للمخالفات (المؤكدة والمحتملة)، و violations_count، و overall_compliance.\n\nقواعد صارمة:\n- استند فقط إلى القواعد المقدّمة فعلياً. لا تخترع قاعدة أو معرّفاً غير موجود.\n- إذا لم تجد قاعدة مطابقة فلا تضف finding لتلك العبارة.\n- كن دقيقاً: هذا تقرير تنظيمي رسمي."
+        }
+      },
+      "id": "c44b4444-dfc3-43fd-bdea-da49d9aa7e6d",
+      "name": "Agent 2 - الامتثال ومطابقة القواعد",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1696,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "938e0a71-4d26-4d15-84b6-23acd1875ac5",
+      "name": "Model - Agent 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1712,
+        432
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\":\"object\",\"properties\":{\"findings\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"claim_text\":{\"type\":\"string\"},\"risk_level\":{\"type\":\"string\",\"enum\":[\"عالي\",\"متوسط\",\"منخفض\"]},\"reason\":{\"type\":\"string\"},\"violation_id\":{\"type\":\"string\",\"description\":\"معرّف القاعدة المطابقة كما ورد في القواعد (مثل SAMA_1715_215)\"},\"violation_type\":{\"type\":\"string\",\"description\":\"نوع المخالفة كما ورد في القاعدة\"},\"rule_reference\":{\"type\":\"string\",\"description\":\"نص القاعدة المطابقة\"},\"rule_source\":{\"type\":\"string\",\"description\":\"المصدر source_file\"},\"score_impact\":{\"type\":\"number\",\"description\":\"تأثير الدرجة compliance_score_impact للقاعدة المطابقة\"},\"confidence\":{\"type\":\"string\",\"enum\":[\"مؤكد\",\"محتمل\",\"ضعيف\"],\"description\":\"درجة الثقة في المطابقة\"}},\"required\":[\"claim_text\",\"risk_level\",\"reason\",\"violation_id\",\"rule_reference\",\"score_impact\",\"confidence\"]}},\"total_score_impact\":{\"type\":\"number\",\"description\":\"مجموع score_impact لكل المخالفات المؤكدة والمحتملة\"},\"violations_count\":{\"type\":\"number\"},\"overall_compliance\":{\"type\":\"string\",\"enum\":[\"متوافق\",\"متوافق جزئياً\",\"غير متوافق\"]}},\"required\":[\"findings\",\"total_score_impact\",\"overall_compliance\"]}",
+        "autoFix": true
+      },
+      "id": "167ef355-e1e1-4edb-9b40-409df0a38b51",
+      "name": "Agent 2 Output Format",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1840,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "4e14930d-1581-49ac-bcc2-4290667f29a5",
+      "name": "Fixer - Agent 2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1840,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const a2 = $('Agent 2 - الامتثال ومطابقة القواعد').first().json.output || {};\nconst rawFindings = a2.findings || [];\n\n// إزالة المخالفات المكررة (حتمي) بناءً على violation_id + claim_text\nconst seen = new Set();\nconst findings = [];\nfor (const f of rawFindings) {\n  const key = `${(f.violation_id || '').trim()}|${(f.claim_text || '').trim()}`;\n  if (seen.has(key)) continue;\n  seen.add(key);\n  findings.push(f);\n}\n\nreturn [{\n  json: {\n    original_ad: $('Prepare Rules Context').first().json.original_ad,\n    findings,\n    overall_compliance: a2.overall_compliance || ''\n  }\n}];"
+      },
+      "id": "10018679-5e23-458e-8372-d6926f15804c",
+      "name": "Prepare Rewrite Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2048,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=الإعلان الأصلي:\n{{ $json.original_ad }}\n\nالمخاطر المرصودة من وكيل الامتثال:\n{{ JSON.stringify($json.findings) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "أنت وكيل الصياغة البديلة. مهمتك كتابة نسخة أوضح وأكثر أماناً من الإعلان بناءً على مخاطر وكيل الامتثال (Agent 2).\n\nقواعد:\n- لا تخترع مشكلة جديدة، عالج العبارات الخطرة فقط\n- حافظ على الطابع التسويقي قدر الإمكان\n- أنتج suggested_rewrite (النص الكامل المعدّل) + changes_explained (مقارنة توضح ما الذي تغيّر ولماذا)"
+        }
+      },
+      "id": "d95c6f1d-4cbd-4976-acc9-2a41ff3c179b",
+      "name": "Agent 3 - الصياغة البديلة",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2272,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "30321a3c-1587-4d74-873d-52fb4465d973",
+      "name": "Model - Agent 3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2288,
+        432
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\":\"object\",\"properties\":{\"suggested_rewrite\":{\"type\":\"string\"},\"changes_explained\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"before\":{\"type\":\"string\"},\"after\":{\"type\":\"string\"},\"why\":{\"type\":\"string\"}},\"required\":[\"before\",\"after\",\"why\"]}}},\"required\":[\"suggested_rewrite\",\"changes_explained\"]}",
+        "autoFix": true
+      },
+      "id": "15aec7b7-452e-4424-884d-132f0b6fa0d5",
+      "name": "Agent 3 Output Format",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2416,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "88048578-1e23-4df3-8fbd-a28a6e3b6d48",
+      "name": "Fixer - Agent 3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2416,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const a3 = $('Agent 3 - الصياغة البديلة').first().json.output || {};\nconst ctx = $('Prepare Rules Context').first().json;\nconst a2 = $('Agent 2 - الامتثال ومطابقة القواعد').first().json.output || {};\n\n// استخدم قائمة المخالفات المنقّاة (بعد إزالة التكرار) من Prepare Rewrite Context\nconst findings = $('Prepare Rewrite Context').first().json.findings || [];\n// حساب حتمي (deterministic) للدرجة من المخالفات المنقّاة\nconst totalImpact = findings.reduce((sum, f) => sum + (Number(f.score_impact) || 0), 0);\nconst computedScore = Math.max(0, Math.min(100, 100 - totalImpact));\n\nlet computedStatus;\nif (findings.length === 0) {\n  computedStatus = 'منخفض';\n} else if (computedScore >= 70) {\n  computedStatus = 'يحتاج مراجعة';\n} else {\n  computedStatus = 'عالي المخاطر';\n}\n\nreturn [{\n  json: {\n    ad_summary: ctx.ad_summary,\n    product_type: ctx.product_type,\n    findings,\n    findings_text: JSON.stringify(findings, null, 2),\n    total_score_impact: totalImpact,\n    computed_score: computedScore,\n    computed_status: computedStatus,\n    violations_count: findings.length,\n    overall_compliance: a2.overall_compliance || '',\n    suggested_rewrite: a3.suggested_rewrite || '',\n    changes_explained: a3.changes_explained || []\n  }\n}];"
+      },
+      "id": "de7672e0-6c65-4259-8914-a7bc6b423c82",
+      "name": "Prepare Report Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2624,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=ملخص الإعلان: {{ $json.ad_summary }}\nنوع المنتج: {{ $json.product_type }}\n\nعدد المخالفات: {{ $json.violations_count }}\nالدرجة المحسوبة (استخدمها كما هي): {{ $json.computed_score }}\nالحالة المحسوبة (استخدمها كما هي): {{ $json.computed_status }}\n\nالمخاطر (findings):\n{{ $json.findings_text }}\n\nالصياغة البديلة المقترحة:\n{{ $json.suggested_rewrite }}\n\nشرح التغييرات:\n{{ JSON.stringify($json.changes_explained) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "أنت وكيل الدرجة والتقرير النهائي. اجمع كل النتائج وحوّلها إلى تقرير تنظيمي رسمي قابل للعرض والأرشفة.\n\nمهم: الدرجة والحالة محسوبتان مسبقاً بطريقة حتمية (computed_score و computed_status):\n- استخدم readiness_score = computed_score تماماً كما هي (لا تغيّرها)\n- استخدم status = computed_status تماماً كما هي\n\nمهمتك:\n- اكتب summary احترافي يوضح سبب الدرجة وأبرز المخالفات\n- انسخ findings كما هي في المخرج (مع كل حقولها: violation_id، rule_source، score_impact، confidence)\n- أنتج recommendations عملية ومحددة لكل مخالفة\n- انسخ suggested_rewrite كما هو"
+        }
+      },
+      "id": "51eb5483-de37-4609-8d06-c6b280ede923",
+      "name": "Agent 4 - الدرجة والتقرير النهائي",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2848,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "3f21eac1-b669-444f-b512-5a3bad6ff2aa",
+      "name": "Model - Agent 4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2864,
+        432
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\"type\":\"object\",\"properties\":{\"readiness_score\":{\"type\":\"number\",\"description\":\"استخدم computed_score كما هي\"},\"status\":{\"type\":\"string\",\"enum\":[\"منخفض\",\"يحتاج مراجعة\",\"عالي المخاطر\"],\"description\":\"استخدم computed_status كما هي\"},\"violations_count\":{\"type\":\"number\"},\"summary\":{\"type\":\"string\"},\"findings\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"claim_text\":{\"type\":\"string\"},\"risk_level\":{\"type\":\"string\"},\"violation_id\":{\"type\":\"string\"},\"violation_type\":{\"type\":\"string\"},\"rule_reference\":{\"type\":\"string\"},\"rule_source\":{\"type\":\"string\"},\"score_impact\":{\"type\":\"number\"},\"confidence\":{\"type\":\"string\"},\"reason\":{\"type\":\"string\"}}}},\"recommendations\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"suggested_rewrite\":{\"type\":\"string\"}},\"required\":[\"readiness_score\",\"status\",\"summary\",\"findings\",\"recommendations\"]}",
+        "autoFix": true
+      },
+      "id": "0870f0d1-5c8d-4426-8f02-5f334bdcafaf",
+      "name": "Agent 4 Output Format",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        2992,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "07b4f600-4383-41ab-8eab-269587703b85",
+      "name": "Fixer - Agent 4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2992,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "4oYcEKeFRYh8WShS",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const f = $('Agent 4 - الدرجة والتقرير النهائي').first().json.output || {};\nconst ctx = $('Prepare Report Context').first().json;\nconst originalAd = $('Prepare Rules Context').first().json.original_ad || '';\n\nconst score = f.readiness_score ?? 0;\nconst status = f.status || 'غير محدد';\nconst findings = f.findings || [];\nconst recommendations = f.recommendations || [];\nconst rewrite = f.suggested_rewrite || '';\nconst summary = f.summary || '';\nconst productType = ctx.product_type || '';\nconst generatedAt = new Date().toLocaleString('ar-SA', { timeZone: 'Asia/Riyadh' });\n\n// لون الحالة\nlet statusColor = '#3E7C68';\nif (status.includes('عالي')) statusColor = '#C0463A';\nelse if (status.includes('مراجعة')) statusColor = '#B07B4F';\n\nconst esc = (s) => String(s == null ? '' : s)\n  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\nconst riskBadge = (r) => {\n  let c = '#3E7C68';\n  if (r === 'عالي') c = '#C0463A';\n  else if (r === 'متوسط') c = '#B07B4F';\n  return `<span style=\"background:${c};color:#fff;padding:2px 10px;border-radius:12px;font-size:12px;white-space:nowrap\">${esc(r)}</span>`;\n};\n\nconst findingsRows = findings.map((x, i) => `\n  <tr>\n    <td style=\"text-align:center\">${i + 1}</td>\n    <td>${esc(x.claim_text)}</td>\n    <td style=\"text-align:center\">${riskBadge(x.risk_level)}</td>\n    <td>${esc(x.rule_reference)}</td>\n    <td style=\"text-align:center;font-family:monospace;font-size:11px\">${esc(x.violation_id || '')}</td>\n    <td style=\"text-align:center\">${esc(x.rule_source || '')}</td>\n    <td style=\"text-align:center\">${esc(x.confidence || '')}</td>\n  </tr>`).join('');\n\nconst recsList = recommendations.map((r) => `<li>${esc(r)}</li>`).join('');\n\nconst html = `<!DOCTYPE html>\n<html lang=\"ar\" dir=\"rtl\">\n<head>\n<meta charset=\"UTF-8\">\n<style>\n  * { box-sizing: border-box; }\n  body { font-family: 'Tahoma','Arial',sans-serif; margin:0; padding:32px; color:#1B2A4A; line-height:1.7; direction:rtl; }\n  .header { display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #1B2A4A; padding-bottom:16px; margin-bottom:24px; }\n  .brand { font-size:28px; font-weight:bold; color:#1B2A4A; }\n  .brand small { display:block; font-size:13px; color:#6B7392; font-weight:normal; margin-top:4px; }\n  .meta { text-align:left; font-size:12px; color:#6B7392; }\n  .score-card { display:flex; gap:16px; margin-bottom:24px; }\n  .score-box { flex:1; border:1px solid #E3E6F0; border-radius:12px; padding:20px; text-align:center; }\n  .score-num { font-size:44px; font-weight:bold; }\n  .score-label { font-size:13px; color:#6B7392; margin-top:4px; }\n  .status-pill { display:inline-block; color:#fff; padding:8px 20px; border-radius:20px; font-size:18px; font-weight:bold; }\n  h2 { color:#1B2A4A; font-size:18px; border-right:4px solid #1B2A4A; padding-right:10px; margin-top:28px; }\n  .summary { background:#F5F6FA; border:1px solid #A89AD4; border-radius:10px; padding:16px; }\n  table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }\n  th { background:#1B2A4A; color:#fff; padding:10px 8px; text-align:right; }\n  td { border:1px solid #E3E6F0; padding:8px; vertical-align:top; }\n  tr:nth-child(even) td { background:#f9fafb; }\n  .ba { display:flex; gap:16px; margin-top:12px; }\n  .ba-box { flex:1; border-radius:10px; padding:16px; }\n  .before { background:#FBEDEB; border:1px solid #F4C4BD; }\n  .after { background:#EAF2EF; border:1px solid #B7D8CD; }\n  .ba-title { font-weight:bold; margin-bottom:8px; }\n  ul { padding-right:20px; }\n  .footer { margin-top:40px; border-top:1px solid #E3E6F0; padding-top:12px; font-size:11px; color:#9ca3af; text-align:center; }\n</style>\n</head>\n<body>\n  <div class=\"header\">\n    <div class=\"brand\">مُعتَمَد<small>منصة فحص امتثال الإعلانات المالية — قواعد SAMA</small></div>\n    <div class=\"meta\">تاريخ التقرير: ${esc(generatedAt)}<br>نوع المنتج: ${esc(productType)}<br>عدد المخالفات: ${findings.length}</div>\n  </div>\n\n  <div class=\"score-card\">\n    <div class=\"score-box\">\n      <div class=\"score-num\" style=\"color:${statusColor}\">${esc(score)}</div>\n      <div class=\"score-label\">درجة الجاهزية (من 100)</div>\n    </div>\n    <div class=\"score-box\" style=\"display:flex;flex-direction:column;justify-content:center\">\n      <div><span class=\"status-pill\" style=\"background:${statusColor}\">${esc(status)}</span></div>\n      <div class=\"score-label\">الحالة التنظيمية</div>\n    </div>\n  </div>\n\n  <h2>الملخص التنفيذي</h2>\n  <div class=\"summary\">${esc(summary)}</div>\n\n  <h2>المخالفات المرصودة ومراجعها النظامية</h2>\n  ${findings.length ? `<table>\n    <thead><tr>\n      <th style=\"width:30px\">#</th><th>العبارة / البند</th><th>الخطورة</th>\n      <th>القاعدة النظامية</th><th>المعرّف</th><th>المصدر</th><th>الثقة</th>\n    </tr></thead>\n    <tbody>${findingsRows}</tbody>\n  </table>` : '<p>لا توجد مخالفات مرصودة. الإعلان متوافق.</p>'}\n\n  <h2>المقارنة: قبل / بعد</h2>\n  <div class=\"ba\">\n    <div class=\"ba-box before\"><div class=\"ba-title\">الإعلان الأصلي (قبل)</div>${esc(originalAd)}</div>\n    <div class=\"ba-box after\"><div class=\"ba-title\">الصياغة المقترحة المتوافقة (بعد)</div>${esc(rewrite)}</div>\n  </div>\n\n  <h2>التوصيات</h2>\n  <ul>${recsList || '<li>لا توجد توصيات.</li>'}</ul>\n\n  <div class=\"footer\">تم إنشاء هذا التقرير آلياً بواسطة نظام مُعتَمَد متعدد الوكلاء (Multi-Agent) — استناداً إلى قواعد البنك المركزي السعودي (SAMA). هذا التقرير استرشادي ولا يُغني عن المراجعة البشرية النهائية.</div>\n</body>\n</html>`;\n\nreturn [{ json: { report_html: html, final_output: f, generated_at: new Date().toISOString() } }];"
+      },
+      "id": "4a693aec-2d79-484b-9452-4fc869b980ec",
+      "name": "Build Report HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3200,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "html",
+        "options": {
+          "fileName": "=mutamad-report-{{ $now.toFormat(\"yyyyLLdd-HHmmss\") }}.html"
+        }
+      },
+      "id": "fd581cdb-2347-422a-8b2b-c3f04766f9bc",
+      "name": "Generate Report File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        3424,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const final = $('Agent 4 - الدرجة والتقرير النهائي').first().json.output || {};\nconst reportHtml = $('Build Report HTML').first().json.report_html || '';\n\n// تم تحويل التقرير إلى ملف HTML (binary) عبر عقدة Convert to File\nconst binary = $input.first().binary || {};\nconst fileEntry = binary.data || {};\nconst fileName = fileEntry.fileName || 'mutamad-report.html';\nconst reportReady = !!fileEntry.data;\n\nreturn [{\n  binary,\n  json: {\n    final_output: final,\n    report: {\n      report_ready: reportReady,\n      report_filename: fileName,\n      report_format: 'html',\n      report_html: reportHtml\n    },\n    generated_at: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "d1676d4d-889d-4881-9d01-5f6d1932d3e9",
+      "name": "Shape Final Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3648,
+        208
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "06093987-dfb5-493d-8376-a83847b19832",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3872,
+        208
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Input Parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input Parser": {
+      "main": [
+        [
+          {
+            "node": "Has Image?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Image?": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Agent 1 - استخراج المحتوى",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Agent 1 - استخراج المحتوى",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 1 - استخراج المحتوى": {
+      "main": [
+        [
+          {
+            "node": "Fetch SAMA Rules",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model - Agent 1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 1 - استخراج المحتوى",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 1 Output Format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent 1 - استخراج المحتوى",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixer - Agent 1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 1 Output Format",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch SAMA Rules": {
+      "main": [
+        [
+          {
+            "node": "Prepare Rules Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Rules Context": {
+      "main": [
+        [
+          {
+            "node": "Agent 2 - الامتثال ومطابقة القواعد",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 2 - الامتثال ومطابقة القواعد": {
+      "main": [
+        [
+          {
+            "node": "Prepare Rewrite Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model - Agent 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 2 - الامتثال ومطابقة القواعد",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 2 Output Format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent 2 - الامتثال ومطابقة القواعد",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixer - Agent 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 2 Output Format",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Rewrite Context": {
+      "main": [
+        [
+          {
+            "node": "Agent 3 - الصياغة البديلة",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 3 - الصياغة البديلة": {
+      "main": [
+        [
+          {
+            "node": "Prepare Report Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model - Agent 3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 3 - الصياغة البديلة",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 3 Output Format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent 3 - الصياغة البديلة",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixer - Agent 3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 3 Output Format",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Report Context": {
+      "main": [
+        [
+          {
+            "node": "Agent 4 - الدرجة والتقرير النهائي",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 4 - الدرجة والتقرير النهائي": {
+      "main": [
+        [
+          {
+            "node": "Build Report HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model - Agent 4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 4 - الدرجة والتقرير النهائي",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent 4 Output Format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Agent 4 - الدرجة والتقرير النهائي",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fixer - Agent 4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agent 4 Output Format",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Report HTML": {
+      "main": [
+        [
+          {
+            "node": "Generate Report File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Report File": {
+      "main": [
+        [
+          {
+            "node": "Shape Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Shape Final Output": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "80c5c73d-31f2-4c29-babc-9b8ab419012d",
+  "meta": {
+    "instanceId": "34a790cfb0b3bc0514defc133ae9eb6526cfe1ac2922435e8c83ee5ca243b742"
+  },
+  "nodeGroups": [],
+  "id": "FZ91rCt6aNPsLCbS",
+  "tags": []
+}

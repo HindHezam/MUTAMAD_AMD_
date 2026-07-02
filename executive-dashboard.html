@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة المدير | مُعتمد</title>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
+
+    :root {
+      --navy: #071B33;
+      --navy-2: #0B2A44;
+      --navy-3: #123E6B;
+      --teal: #19A89D;
+      --teal-dark: #0F766E;
+      --gold: #C8A24A;
+      --bg: #F4F7FA;
+      --white: #FFFFFF;
+      --text: #102033;
+      --muted: #667085;
+      --line: #E5ECF2;
+      --soft: #EEF3F7;
+      --teal-soft: #E7F8F5;
+      --red: #D92D20;
+      --red-soft: #FFF1F0;
+      --orange: #F79009;
+      --orange-soft: #FFF6E6;
+      --green: #12B76A;
+      --green-soft: #ECFDF3;
+      --blue: #2E90FA;
+      --blue-soft: #EAF3FF;
+      --purple: #7A5AF8;
+      --purple-soft: #F1EFFF;
+      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
+      --shadow-soft: 0 10px 26px rgba(7, 27, 51, 0.07);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.10), transparent 28%),
+        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      direction: rtl;
+      line-height: 1.8;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 278px 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(25,168,157,0.22), transparent 30%),
+        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
+      color: var(--white);
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 8px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      margin-bottom: 20px;
+    }
+
+    .brand img {
+      width: 135px;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .role-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(25,168,157,0.13);
+      color: #D7F3EE;
+      border: 1px solid rgba(25,168,157,0.25);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .role-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .nav {
+      display: grid;
+      gap: 7px;
+    }
+
+    .nav a {
+      min-height: 48px;
+      padding: 0 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 15px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      background: rgba(255,255,255,0.10);
+      color: var(--white);
+    }
+
+    .nav-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      color: #D7F3EE;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .sidebar-card {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .sidebar-card h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-card p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+    }
+
+    .logout {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 18px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.84);
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .logout:hover {
+      background: rgba(255,255,255,0.11);
+      color: white;
+    }
+
+    .main {
+      padding: 28px;
+      min-width: 0;
+    }
+
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .page-title h1 {
+      color: var(--navy);
+      font-size: 32px;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      letter-spacing: -0.4px;
+    }
+
+    .page-title p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      min-height: 42px;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 0 17px;
+      border-radius: 14px;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      min-height: 126px;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      align-content: space-between;
+    }
+
+    .metric-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .metric-head span {
+      color: #475467;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .metric-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .metric-value {
+      color: var(--navy);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.4px;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .metric-note.good {
+      color: #067647;
+    }
+
+    .metric-note.warn {
+      color: #B54708;
+    }
+
+    .metric-note.bad {
+      color: #B42318;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 20px 20px 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .panel-head h3 {
+      color: var(--navy);
+      font-size: 17px;
+      line-height: 1.4;
+      margin-bottom: 2px;
+    }
+
+    .panel-head p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .bar-chart {
+      height: 260px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 12px;
+      align-items: end;
+      padding-top: 14px;
+    }
+
+    .bar-col {
+      display: grid;
+      gap: 9px;
+      justify-items: center;
+      align-items: end;
+      min-width: 0;
+    }
+
+    .bar-stick {
+      width: 100%;
+      max-width: 44px;
+      height: var(--h, 8%);
+      min-height: 8px;
+      border-radius: 12px 12px 5px 5px;
+      background: linear-gradient(180deg, #4B6475, #233746);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+      transition: 0.2s ease;
+    }
+
+    .bar-col:hover .bar-stick {
+      transform: translateY(-3px);
+      background: linear-gradient(180deg, var(--teal), var(--teal-dark));
+    }
+
+    .bar-label {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 700;
+      text-align: center;
+      white-space: nowrap;
+      transform: rotate(-24deg);
+      transform-origin: center;
+    }
+
+    .donut-layout {
+      min-height: 260px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .donut {
+      --a: 0deg;
+      --b: 0deg;
+      --c: 0deg;
+      --d: 0deg;
+      --e: 0deg;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background:
+        conic-gradient(
+          var(--green) 0deg var(--a),
+          var(--orange) var(--a) var(--b),
+          var(--red) var(--b) var(--c),
+          var(--blue) var(--c) var(--d),
+          #D8E0E8 var(--d) 360deg
+        );
+      display: grid;
+      place-items: center;
+      position: relative;
+      margin: auto;
+    }
+
+    .donut::before {
+      content: "";
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    .donut-center {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .donut-center strong {
+      display: block;
+      color: var(--navy);
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .donut-center span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: grid;
+      gap: 11px;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      color: #344054;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .legend-item small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .analysis-card {
+      min-height: 235px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 12px;
+    }
+
+    .issue-box {
+      background: linear-gradient(135deg, #344B5A, #213848);
+      color: white;
+      border-radius: 18px;
+      padding: 17px;
+      display: grid;
+      align-content: space-between;
+      min-height: 190px;
+    }
+
+    .issue-box span {
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .issue-box strong {
+      display: block;
+      font-size: 19px;
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .issue-box .big {
+      font-size: 34px;
+      line-height: 1;
+      margin-top: 18px;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .mini-box {
+      border: 1px solid var(--line);
+      background: #FBFCFD;
+      border-radius: 17px;
+      padding: 13px;
+      min-height: 88px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .mini-box span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .mini-box strong {
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .horizontal-bars {
+      display: grid;
+      gap: 13px;
+    }
+
+    .hbar-item {
+      display: grid;
+      grid-template-columns: 140px 1fr 36px;
+      align-items: center;
+      gap: 12px;
+      min-height: 24px;
+    }
+
+    .hbar-item span {
+      color: #344054;
+      font-size: 12px;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hbar-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #EEF3F7;
+      overflow: hidden;
+    }
+
+    .hbar-track i {
+      display: block;
+      height: 100%;
+      width: var(--w, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #4B6475, #233746);
+    }
+
+    .hbar-item b {
+      color: var(--navy);
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .table-tools {
+      padding: 14px 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      background: #FBFCFD;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid #D8E0E8;
+      padding: 0 14px;
+      outline: none;
+      color: var(--text);
+      background: white;
+    }
+
+    .filter-btn {
+      min-height: 40px;
+      padding: 0 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      border-color: var(--teal);
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1080px;
+    }
+
+    th,
+    td {
+      padding: 15px 18px;
+      text-align: right;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      color: #475467;
+      font-size: 12px;
+      background: #FBFCFD;
+      font-weight: 800;
+    }
+
+    td {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    tr:hover td {
+      background: #FCFFFE;
+    }
+
+    .campaign-name strong {
+      color: var(--navy);
+      font-size: 13px;
+      display: block;
+    }
+
+    .campaign-name span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--navy);
+      font-weight: 800;
+    }
+
+    .score-bar {
+      width: 70px;
+      height: 7px;
+      border-radius: 999px;
+      background: #EEF3F7;
+      overflow: hidden;
+    }
+
+    .score-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--teal);
+    }
+
+    .status,
+    .risk {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .status.approved,
+    .risk.low {
+      background: var(--green-soft);
+      color: #067647;
+    }
+
+    .status.pending_compliance,
+    .risk.medium {
+      background: var(--orange-soft);
+      color: #B54708;
+    }
+
+    .status.needs_revision,
+    .status.rejected,
+    .risk.high {
+      background: var(--red-soft);
+      color: #B42318;
+    }
+
+    .status.draft,
+    .status.revision_draft,
+    .risk.unknown {
+      background: var(--soft);
+      color: var(--muted);
+    }
+
+    .open-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 0;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 48px 18px;
+    }
+
+    .empty-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-size: 24px;
+      font-weight: 900;
+      margin: 0 auto 14px;
+    }
+
+    .empty-state h4 {
+      color: var(--navy);
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 520px;
+      line-height: 1.9;
+    }
+
+    @media (max-width: 1360px) {
+      .metrics-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .dashboard-grid,
+      .lower-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-radius: 0 0 26px 26px;
+      }
+
+      .nav {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .sidebar-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .main {
+        padding: 16px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-actions,
+      .top-actions .btn,
+      .badge {
+        width: 100%;
+      }
+
+      .metrics-grid,
+      .nav,
+      .donut-layout,
+      .analysis-card {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-chart {
+        grid-template-columns: repeat(4, 1fr);
+        height: auto;
+        min-height: 260px;
+      }
+
+      .hbar-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .table-tools {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-btn,
+      .search {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
+      </div>
+
+      <div class="role-pill">مدير المنصة</div>
+
+      <nav class="nav">
+        <a class="active" href="executive-dashboard.html">
+          <span class="nav-icon">▦</span>
+          نظرة عامة
+        </a>
+
+        <a href="reports.html">
+          <span class="nav-icon">▤</span>
+          أرشيف التقارير
+        </a>
+
+        <a href="#campaignsPanel" onclick="scrollToSection('campaignsPanel')">
+          <span class="nav-icon">⌕</span>
+          الحملات
+        </a>
+
+        <a href="#riskPanel" onclick="scrollToSection('riskPanel')">
+          <span class="nav-icon">!</span>
+          المخاطر
+        </a>
+
+        <a href="admin-settings.html">
+          <span class="nav-icon">⚙</span>
+          الإعدادات
+        </a>
+
+        <a href="index.html">
+          <span class="nav-icon">⌂</span>
+          الرئيسية
+        </a>
+      </nav>
+
+      <div class="sidebar-card">
+        <h3>لوحة بيانات المدير</h3>
+        <p>تعرض مؤشرات الحملات، المخاطر، الجاهزية، التقارير، وأحدث القرارات.</p>
+      </div>
+
+      <button class="logout" onclick="logout()">تسجيل الخروج</button>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="page-title">
+          <h1>لوحة المدير</h1>
+          <p>نظرة تنفيذية على الحملات، الاعتمادات، المخاطر، والتقارير.</p>
+        </div>
+
+        <div class="top-actions">
+          <span class="badge">بيانات فعلية من الحملات المحفوظة</span>
+          <button class="btn btn-secondary" onclick="refreshData()">تحديث البيانات</button>
+          <a class="btn btn-primary" href="reports.html">فتح أرشيف التقارير</a>
+        </div>
+      </header>
+
+      <section class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>إجمالي الحملات</span>
+            <div class="metric-icon">▤</div>
+          </div>
+          <div>
+            <div class="metric-value" id="totalCampaigns">0</div>
+            <div class="metric-note" id="totalNote">لا توجد بيانات بعد</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>بانتظار الامتثال</span>
+            <div class="metric-icon">⧗</div>
+          </div>
+          <div>
+            <div class="metric-value" id="pendingCampaigns">0</div>
+            <div class="metric-note warn" id="pendingNote">طلبات تحتاج مراجعة</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>معتمدة</span>
+            <div class="metric-icon">✓</div>
+          </div>
+          <div>
+            <div class="metric-value" id="approvedCampaigns">0</div>
+            <div class="metric-note good" id="approvedNote">قرارات مكتملة</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>متوسط الجاهزية</span>
+            <div class="metric-icon">%</div>
+          </div>
+          <div>
+            <div class="metric-value" id="avgReadiness">0%</div>
+            <div class="metric-note" id="avgNote">متوسط كل الحملات</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>عالية الخطورة</span>
+            <div class="metric-icon">!</div>
+          </div>
+          <div>
+            <div class="metric-value" id="highRiskCampaigns">0</div>
+            <div class="metric-note bad" id="riskNote">تحتاج انتباه</div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-head">
+            <span>تقارير متاحة</span>
+            <div class="metric-icon">▦</div>
+          </div>
+          <div>
+            <div class="metric-value" id="reportsCount">0</div>
+            <div class="metric-note" id="reportsNote">قرارات يمكن فتح تقريرها</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>الحملات حسب الحالة</h3>
+              <p>رسم أعمدة يوضح حجم كل حالة داخل المنصة.</p>
+            </div>
+            <button class="btn btn-secondary" onclick="scrollToSection('campaignsPanel')">عرض الحملات</button>
+          </div>
+
+          <div class="panel-body">
+            <div class="bar-chart" id="statusBarChart"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>توزيع المخاطر</h3>
+              <p>نسبة الحملات حسب مستوى الخطر.</p>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="donut-layout">
+              <div class="donut" id="riskDonut">
+                <div class="donut-center">
+                  <strong id="riskDonutTotal">0</strong>
+                  <span>حملة</span>
+                </div>
+              </div>
+
+              <div class="legend" id="riskLegend"></div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="lower-grid">
+        <section class="panel" id="riskPanel">
+          <div class="panel-head">
+            <div>
+              <h3>تحليل الملاحظات المتكررة</h3>
+              <p>أكثر نوع ملاحظة ظهر في نتائج الفحص، إن وجدت.</p>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="analysis-card">
+              <div class="issue-box">
+                <div>
+                  <span>أكثر ملاحظة تكرارًا</span>
+                  <strong id="topIssueName">لا توجد ملاحظات بعد</strong>
+                </div>
+                <div>
+                  <div class="big" id="topIssueCount">0</div>
+                  <span>عدد مرات الظهور</span>
+                </div>
+              </div>
+
+              <div class="mini-stats">
+                <div class="mini-box">
+                  <span>تعديل مطلوب</span>
+                  <strong id="revisionCount">0</strong>
+                </div>
+
+                <div class="mini-box">
+                  <span>مرفوضة</span>
+                  <strong id="rejectedCount">0</strong>
+                </div>
+
+                <div class="mini-box">
+                  <span>متوسط المخاطر</span>
+                  <strong id="riskScore">0%</strong>
+                </div>
+
+                <div class="mini-box">
+                  <span>اعتماد فعلي</span>
+                  <strong id="approvalRate">0%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>الجاهزية حسب المنتج</h3>
+              <p>متوسط الجاهزية لكل نوع منتج محفوظ.</p>
+            </div>
+          </div>
+
+          <div class="panel-body">
+            <div class="horizontal-bars" id="productReadiness"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel" id="campaignsPanel">
+        <div class="panel-head">
+          <div>
+            <h3>متابعة الحملات</h3>
+            <p>جدول مدير مختصر للحملات مع إمكانية فتح التقرير للحملات التي صدر عليها قرار.</p>
+          </div>
+        </div>
+
+        <div class="table-tools">
+          <input class="search" id="searchInput" type="text" placeholder="ابحث باسم الحملة أو المنتج أو القناة..." />
+
+          <button class="filter-btn active" data-filter="all">الكل</button>
+          <button class="filter-btn" data-filter="pending_compliance">بانتظار الامتثال</button>
+          <button class="filter-btn" data-filter="approved">معتمد</button>
+          <button class="filter-btn" data-filter="needs_revision">تحتاج تعديل</button>
+          <button class="filter-btn" data-filter="rejected">مرفوض</button>
+          <button class="filter-btn" data-filter="high">عالية الخطورة</button>
+        </div>
+
+        <div class="table-wrap" id="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>الحملة</th>
+                <th>نوع المنتج</th>
+                <th>القناة</th>
+                <th>الحالة</th>
+                <th>الجاهزية</th>
+                <th>الخطر</th>
+                <th>آخر تحديث</th>
+                <th>التقرير</th>
+              </tr>
+            </thead>
+
+            <tbody id="campaignTable"></tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <div>
+            <div class="empty-icon">▤</div>
+            <h4>لا توجد حملات بعد</h4>
+            <p>بعد إنشاء أول حملة من حساب التسويق ستظهر هنا تلقائيًا.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "mutamad_campaigns";
+    const ROLE_KEY = "mutamad_demo_role";
+    const REVIEW_KEY_PRIMARY = "mutamad_current_review_id";
+    const REVIEW_KEY_SECONDARY = "mutamad_review_campaign_id";
+
+    let campaigns = [];
+    let activeFilter = "all";
+
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const searchInput = document.getElementById("searchInput");
+
+    function getCampaigns() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+
+      if (!stored) return [];
+
+      try {
+        const parsed = JSON.parse(stored);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function safeValue(value, fallback = "—") {
+      return value && String(value).trim() !== "" ? value : fallback;
+    }
+
+    function percent(part, total) {
+      if (!total) return 0;
+      return Math.round((part / total) * 100);
+    }
+
+    function countStatus(status) {
+      return campaigns.filter(item => item.status === status).length;
+    }
+
+    function countRisk(risk) {
+      return campaigns.filter(item => item.risk_level === risk).length;
+    }
+
+    function averageReadiness() {
+      if (!campaigns.length) return 0;
+
+      const sum = campaigns.reduce((acc, item) => acc + Number(item.readiness_score || 0), 0);
+
+      return Math.round(sum / campaigns.length);
+    }
+
+    function statusLabel(status) {
+      const labels = {
+        draft: "مسودة",
+        checking: "قيد الفحص",
+        pending_compliance: "بانتظار الامتثال",
+        approved: "معتمد",
+        needs_revision: "تحتاج تعديل",
+        rejected: "مرفوض",
+        revision_draft: "مسودة تعديل"
+      };
+
+      return labels[status] || "غير محدد";
+    }
+
+    function riskLabel(risk) {
+      const labels = {
+        low: "منخفض",
+        medium: "متوسط",
+        high: "عالي",
+        unknown: "غير محدد",
+        "": "غير محدد"
+      };
+
+      return labels[risk] || "غير محدد";
+    }
+
+    function refreshData() {
+      campaigns = getCampaigns();
+
+      updateMetrics();
+      renderStatusBars();
+      renderRiskDonut();
+      renderTopIssue();
+      renderProductReadiness();
+      renderCampaigns();
+    }
+
+    function updateMetrics() {
+      const total = campaigns.length;
+      const pending = countStatus("pending_compliance");
+      const approved = countStatus("approved");
+      const highRisk = countRisk("high");
+      const reports = campaigns.filter(item => ["approved", "needs_revision", "rejected"].includes(item.status)).length;
+      const avg = averageReadiness();
+
+      document.getElementById("totalCampaigns").textContent = total;
+      document.getElementById("pendingCampaigns").textContent = pending;
+      document.getElementById("approvedCampaigns").textContent = approved;
+      document.getElementById("avgReadiness").textContent = avg + "%";
+      document.getElementById("highRiskCampaigns").textContent = highRisk;
+      document.getElementById("reportsCount").textContent = reports;
+
+      document.getElementById("totalNote").textContent = total ? "حملات محفوظة داخل المنصة" : "لا توجد بيانات بعد";
+      document.getElementById("pendingNote").textContent = pending ? "طلبات تحتاج مراجعة" : "لا توجد طلبات معلقة";
+      document.getElementById("approvedNote").textContent = approved ? "قرارات اعتماد مكتملة" : "لا توجد اعتمادات بعد";
+      document.getElementById("avgNote").textContent = avg >= 70 ? "مستوى جيد مبدئيًا" : "قابل للتحسين";
+      document.getElementById("riskNote").textContent = highRisk ? "تحتاج انتباه إداري" : "لا توجد مخاطر عالية";
+      document.getElementById("reportsNote").textContent = reports ? "تقارير يمكن فتحها" : "لا توجد تقارير بعد";
+
+      const revision = countStatus("needs_revision");
+      const rejected = countStatus("rejected");
+      const approvalRate = percent(approved, reports);
+      const riskScore = percent(highRisk, total);
+
+      document.getElementById("revisionCount").textContent = revision;
+      document.getElementById("rejectedCount").textContent = rejected;
+      document.getElementById("approvalRate").textContent = approvalRate + "%";
+      document.getElementById("riskScore").textContent = riskScore + "%";
+    }
+
+    function renderStatusBars() {
+      const chart = document.getElementById("statusBarChart");
+      chart.innerHTML = "";
+
+      const data = [
+        { label: "مسودة", status: "draft" },
+        { label: "قيد الفحص", status: "checking" },
+        { label: "بانتظار", status: "pending_compliance" },
+        { label: "تعديل", status: "needs_revision" },
+        { label: "مسودة تعديل", status: "revision_draft" },
+        { label: "معتمد", status: "approved" },
+        { label: "مرفوض", status: "rejected" },
+        { label: "تقارير", status: "reports" }
+      ];
+
+      const max = Math.max(
+        ...data.map(item => item.status === "reports"
+          ? campaigns.filter(c => ["approved", "needs_revision", "rejected"].includes(c.status)).length
+          : countStatus(item.status)
+        ),
+        1
+      );
+
+      data.forEach(item => {
+        const count = item.status === "reports"
+          ? campaigns.filter(c => ["approved", "needs_revision", "rejected"].includes(c.status)).length
+          : countStatus(item.status);
+
+        const height = Math.max(6, Math.round((count / max) * 100));
+
+        const div = document.createElement("div");
+        div.className = "bar-col";
+
+        div.innerHTML = `
+          <div class="bar-stick" title="${item.label}: ${count}" style="--h:${height}%"></div>
+          <div class="bar-label">${item.label}</div>
+        `;
+
+        chart.appendChild(div);
+      });
+    }
+
+    function renderRiskDonut() {
+      const total = campaigns.length;
+      const low = countRisk("low");
+      const medium = countRisk("medium");
+      const high = countRisk("high");
+      const unknown = campaigns.filter(item => !item.risk_level || item.risk_level === "unknown").length;
+
+      const lowDeg = total ? (low / total) * 360 : 0;
+      const medDeg = total ? lowDeg + (medium / total) * 360 : 0;
+      const highDeg = total ? medDeg + (high / total) * 360 : 0;
+      const unknownDeg = 360;
+
+      const donut = document.getElementById("riskDonut");
+      donut.style.setProperty("--a", lowDeg + "deg");
+      donut.style.setProperty("--b", medDeg + "deg");
+      donut.style.setProperty("--c", highDeg + "deg");
+      donut.style.setProperty("--d", unknownDeg + "deg");
+
+      document.getElementById("riskDonutTotal").textContent = total;
+
+      const legend = document.getElementById("riskLegend");
+      legend.innerHTML = "";
+
+      addLegend("منخفض", low, "#12B76A", total);
+      addLegend("متوسط", medium, "#F79009", total);
+      addLegend("عالي", high, "#D92D20", total);
+      addLegend("غير محدد", unknown, "#D8E0E8", total);
+    }
+
+    function addLegend(label, count, color, total) {
+      const item = document.createElement("div");
+      item.className = "legend-item";
+
+      item.innerHTML = `
+        <span class="legend-dot" style="background:${color}"></span>
+        <span>${label}</span>
+        <small>${count} / ${percent(count, total)}%</small>
+      `;
+
+      document.getElementById("riskLegend").appendChild(item);
+    }
+
+    function renderTopIssue() {
+      const issueMap = {};
+
+      campaigns.forEach(campaign => {
+        if (!Array.isArray(campaign.findings)) return;
+
+        campaign.findings.forEach(finding => {
+          let issue = "";
+
+          if (typeof finding === "string") {
+            issue = finding;
+          } else {
+            issue = finding.issue || finding.reason || finding.recommendation || "";
+          }
+
+          issue = issue.trim();
+
+          if (!issue) return;
+
+          issueMap[issue] = (issueMap[issue] || 0) + 1;
+        });
+      });
+
+      const entries = Object.entries(issueMap).sort((a, b) => b[1] - a[1]);
+
+      if (!entries.length) {
+        document.getElementById("topIssueName").textContent = "لا توجد ملاحظات بعد";
+        document.getElementById("topIssueCount").textContent = "0";
+        return;
+      }
+
+      document.getElementById("topIssueName").textContent = entries[0][0];
+      document.getElementById("topIssueCount").textContent = entries[0][1];
+    }
+
+    function renderProductReadiness() {
+      const container = document.getElementById("productReadiness");
+      container.innerHTML = "";
+
+      if (!campaigns.length) {
+        container.innerHTML = `
+          <div class="empty-state" style="padding:20px;">
+            <div>
+              <div class="empty-icon">%</div>
+              <h4>لا توجد بيانات جاهزية</h4>
+              <p>بعد إنشاء حملات ستظهر متوسطات الجاهزية حسب المنتج.</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const grouped = {};
+
+      campaigns.forEach(campaign => {
+        const label = campaign.product_type_label || "غير محدد";
+
+        if (!grouped[label]) {
+          grouped[label] = {
+            total: 0,
+            count: 0
+          };
+        }
+
+        grouped[label].total += Number(campaign.readiness_score || 0);
+        grouped[label].count += 1;
+      });
+
+      const rows = Object.entries(grouped)
+        .map(([label, value]) => ({
+          label,
+          avg: Math.round(value.total / value.count)
+        }))
+        .sort((a, b) => b.avg - a.avg)
+        .slice(0, 6);
+
+      rows.forEach(row => {
+        const div = document.createElement("div");
+        div.className = "hbar-item";
+
+        div.innerHTML = `
+          <span title="${row.label}">${row.label}</span>
+          <div class="hbar-track"><i style="--w:${row.avg}%"></i></div>
+          <b>${row.avg}%</b>
+        `;
+
+        container.appendChild(div);
+      });
+    }
+
+    function renderCampaigns() {
+      const table = document.getElementById("campaignTable");
+      const emptyState = document.getElementById("emptyState");
+      const tableWrap = document.getElementById("tableWrap");
+
+      table.innerHTML = "";
+
+      if (!campaigns.length) {
+        emptyState.style.display = "grid";
+        tableWrap.style.display = "none";
+        return;
+      }
+
+      emptyState.style.display = "none";
+      tableWrap.style.display = "block";
+
+      campaigns.slice().reverse().forEach(campaign => {
+        const readiness = Number(campaign.readiness_score || 0);
+        const status = campaign.status || "draft";
+        const risk = campaign.risk_level || "unknown";
+        const canOpenReport = ["approved", "needs_revision", "rejected"].includes(status);
+
+        const row = document.createElement("tr");
+
+        row.dataset.status = status;
+        row.dataset.risk = risk;
+        row.dataset.search = [
+          campaign.title,
+          campaign.product_type_label,
+          campaign.channel,
+          campaign.id
+        ].join(" ").toLowerCase();
+
+        row.innerHTML = `
+          <td>
+            <div class="campaign-name">
+              <strong>${safeValue(campaign.title, "حملة بدون عنوان")}</strong>
+              <span>${safeValue(campaign.id, "ID غير محدد")}</span>
+            </div>
+          </td>
+
+          <td>${safeValue(campaign.product_type_label)}</td>
+          <td>${safeValue(campaign.channel)}</td>
+          <td><span class="status ${status}">${statusLabel(status)}</span></td>
+
+          <td>
+            <span class="score">
+              ${readiness}%
+              <span class="score-bar"><span style="width:${readiness}%"></span></span>
+            </span>
+          </td>
+
+          <td><span class="risk ${risk}">${riskLabel(risk)}</span></td>
+          <td>${safeValue(campaign.updated_at)}</td>
+          <td>
+            ${
+              canOpenReport
+                ? `<button class="open-btn" onclick="openFinalReport('${campaign.id}')">فتح التقرير</button>`
+                : `<span class="status draft">غير جاهز</span>`
+            }
+          </td>
+        `;
+
+        table.appendChild(row);
+      });
+
+      applyTableFilter();
+    }
+
+    function applyTableFilter() {
+      const rows = document.querySelectorAll("#campaignTable tr");
+      const searchValue = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+
+      rows.forEach(row => {
+        const status = row.dataset.status;
+        const risk = row.dataset.risk;
+        const searchable = row.dataset.search || "";
+
+        let filterMatch = false;
+
+        if (activeFilter === "all") {
+          filterMatch = true;
+        } else if (activeFilter === "high") {
+          filterMatch = risk === "high";
+        } else {
+          filterMatch = status === activeFilter;
+        }
+
+        const searchMatch = searchable.includes(searchValue);
+
+        if (filterMatch && searchMatch) {
+          row.style.display = "";
+          visible++;
+        } else {
+          row.style.display = "none";
+        }
+      });
+
+      if (campaigns.length && visible === 0) {
+        document.getElementById("emptyState").style.display = "grid";
+      } else if (campaigns.length) {
+        document.getElementById("emptyState").style.display = "none";
+      }
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        activeFilter = button.dataset.filter;
+        applyTableFilter();
+      });
+    });
+
+    searchInput.addEventListener("input", applyTableFilter);
+
+    function openFinalReport(campaignId) {
+      localStorage.setItem(REVIEW_KEY_PRIMARY, campaignId);
+      localStorage.setItem(REVIEW_KEY_SECONDARY, campaignId);
+      window.location.href = "final-report.html";
+    }
+
+    function scrollToSection(id) {
+      const element = document.getElementById(id);
+
+      if (!element) return;
+
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    function logout() {
+      localStorage.removeItem(ROLE_KEY);
+      window.location.href = "login.html";
+    }
+
+    refreshData();
+  </script>
+</body>
+</html>
