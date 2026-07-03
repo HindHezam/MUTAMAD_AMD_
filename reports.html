@@ -1,1083 +1,184 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>التقارير | مُعتمد</title>
-
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
-
-    :root {
-      --navy: #071B33;
-      --navy-2: #0B2A44;
-      --navy-3: #123E6B;
-      --teal: #19A89D;
-      --teal-dark: #0F766E;
-      --gold: #C8A24A;
-      --bg: #F6F8FA;
-      --white: #FFFFFF;
-      --text: #102033;
-      --muted: #667085;
-      --line: #E5ECF2;
-      --soft: #EEF3F7;
-      --teal-soft: #E7F8F5;
-      --red: #D92D20;
-      --red-soft: #FFF1F0;
-      --orange: #F79009;
-      --orange-soft: #FFF6E6;
-      --green: #12B76A;
-      --green-soft: #ECFDF3;
-      --blue-soft: #EAF3FF;
-      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
-      --shadow-soft: 0 10px 28px rgba(7, 27, 51, 0.07);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
-      background:
-        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.09), transparent 28%),
-        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
-        var(--bg);
-      color: var(--text);
-      direction: rtl;
-      line-height: 1.8;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button,
-    input {
-      font-family: inherit;
-    }
-
-    .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 282px 1fr;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 24px 18px;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(25,168,157,0.18), transparent 32%),
-        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
-      color: var(--white);
-      overflow-y: auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 6px 8px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.09);
-      margin-bottom: 20px;
-    }
-
-    .brand img {
-      width: 135px;
-      height: auto;
-      object-fit: contain;
-      display: block;
-    }
-
-    .role-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(25,168,157,0.13);
-      color: #D7F3EE;
-      border: 1px solid rgba(25,168,157,0.25);
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .role-pill::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
-    }
-
-    .nav {
-      display: grid;
-      gap: 7px;
-    }
-
-    .nav a {
-      min-height: 46px;
-      padding: 0 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 15px;
-      color: rgba(255,255,255,0.72);
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.2s ease;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      background: rgba(255,255,255,0.10);
-      color: var(--white);
-    }
-
-    .nav-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,0.08);
-      color: #D7F3EE;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .sidebar-card {
-      margin-top: 22px;
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-
-    .sidebar-card h3 {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .sidebar-card p {
-      font-size: 12px;
-      color: rgba(255,255,255,0.63);
-      line-height: 1.8;
-    }
-
-    .logout {
-      width: 100%;
-      min-height: 44px;
-      margin-top: 18px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.84);
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    .main {
-      padding: 26px;
-      min-width: 0;
-    }
-
-    .topbar {
-      min-height: 76px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 22px;
-    }
-
-    .page-title h1 {
-      color: var(--navy);
-      font-size: 30px;
-      line-height: 1.35;
-      margin-bottom: 4px;
-    }
-
-    .page-title p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      min-height: 42px;
-      padding: 0 13px;
-      border-radius: 999px;
-      background: white;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .badge::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
-    }
-
-    .btn {
-      min-height: 44px;
-      padding: 0 17px;
-      border-radius: 14px;
-      border: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 800;
-      transition: 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      color: white;
-      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--navy);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero {
-      background:
-        radial-gradient(circle at 14% 18%, rgba(25,168,157,0.16), transparent 28%),
-        linear-gradient(135deg, #071B33 0%, #0B2A44 70%, #123E6B 100%);
-      color: white;
-      border-radius: 30px;
-      padding: 26px;
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 22px;
-      align-items: stretch;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 42px 42px;
-      opacity: 0.35;
-    }
-
-    .hero > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.16);
-      color: #D7F3EE;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .hero h2 {
-      font-size: 28px;
-      line-height: 1.45;
-      margin-bottom: 10px;
-      max-width: 900px;
-    }
-
-    .hero p {
-      color: #DCE7F2;
-      font-size: 14px;
-      line-height: 2;
-      font-weight: 300;
-      max-width: 850px;
-    }
-
-    .hero-metrics {
-      padding: 20px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      display: grid;
-      gap: 12px;
-      align-content: center;
-    }
-
-    .hero-metric {
-      padding: 13px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hero-metric span {
-      color: rgba(255,255,255,0.68);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .hero-metric strong {
-      font-size: 22px;
-      color: white;
-      line-height: 1;
-    }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-
-    .kpi {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 18px;
-      box-shadow: var(--shadow-soft);
-      min-height: 132px;
-      display: grid;
-      align-content: space-between;
-    }
-
-    .kpi-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-
-    .kpi-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 15px;
-      display: grid;
-      place-items: center;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      font-weight: 900;
-    }
-
-    .kpi small {
-      font-size: 11px;
-      font-weight: 800;
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--muted);
-    }
-
-    .kpi strong {
-      display: block;
-      color: var(--navy);
-      font-size: 26px;
-      line-height: 1.2;
-      margin-bottom: 4px;
-    }
-
-    .kpi span {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .panel {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      margin-bottom: 18px;
-    }
-
-    .panel-head {
-      padding: 20px 20px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .panel-head h3 {
-      color: var(--navy);
-      font-size: 18px;
-      line-height: 1.4;
-      margin-bottom: 2px;
-    }
-
-    .panel-head p {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .panel-body {
-      padding: 20px;
-    }
-
-    .tools {
-      padding: 14px 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
-      background: #FBFCFD;
-    }
-
-    .search {
-      flex: 1;
-      min-width: 250px;
-      height: 42px;
-      border-radius: 14px;
-      border: 1px solid #D8E0E8;
-      padding: 0 14px;
-      outline: none;
-      color: var(--text);
-      background: white;
-    }
-
-    .filter-btn {
-      min-height: 40px;
-      padding: 0 13px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: white;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .filter-btn.active,
-    .filter-btn:hover {
-      border-color: var(--teal);
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 1050px;
-    }
-
-    th,
-    td {
-      padding: 15px 18px;
-      text-align: right;
-      border-bottom: 1px solid var(--line);
-      vertical-align: middle;
-      white-space: nowrap;
-    }
-
-    th {
-      color: #475467;
-      font-size: 12px;
-      background: #FBFCFD;
-      font-weight: 800;
-    }
-
-    td {
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    tr:hover td {
-      background: #FCFFFE;
-    }
-
-    .campaign-name strong {
-      color: var(--navy);
-      font-size: 13px;
-      display: block;
-    }
-
-    .campaign-name span {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 500;
-      display: block;
-      margin-top: 2px;
-    }
-
-    .status,
-    .risk {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .status.approved,
-    .risk.low {
-      background: var(--green-soft);
-      color: #067647;
-    }
-
-    .status.needs_revision,
-    .status.rejected,
-    .risk.high {
-      background: var(--red-soft);
-      color: #B42318;
-    }
-
-    .status.pending_compliance,
-    .risk.medium {
-      background: var(--orange-soft);
-      color: #B54708;
-    }
-
-    .status.draft,
-    .risk.unknown {
-      background: var(--soft);
-      color: var(--muted);
-    }
-
-    .open-btn {
-      min-height: 36px;
-      padding: 0 12px;
-      border-radius: 12px;
-      border: 0;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 12px;
-    }
-
-    .empty-state {
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 54px 24px;
-    }
-
-    .empty-icon {
-      width: 74px;
-      height: 74px;
-      border-radius: 24px;
-      display: grid;
-      place-items: center;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      font-size: 28px;
-      font-weight: 900;
-      margin: 0 auto 16px;
-    }
-
-    .empty-state h4 {
-      color: var(--navy);
-      font-size: 19px;
-      margin-bottom: 6px;
-    }
-
-    .empty-state p {
-      color: var(--muted);
-      font-size: 13px;
-      max-width: 520px;
-      line-height: 1.9;
-      margin-bottom: 18px;
-    }
-
-    @media (max-width: 1180px) {
-      .app,
-      .hero {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: relative;
-        height: auto;
-        border-radius: 0 0 26px 26px;
-      }
-
-      .nav {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .sidebar-card {
-        display: none;
-      }
-
-      .kpi-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .main {
-        padding: 16px;
-      }
-
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .top-actions,
-      .top-actions .btn,
-      .badge {
-        width: 100%;
-      }
-
-      .kpi-grid,
-      .nav {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 20px;
-        border-radius: 24px;
-      }
-
-      .hero h2 {
-        font-size: 23px;
-      }
-
-      .tools {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .search,
-      .filter-btn {
-        width: 100%;
-      }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>التقارير التنفيذية | مُعتمد</title>
+<link rel="icon" type="image/png" href="lo.png"/>
+<link rel="stylesheet" href="assets/mutamad-app.css"/>
+  <link rel="stylesheet" href="assets/mutamad-government.css" />
 </head>
+<body class="reports-page">
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><img src="lo.png" alt="شعار مُعتمد"/><span class="brand-word">مُعتمد</span></div>
+    <div class="role-pill">مدير النظام</div>
+    <nav class="nav">
+      <a href="executive-dashboard.html"><span class="nav-icon">▦</span> لوحة المدير</a>
+      <a class="active" href="reports.html"><span class="nav-icon">▤</span> التقارير التنفيذية</a>
+      <a href="admin-settings.html"><span class="nav-icon">⚙</span> الإعدادات</a>
+      <a href="index.html"><span class="nav-icon">⌂</span> الرئيسية</a>
+    </nav>
+    <div class="sidebar-card">
+      <h3>مركز التقارير</h3>
+      <p>إصدار التقارير التنفيذية وتقارير اعتماد الحملات وفتحها للطباعة الرسمية.</p>
+    </div>
+    <button class="logout" onclick="Mutamad.logout()">تسجيل الخروج</button>
+  </aside>
 
-<body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
-      </div>
-
-      <div class="role-pill">مدير المنصة</div>
-
-      <nav class="nav">
-        <a href="executive-dashboard.html">
-          <span class="nav-icon">▦</span>
-          لوحة المدير
-        </a>
-
-        <a class="active" href="reports.html">
-          <span class="nav-icon">▤</span>
-          التقارير
-        </a>
-
-        <a href="admin-settings.html">
-          <span class="nav-icon">⚙️</span>
-          الإعدادات
-        </a>
-
-        <a href="index.html">
-          <span class="nav-icon">⌂</span>
-          الصفحة الرئيسية
-        </a>
-      </nav>
-
-      <div class="sidebar-card">
-        <h3>تقارير المدير</h3>
-        <p>هذه الصفحة مخصصة للمدير فقط لعرض تقارير الحملات وفتح التقرير النهائي.</p>
-      </div>
-
-      <button class="logout" onclick="logout()">تسجيل الخروج</button>
-    </aside>
-
-    <main class="main">
+  <main class="main">
+    <div class="main-inner">
       <header class="topbar">
         <div class="page-title">
-          <h1>أرشيف التقارير</h1>
-          <p>قائمة تقارير الحملات التي صدر عليها قرار امتثال.</p>
+          <h1>التقارير التنفيذية</h1>
+          <p>إدارة تقارير الاعتماد الخاصة بالحملات والتقارير التنفيذية العامة للمنصة.</p>
         </div>
-
         <div class="top-actions">
-          <span class="badge">مخصص للمدير فقط</span>
-          <button class="btn btn-secondary" onclick="refreshData()">تحديث البيانات</button>
-          <a class="btn btn-primary" href="executive-dashboard.html">العودة للوحة المدير</a>
+          <a class="btn btn-secondary" href="executive-dashboard.html">العودة للوحة المدير</a>
         </div>
       </header>
 
-      <section class="hero">
-        <div>
-          <span class="eyebrow">تقارير الاعتماد</span>
-          <h2>هنا يراجع المدير تقارير الحملات النهائية ويطبعها عند الحاجة.</h2>
-          <p>
-            تظهر هنا الحملات التي صدر عليها قرار من الامتثال: اعتماد، طلب تعديل، أو رفض.
-            المدير يستطيع فتح التقرير النهائي لكل حملة والاطلاع على قبل/بعد، القرار، الملاحظات، والمراجع.
-          </p>
-        </div>
-
-        <div class="hero-metrics">
-          <div class="hero-metric">
-            <span>إجمالي التقارير</span>
-            <strong id="totalReports">0</strong>
-          </div>
-
-          <div class="hero-metric">
-            <span>تقارير معتمدة</span>
-            <strong id="approvedReports">0</strong>
-          </div>
-
-          <div class="hero-metric">
-            <span>تعديل / رفض</span>
-            <strong id="revisionReports">0</strong>
-          </div>
-        </div>
+      <section class="page-banner reports-page-banner">
+        <span class="eyebrow">مركز التقارير الرسمية</span>
+        <h2>توثيق قرارات الامتثال في تقارير رسمية قابلة للحفظ والطباعة</h2>
+        <p>تُصدر التقارير للحملات المعتمدة أو كملخص تنفيذي عام على مستوى المنصة، مع إمكانية الفتح والحفظ والطباعة من صفحة التقرير النهائي الحاملة لشعار مُعتمد وختم التحقق.</p>
       </section>
 
-      <section class="kpi-grid">
-        <div class="kpi">
-          <div class="kpi-top">
-            <div class="kpi-icon">▤</div>
-            <small>فعلي</small>
-          </div>
-          <div>
-            <strong id="kpiTotal">0</strong>
-            <span>كل التقارير</span>
-          </div>
-        </div>
-
-        <div class="kpi">
-          <div class="kpi-top">
-            <div class="kpi-icon">✓</div>
-            <small>فعلي</small>
-          </div>
-          <div>
-            <strong id="kpiApproved">0</strong>
-            <span>معتمدة</span>
-          </div>
-        </div>
-
-        <div class="kpi">
-          <div class="kpi-top">
-            <div class="kpi-icon">↺</div>
-            <small>فعلي</small>
-          </div>
-          <div>
-            <strong id="kpiRevision">0</strong>
-            <span>تحتاج تعديل</span>
-          </div>
-        </div>
-
-        <div class="kpi">
-          <div class="kpi-top">
-            <div class="kpi-icon">!</div>
-            <small>فعلي</small>
-          </div>
-          <div>
-            <strong id="kpiRejected">0</strong>
-            <span>مرفوضة</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <div>
-            <h3>قائمة تقارير الحملات</h3>
-            <p>يعرض فقط الحملات التي صدر عليها قرار امتثال.</p>
-          </div>
-        </div>
-
-        <div class="tools">
-          <input class="search" id="searchInput" type="text" placeholder="ابحث باسم الحملة أو رقمها أو نوع المنتج..." />
-
-          <button class="filter-btn active" data-filter="all">الكل</button>
-          <button class="filter-btn" data-filter="approved">معتمد</button>
-          <button class="filter-btn" data-filter="needs_revision">تحتاج تعديل</button>
-          <button class="filter-btn" data-filter="rejected">مرفوض</button>
-          <button class="filter-btn" data-filter="high">عالي الخطورة</button>
-        </div>
-
-        <div class="table-wrap" id="tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>الحملة</th>
-                <th>نوع المنتج</th>
-                <th>القناة</th>
-                <th>القرار</th>
-                <th>الجاهزية</th>
-                <th>الخطر</th>
-                <th>تاريخ القرار</th>
-                <th>التقرير</th>
-              </tr>
-            </thead>
-
-            <tbody id="reportsTable"></tbody>
-          </table>
-        </div>
-
-        <div class="empty-state" id="emptyState">
-          <div>
-            <div class="empty-icon">▤</div>
-            <h4>لا توجد تقارير بعد</h4>
-            <p>
-              بعد أن يحفظ مسؤول الامتثال قرارًا على حملة، ستظهر هنا تلقائيًا للمدير.
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    const CAMPAIGNS_KEY = "mutamad_campaigns";
-    const REVIEW_KEY_PRIMARY = "mutamad_current_review_id";
-    const REVIEW_KEY_SECONDARY = "mutamad_review_campaign_id";
-
-    let reports = [];
-    let activeFilter = "all";
-
-    const filterButtons = document.querySelectorAll(".filter-btn");
-    const searchInput = document.getElementById("searchInput");
-
-    function getCampaigns() {
-      const stored = localStorage.getItem(CAMPAIGNS_KEY);
-
-      if (!stored) return [];
-
-      try {
-        const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
-
-    function safeValue(value, fallback = "—") {
-      return value && String(value).trim() !== "" ? value : fallback;
-    }
-
-    function statusLabel(status) {
-      const labels = {
-        approved: "معتمد",
-        needs_revision: "تحتاج تعديل",
-        rejected: "مرفوض",
-        pending_compliance: "بانتظار الامتثال",
-        draft: "مسودة"
-      };
-
-      return labels[status] || "غير محدد";
-    }
-
-    function riskLabel(risk) {
-      const labels = {
-        low: "منخفض",
-        medium: "متوسط",
-        high: "عالي",
-        unknown: "غير محدد",
-        "": "غير محدد"
-      };
-
-      return labels[risk] || "غير محدد";
-    }
-
-    function countStatus(status) {
-      return reports.filter(item => item.status === status).length;
-    }
-
-    function refreshData() {
-      const campaigns = getCampaigns();
-
-      reports = campaigns.filter(item => {
-        return ["approved", "needs_revision", "rejected"].includes(item.status);
-      });
-
-      updateKpis();
-      renderReports();
-    }
-
-    function updateKpis() {
-      const approved = countStatus("approved");
-      const revision = countStatus("needs_revision");
-      const rejected = countStatus("rejected");
-
-      document.getElementById("totalReports").textContent = reports.length;
-      document.getElementById("approvedReports").textContent = approved;
-      document.getElementById("revisionReports").textContent = revision + rejected;
-
-      document.getElementById("kpiTotal").textContent = reports.length;
-      document.getElementById("kpiApproved").textContent = approved;
-      document.getElementById("kpiRevision").textContent = revision;
-      document.getElementById("kpiRejected").textContent = rejected;
-    }
-
-    function renderReports() {
-      const table = document.getElementById("reportsTable");
-      const tableWrap = document.getElementById("tableWrap");
-      const emptyState = document.getElementById("emptyState");
-
-      table.innerHTML = "";
-
-      if (!reports.length) {
-        tableWrap.style.display = "none";
-        emptyState.style.display = "grid";
-        return;
-      }
-
-      tableWrap.style.display = "block";
-      emptyState.style.display = "none";
-
-      reports.forEach(function (campaign) {
-        const status = campaign.status || "";
-        const risk = campaign.risk_level || "unknown";
-        const readiness = Number(campaign.readiness_score || 0);
-
-        const row = document.createElement("tr");
-        row.dataset.status = status;
-        row.dataset.risk = risk;
-        row.dataset.search = [
-          campaign.title,
-          campaign.id,
-          campaign.product_type_label,
-          campaign.channel
-        ].join(" ").toLowerCase();
-
-        row.innerHTML = `
-          <td>
-            <div class="campaign-name">
-              <strong>${safeValue(campaign.title, "حملة بدون عنوان")}</strong>
-              <span>${safeValue(campaign.id)}</span>
+      <section class="layout-2">
+        <section class="section-card">
+          <div class="card-head">
+            <div>
+              <h3>إنشاء تقرير لحملة</h3>
+              <p>اختر أي حملة مسجلة لإصدار تقرير رسمي خاص بها وفق حالتها الحالية داخل المنصة.</p>
             </div>
-          </td>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>الحملة</label>
+              <select id="campaignSelect"></select>
+            </div>
+            <div class="field">
+              <label>ملاحظة المدير (اختياري)</label>
+              <textarea id="campaignNote" placeholder="ملاحظة إدارية تظهر داخل التقرير."></textarea>
+            </div>
+            <button class="btn btn-primary btn-wide" onclick="createCampaignReport()">إنشاء تقرير الحملة</button>
+            <div id="message" class="message" style="margin-top:12px"></div>
+          </div>
+        </section>
 
-          <td>${safeValue(campaign.product_type_label)}</td>
-          <td>${safeValue(campaign.channel)}</td>
-          <td><span class="status ${status}">${statusLabel(status)}</span></td>
-          <td>${readiness}%</td>
-          <td><span class="risk ${risk}">${riskLabel(risk)}</span></td>
-          <td>${safeValue(campaign.reviewed_at || campaign.updated_at)}</td>
-          <td>
-            <button class="open-btn" onclick="openReport('${campaign.id}')">فتح التقرير</button>
-          </td>
-        `;
+        <section class="section-card">
+          <div class="card-head">
+            <div>
+              <h3>إنشاء تقرير تنفيذي عام</h3>
+              <p>ملخص تنفيذي يوثّق حالة جميع الحملات داخل المنصة.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="field">
+              <label>عنوان التقرير</label>
+              <input id="generalTitle" value="التقرير التنفيذي العام — منصة مُعتمد"/>
+            </div>
+            <div class="field">
+              <label>ملاحظة المدير (اختياري)</label>
+              <textarea id="generalNote" placeholder="ملاحظة إدارية تظهر داخل التقرير."></textarea>
+            </div>
+            <button class="btn btn-accent btn-wide" onclick="createGeneralReport()">إنشاء التقرير العام</button>
+          </div>
+        </section>
 
-        table.appendChild(row);
-      });
+        <section class="section-card">
+          <div class="card-head">
+            <div>
+              <h3>التقارير المُصدرة</h3>
+              <p>افتح تقريرًا محفوظًا للاطلاع والطباعة، أو احذف التقارير غير المطلوبة.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="reportsList" class="stack"></div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+</div>
 
-      applyFilter();
+<script src="assets/mutamad-app.js"></script>
+<script>
+  function render() { renderReports(); renderCampaignSelect(); }
+
+  function renderReports() {
+    const reports = Mutamad.getReports();
+    const list = document.getElementById("reportsList");
+    if (!reports.length) {
+      list.innerHTML = '<div class="empty"><div><h3>لا توجد تقارير بعد</h3>' +
+        '<p>أنشئ تقريرًا تنفيذيًا عامًا أو تقريرًا خاصًا بإحدى الحملات ليظهر هنا.</p></div></div>';
+      return;
     }
+    list.innerHTML = reports.map(function (r) {
+      return '<article class="summary-card">' +
+        '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">' +
+        '<div><h4>' + Mutamad.escapeHtml(r.title || "تقرير") + '</h4>' +
+        '<p>' + Mutamad.escapeHtml(r.created_at) + ' — ' + (r.type === "campaign" ? "تقرير اعتماد حملة" : "تقرير تنفيذي عام") + '</p></div>' +
+        '<span class="badge low">' + Mutamad.escapeHtml(r.stamp || r.status || "موثّق") + '</span></div>' +
+        '<div class="btn-row" style="margin-top:14px">' +
+        '<button class="small-btn primary" onclick="openReport(\'' + r.id + '\')">فتح التقرير</button>' +
+        '<button class="small-btn danger" onclick="removeReport(\'' + r.id + '\')">حذف</button>' +
+        '</div></article>';
+    }).join("");
+  }
 
-    function applyFilter() {
-      const rows = document.querySelectorAll("#reportsTable tr");
-      const searchValue = searchInput.value.trim().toLowerCase();
-      let visible = 0;
+  function renderCampaignSelect() {
+    const campaigns = Mutamad.getCampaigns();
+    const sel = document.getElementById("campaignSelect");
+    sel.innerHTML = campaigns.length
+      ? campaigns.map(function (c) {
+          const status = Mutamad.statusLabel(c.status || "draft");
+          return '<option value="' + c.id + '">' + Mutamad.escapeHtml((c.title || c.id) + ' — ' + status) + '</option>';
+        }).join("")
+      : '<option value="">لا توجد حملات متاحة</option>';
+  }
 
-      rows.forEach(function (row) {
-        const status = row.dataset.status;
-        const risk = row.dataset.risk;
-        const searchable = row.dataset.search || "";
+  function openReport(id) {
+    Mutamad.setCurrentReport(id);
+    location.href = "final-report.html";
+  }
 
-        let filterMatch = false;
+  function removeReport(id) {
+    Mutamad.deleteReport(id);
+    renderReports();
+  }
 
-        if (activeFilter === "all") {
-          filterMatch = true;
-        } else if (activeFilter === "high") {
-          filterMatch = risk === "high";
-        } else {
-          filterMatch = status === activeFilter;
-        }
-
-        const searchMatch = searchable.includes(searchValue);
-
-        if (filterMatch && searchMatch) {
-          row.style.display = "";
-          visible++;
-        } else {
-          row.style.display = "none";
-        }
-      });
-
-      if (reports.length && visible === 0) {
-        document.getElementById("emptyState").style.display = "grid";
-      } else if (reports.length) {
-        document.getElementById("emptyState").style.display = "none";
-      }
-    }
-
-    filterButtons.forEach(function (button) {
-      button.addEventListener("click", function () {
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-        activeFilter = button.dataset.filter;
-        applyFilter();
-      });
+  function createGeneralReport() {
+    const campaigns = Mutamad.getCampaigns();
+    if (!campaigns.length) { show("error", "لا توجد حملات لإنشاء تقرير عام."); return; }
+    const report = Mutamad.buildGeneralReport({
+      title: document.getElementById("generalTitle").value,
+      manager_note: document.getElementById("generalNote").value
     });
+    Mutamad.commitReport(report);
+    show("success", "تم إنشاء التقرير التنفيذي العام بنجاح.");
+    renderReports();
+  }
 
-    searchInput.addEventListener("input", applyFilter);
+  function createCampaignReport() {
+    const id = document.getElementById("campaignSelect").value;
+    if (!id) { show("error", "يرجى اختيار حملة لإنشاء التقرير."); return; }
+    const campaign = Mutamad.getCampaigns().find(function (c) { return c.id === id; });
+    const report = Mutamad.buildCampaignReport(campaign, {
+      manager_note: document.getElementById("campaignNote").value
+    });
+    Mutamad.commitReport(report);
+    show("success", "تم إنشاء تقرير الحملة بنجاح.");
+    renderReports();
+  }
 
-    function openReport(campaignId) {
-      localStorage.setItem(REVIEW_KEY_PRIMARY, campaignId);
-      localStorage.setItem(REVIEW_KEY_SECONDARY, campaignId);
-      window.location.href = "final-report.html";
-    }
+  function show(type, msg) {
+    const m = document.getElementById("message");
+    m.className = "message " + type + " show";
+    m.textContent = msg;
+  }
 
-    function logout() {
-      localStorage.removeItem("mutamad_demo_role");
-      window.location.href = "login.html";
-    }
-
-    refreshData();
-  </script>
+  render();
+</script>
 </body>
 </html>

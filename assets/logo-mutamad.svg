@@ -1,0 +1,18 @@
+<svg width="170" height="50" viewBox="0 0 170 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="مُعتمد">
+  <defs>
+    <linearGradient id="ringD" x1="128" y1="6" x2="166" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2CB7A7"/>
+      <stop offset="1" stop-color="#022A42"/>
+    </linearGradient>
+    <linearGradient id="chkD" x1="138" y1="33" x2="160" y2="17" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2CB7A7"/>
+      <stop offset="1" stop-color="#1E9084"/>
+    </linearGradient>
+  </defs>
+  <!-- mark on the right -->
+  <path d="M147 5 a20 20 0 1 0 14 5.8" stroke="url(#ringD)" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <circle cx="162" cy="11" r="3.4" fill="#2CB7A7"/>
+  <path d="M138 26 L145 32.5 L159 16.5" stroke="url(#chkD)" stroke-width="5.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- wordmark to the left of the mark -->
+  <text x="118" y="32" text-anchor="end" font-family="'IBM Plex Sans Arabic', Tahoma, sans-serif" font-size="25" font-weight="700" fill="#022A42">مُعتمد</text>
+</svg>

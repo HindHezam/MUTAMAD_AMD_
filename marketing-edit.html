@@ -1,1279 +1,1335 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html dir="rtl" lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تعديل حملة | مُعتمد</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>الحملات الراجعة | مُعتمد</title>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
 
-    :root {
-      --navy: #071B33;
-      --navy-2: #0B2A44;
-      --navy-3: #123E6B;
-      --teal: #19A89D;
-      --teal-dark: #0F766E;
-      --gold: #C8A24A;
-      --bg: #F6F8FA;
-      --white: #FFFFFF;
-      --text: #102033;
-      --muted: #667085;
-      --line: #E5ECF2;
-      --soft: #EEF3F7;
-      --teal-soft: #E7F8F5;
-      --red: #D92D20;
-      --red-soft: #FFF1F0;
-      --orange: #F79009;
-      --orange-soft: #FFF6E6;
-      --green: #12B76A;
-      --green-soft: #ECFDF3;
-      --blue-soft: #EAF3FF;
-      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
-      --shadow-soft: 0 10px 28px rgba(7, 27, 51, 0.07);
-    }
+  :root {
+    --navy: #002134;
+    --navy-2: #011E2F;
+    --navy-3: #023a55;
+    --blue: #837FD8;
+    --blue-lt: #a9a6e6;
+    --blue-main: #6863bd;
+    --blue-dk: #011D2D;
+    --blue-soft: #ECEBF9;
+    --bg: #F4F6FA;
+    --white: #FFFFFF;
+    --text: #002134;
+    --muted: #5b6b76;
+    --line: #E3E6F0;
+    --soft: #EEF1F7;
+    --red-soft: #FFF1F0;
+    --red: #B42318;
+    --orange-soft: #FFF6E6;
+    --orange: #B54708;
+    --green-soft: #ECFDF3;
+    --green: #067647;
+    --shadow: 0 18px 45px rgba(0,33,52, 0.14);
+    --shadow-soft: 0 10px 28px rgba(0,33,52, 0.08);
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-    body {
-      min-height: 100vh;
-      font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
-      background:
-        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.09), transparent 28%),
-        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
-        var(--bg);
-      color: var(--text);
-      direction: rtl;
-      line-height: 1.8;
-    }
+  body {
+    min-height: 100vh;
+    font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
+    background: linear-gradient(160deg, #F4F6FA 0%, #F8FAFD 48%, #F4F6FA 100%);
+    color: var(--text);
+    direction: rtl;
+    line-height: 1.8;
+  }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-    button,
-    textarea,
-    input,
-    select {
-      font-family: inherit;
-    }
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
 
+  .app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 282px 1fr;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 24px 18px;
+    background: linear-gradient(160deg, #03141E 0%, #002134 42%, #011E2F 72%, #023a55 100%);
+    color: white;
+    overflow-y: auto;
+  }
+
+  .sidebar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+
+  .sidebar > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.09);
+    margin-bottom: 20px;
+  }
+
+  .brand img {
+    width: 135px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .role-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(131,127,216,0.16);
+    color: #E4DDF7;
+    border: 1px solid rgba(168,154,212,0.30);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+
+  .role-pill::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue-lt);
+  }
+
+  .nav {
+    display: grid;
+    gap: 7px;
+  }
+
+  .nav a {
+    min-height: 46px;
+    padding: 0 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+    color: rgba(255,255,255,0.72);
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+
+  .nav a:hover,
+  .nav a.active {
+    background: rgba(168,154,212,0.16);
+    color: white;
+  }
+
+  .nav-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,0.08);
+    color: #E4DDF7;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .sidebar-card {
+    margin-top: 22px;
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .sidebar-card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-card p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.63);
+    line-height: 1.8;
+  }
+
+  .logout {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 18px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.84);
+    border-radius: 14px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .logout:hover {
+    background: rgba(255,255,255,0.11);
+    color: white;
+  }
+
+  .main {
+    padding: 30px;
+    min-width: 0;
+  }
+
+  .main-inner {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+  }
+
+  .topbar {
+    min-height: 76px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .page-title h1 {
+    color: var(--navy);
+    font-size: 30px;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+
+  .page-title p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .btn {
+    min-height: 46px;
+    padding: 0 19px;
+    border-radius: 15px;
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 800;
+    transition: 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.52;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-primary {
+    color: white;
+    background: linear-gradient(135deg, #837FD8 0%, #6863bd 48%, #011D2D 100%);
+    box-shadow: 0 16px 32px rgba(0,33,52,0.28);
+  }
+
+  .btn-secondary {
+    color: white;
+    background: linear-gradient(135deg, #a9a6e6 0%, #837FD8 52%, #6863bd 100%);
+    box-shadow: 0 14px 28px rgba(131,127,216,0.22);
+  }
+
+  .page-banner {
+    background: linear-gradient(160deg, #03141E 0%, #002134 42%, #011E2F 72%, #023a55 100%);
+    color: white;
+    border-radius: 32px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+
+  .page-banner > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(131,127,216,0.16);
+    border: 1px solid rgba(168,154,212,0.30);
+    color: #E4DDF7;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .page-banner h2 {
+    font-size: 27px;
+    line-height: 1.45;
+    margin-bottom: 6px;
+  }
+
+  .page-banner p {
+    color: #DCE7F2;
+    font-size: 14px;
+    line-height: 2;
+    font-weight: 300;
+    max-width: 780px;
+  }
+
+  .content-stack {
+    display: grid;
+    gap: 22px;
+  }
+
+  .section-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+  }
+
+  .card-head {
+    padding: 23px 26px 17px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #FFFFFF, #FBFCFD);
+  }
+
+  .card-head h3 {
+    color: var(--navy);
+    font-size: 19px;
+    line-height: 1.4;
+    margin-bottom: 3px;
+  }
+
+  .card-head p {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .card-body {
+    padding: 26px;
+  }
+
+  .campaign-layout {
+    display: grid;
+    gap: 18px;
+  }
+
+  .campaign-picker {
+    padding: 20px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, #F8FAFD, #FFFFFF);
+    border-radius: 24px;
+  }
+
+  .campaign-showcase {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .campaign-hero-card {
+    min-height: 190px;
+    padding: 24px;
+    border-radius: 28px;
+    color: white;
+    background: linear-gradient(145deg, #002134 0%, #011E2F 52%, #011D2D 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .campaign-hero-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .campaign-hero-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .campaign-hero-card .small {
+    display: inline-flex;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #E4DDF7;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .campaign-hero-card h3 {
+    font-size: 25px;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+
+  .campaign-hero-card p {
+    color: #DCE7F2;
+    font-size: 13px;
+    line-height: 1.9;
+    max-width: 520px;
+  }
+
+  .campaign-hero-footer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+
+  .mini-pill {
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #EFF6FF;
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .campaign-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .detail-box {
+    padding: 16px;
+    border-radius: 20px;
+    background: #F8FAFD;
+    border: 1px solid var(--line);
+    min-height: 88px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+  }
+
+  .detail-box span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .detail-box strong {
+    color: var(--navy);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #344054;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    outline: none;
+    color: var(--text);
+    background: white;
+    transition: 0.2s ease;
+    font-size: 14px;
+  }
+
+  .field input,
+  .field select {
+    height: 56px;
+    padding: 0 15px;
+  }
+
+  .field textarea {
+    min-height: 250px;
+    resize: vertical;
+    padding: 16px;
+    line-height: 1.9;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--blue-lt);
+    box-shadow: 0 0 0 4px rgba(131,127,216,0.12);
+  }
+
+  .notes-list {
+    display: grid;
+    gap: 13px;
+  }
+
+  .note-item {
+    padding: 17px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: #F8FAFD;
+  }
+
+  .note-item strong {
+    display: block;
+    color: var(--navy);
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .note-item p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+  }
+
+  .edit-form {
+    display: grid;
+    gap: 18px;
+  }
+
+  .center-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  .center-actions .btn {
+    min-width: 190px;
+    min-height: 52px;
+  }
+
+  .check-panel {
+    display: grid;
+    gap: 20px;
+  }
+
+  .result-grid {
+    display: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .result-grid.show {
+    display: grid;
+  }
+
+  .result-item {
+    padding: 18px;
+    border-radius: 20px;
+    background: #F8FAFD;
+    border: 1px solid var(--line);
+    min-height: 100px;
+    display: grid;
+    align-content: center;
+    gap: 6px;
+  }
+
+  .result-item span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .result-item strong {
+    color: var(--navy);
+    font-size: 18px;
+  }
+
+  .empty-state {
+    min-height: 150px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border: 1px dashed #B6C2D2;
+    border-radius: 24px;
+    background: linear-gradient(180deg, #F8FAFD, #FFFFFF);
+    padding: 24px;
+  }
+
+  .empty-state h4 {
+    color: var(--navy);
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .empty-state p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    max-width: 560px;
+  }
+
+  .message {
+    display: none;
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.8;
+    font-weight: 700;
+  }
+
+  .message.error {
+    display: block;
+    background: var(--red-soft);
+    color: var(--red);
+    border: 1px solid #FFD5D2;
+  }
+
+  .message.success {
+    display: block;
+    background: var(--green-soft);
+    color: var(--green);
+    border: 1px solid #BFEED7;
+  }
+
+  @media (max-width: 1180px) {
     .app {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 282px 1fr;
+      grid-template-columns: 1fr;
     }
 
     .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 24px 18px;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(25,168,157,0.18), transparent 32%),
-        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
-      color: var(--white);
-      overflow-y: auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 6px 8px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.09);
-      margin-bottom: 20px;
-    }
-
-    .brand img {
-      width: 135px;
+      position: relative;
       height: auto;
-      object-fit: contain;
-      display: block;
-    }
-
-    .role-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(25,168,157,0.13);
-      color: #D7F3EE;
-      border: 1px solid rgba(25,168,157,0.25);
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
-
-    .role-pill::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--teal);
+      border-radius: 0 0 26px 26px;
     }
 
     .nav {
-      display: grid;
-      gap: 7px;
-    }
-
-    .nav a {
-      min-height: 46px;
-      padding: 0 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 15px;
-      color: rgba(255,255,255,0.72);
-      font-size: 14px;
-      font-weight: 600;
-      transition: 0.2s ease;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      background: rgba(255,255,255,0.10);
-      color: var(--white);
-    }
-
-    .nav-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,0.08);
-      color: #D7F3EE;
-      font-size: 13px;
-      font-weight: 800;
+      grid-template-columns: repeat(3, 1fr);
     }
 
     .sidebar-card {
-      margin-top: 22px;
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
+      display: none;
     }
+  }
 
-    .sidebar-card h3 {
-      font-size: 14px;
-      margin-bottom: 8px;
+  @media (max-width: 840px) {
+    .campaign-showcase,
+    .campaign-details,
+    .result-grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    .sidebar-card p {
-      font-size: 12px;
-      color: rgba(255,255,255,0.63);
-      line-height: 1.8;
-    }
-
-    .logout {
-      width: 100%;
-      min-height: 44px;
-      margin-top: 18px;
-      border: 1px solid rgba(255,255,255,0.16);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.84);
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
+  @media (max-width: 760px) {
     .main {
-      padding: 26px;
-      min-width: 0;
+      padding: 16px;
     }
 
     .topbar {
-      min-height: 76px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 22px;
-    }
-
-    .page-title h1 {
-      color: var(--navy);
-      font-size: 30px;
-      line-height: 1.35;
-      margin-bottom: 4px;
-    }
-
-    .page-title p {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      min-height: 44px;
-      padding: 0 17px;
-      border-radius: 14px;
-      border: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 14px;
-      font-weight: 800;
-      transition: 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      color: white;
-      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--navy);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero {
-      background:
-        radial-gradient(circle at 14% 18%, rgba(25,168,157,0.16), transparent 28%),
-        linear-gradient(135deg, #071B33 0%, #0B2A44 70%, #123E6B 100%);
-      color: white;
-      border-radius: 30px;
-      padding: 26px;
-      box-shadow: var(--shadow);
-      margin-bottom: 22px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 22px;
-      align-items: stretch;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 42px 42px;
-      opacity: 0.35;
-    }
-
-    .hero > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.16);
-      color: #D7F3EE;
-      font-size: 12px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .hero h2 {
-      font-size: 28px;
-      line-height: 1.45;
-      margin-bottom: 10px;
-      max-width: 900px;
-    }
-
-    .hero p {
-      color: #DCE7F2;
-      font-size: 14px;
-      line-height: 2;
-      font-weight: 300;
-      max-width: 850px;
-    }
-
-    .hero-card {
-      padding: 20px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.14);
-      backdrop-filter: blur(10px);
-      display: grid;
-      gap: 12px;
-      align-content: center;
-    }
-
-    .hero-row {
-      padding: 13px 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .hero-row span {
-      color: rgba(255,255,255,0.68);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .hero-row strong {
-      font-size: 20px;
-      color: white;
-      line-height: 1;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .panel {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 26px;
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      margin-bottom: 18px;
-    }
-
-    .panel-head {
-      padding: 20px 20px 14px;
-      display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
-      gap: 16px;
-      border-bottom: 1px solid var(--line);
     }
 
-    .panel-head h3 {
-      color: var(--navy);
-      font-size: 18px;
-      line-height: 1.4;
-      margin-bottom: 2px;
+    .topbar .btn,
+    .center-actions .btn {
+      width: 100%;
     }
 
-    .panel-head p {
-      color: var(--muted);
-      font-size: 12px;
+    .nav {
+      grid-template-columns: 1fr;
     }
 
-    .panel-body {
+    .page-banner {
+      padding: 22px;
+      border-radius: 24px;
+    }
+
+    .page-banner h2 {
+      font-size: 23px;
+    }
+
+    .card-body {
       padding: 20px;
     }
+  }
 
-    .details-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    .detail {
-      background: #FBFCFD;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 13px;
-      min-height: 82px;
-    }
-
-    .detail span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 4px;
-      font-weight: 700;
-    }
-
-    .detail strong {
-      display: block;
-      color: var(--navy);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .text-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .text-box {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      overflow: hidden;
-      background: white;
-      min-height: 240px;
-    }
-
-    .text-box-title {
-      padding: 12px 14px;
-      background: #FBFCFD;
-      border-bottom: 1px solid var(--line);
-      color: var(--navy);
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    .text-box-content {
-      padding: 15px;
-      color: #344054;
-      font-size: 13px;
-      line-height: 2;
-      white-space: pre-wrap;
-    }
-
-    .field {
-      margin-bottom: 14px;
-    }
-
-    .field label {
-      display: block;
-      color: #344054;
-      font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      border: 1px solid #D8E0E8;
-      border-radius: 16px;
-      background: white;
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-      transition: 0.2s ease;
-    }
-
-    .field input,
-    .field select {
-      height: 50px;
-      padding: 0 13px;
-    }
-
-    .field textarea {
-      min-height: 180px;
-      padding: 12px 13px;
-      resize: vertical;
-      line-height: 1.9;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--teal);
-      box-shadow: 0 0 0 4px rgba(25,168,157,0.12);
-    }
-
-    .action-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-
-    .note {
-      display: none;
-      margin-top: 15px;
-      padding: 13px 15px;
-      border-radius: 16px;
-      font-size: 13px;
-      line-height: 1.8;
-      font-weight: 700;
-    }
-
-    .note.success {
-      display: block;
-      background: var(--green-soft);
-      color: #067647;
-      border: 1px solid #ABEFC6;
-    }
-
-    .note.error {
-      display: block;
-      background: var(--red-soft);
-      color: #B42318;
-      border: 1px solid #FFD5D2;
-    }
-
-    .note.warning {
-      display: block;
-      background: var(--orange-soft);
-      color: #B54708;
-      border: 1px solid #FEDF89;
-    }
-
-    .list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .list-item {
-      border: 1px solid var(--line);
-      background: #FBFCFD;
-      border-radius: 18px;
-      padding: 13px;
-    }
-
-    .list-item strong {
-      display: block;
-      color: var(--navy);
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .list-item p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.8;
-    }
-
-    .empty-state {
-      min-height: 540px;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      box-shadow: var(--shadow-soft);
-      padding: 40px;
-    }
-
-    .empty-icon {
-      width: 78px;
-      height: 78px;
-      border-radius: 26px;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      display: grid;
-      place-items: center;
-      font-size: 30px;
-      font-weight: 900;
-      margin: 0 auto 18px;
-    }
-
-    .empty-state h2 {
-      color: var(--navy);
-      font-size: 26px;
-      margin-bottom: 8px;
-    }
-
-    .empty-state p {
-      color: var(--muted);
-      max-width: 560px;
-      font-size: 14px;
-      line-height: 1.9;
-      margin-bottom: 20px;
-    }
-
-    .select-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-      max-width: 760px;
-      width: 100%;
-    }
-
-    .select-card {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: #FBFCFD;
-      border-radius: 18px;
-      padding: 14px;
-      display: grid;
-      gap: 8px;
-      text-align: right;
-    }
-
-    .select-card strong {
-      color: var(--navy);
-      font-size: 14px;
-    }
-
-    .select-card p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.8;
-      margin: 0;
-    }
-
-    .select-card button {
-      justify-self: start;
-      min-height: 38px;
-      padding: 0 13px;
-      border-radius: 13px;
-      border: 0;
-      background: var(--teal-soft);
-      color: var(--teal-dark);
-      cursor: pointer;
-      font-weight: 900;
-      font-size: 12px;
-    }
-
-    .status,
-    .risk {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-    }
-
-    .status.needs_revision,
-    .risk.high {
-      background: var(--red-soft);
-      color: #B42318;
-    }
-
-    .status.pending_compliance,
-    .risk.medium {
-      background: var(--orange-soft);
-      color: #B54708;
-    }
-
-    .status.approved,
-    .risk.low {
-      background: var(--green-soft);
-      color: #067647;
-    }
-
-    .status.draft,
-    .risk.unknown {
-      background: var(--soft);
-      color: var(--muted);
-    }
-
-    @media (max-width: 1180px) {
-      .app,
-      .hero,
-      .layout,
-      .text-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: relative;
-        height: auto;
-        border-radius: 0 0 26px 26px;
-      }
-
-      .details-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 720px) {
-      .main {
-        padding: 16px;
-      }
-
-      .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .top-actions,
-      .top-actions .btn,
-      .action-row .btn {
-        width: 100%;
-      }
-
-      .details-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding: 20px;
-        border-radius: 24px;
-      }
-
-      .hero h2 {
-        font-size: 23px;
-      }
-    }
-  </style>
+  ::placeholder {
+    color: #8B9BC6;
+    font-weight: 300;
+  }
+</style>
+  <link rel="stylesheet" href="assets/mutamad-government.css" />
 </head>
 
-<body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
-      </div>
+<body class="marketing-edit">
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <img alt="شعار مُعتمد" src="lo.png"/>
+    </div>
 
-      <div class="role-pill">مسؤول التسويق</div>
+    <div class="role-pill">مسؤول التسويق</div>
 
-      <nav class="nav">
-        <a href="marketing-dashboard.html">
-          <span class="nav-icon">▦</span>
-          لوحة التسويق
-        </a>
+    <nav class="nav">
+      <a href="marketing-dashboard.html"><span class="nav-icon">▦</span> لوحة التسويق</a>
+      <a href="campaign-workspace.html"><span class="nav-icon">＋</span> فحص محتوى جديد</a>
+      <a class="active" href="marketing-edit.html"><span class="nav-icon">↺</span> الحملات الراجعة</a>
+      <a href="index.html"><span class="nav-icon">⌂</span> الرئيسية</a>
+    </nav>
 
-        <a href="campaign-workspace.html">
-          <span class="nav-icon">+</span>
-          فحص محتوى جديد
-        </a>
+    <div class="sidebar-card">
+      <h3>الحملات الراجعة</h3>
+      <p>مراجعة الملاحظات، تعديل المحتوى، إعادة الفحص، ثم إعادة الإرسال للاعتماد.</p>
+    </div>
 
-        <a class="active" href="marketing-edit.html">
-          <span class="nav-icon">↺</span>
-          تعديل حملة راجعة
-        </a>
+    <button class="logout" onclick="logout()">تسجيل الخروج</button>
+  </aside>
 
-        <a href="index.html">
-          <span class="nav-icon">⌂</span>
-          الصفحة الرئيسية
-        </a>
-      </nav>
-
-      <div class="sidebar-card">
-        <h3>مسار التعديل</h3>
-        <p>عندما يطلب الامتثال تعديل حملة، تظهر هنا ليتم تعديلها وإعادة إرسالها.</p>
-      </div>
-
-      <button class="logout" onclick="logout()">تسجيل الخروج</button>
-    </aside>
-
-    <main class="main">
+  <main class="main">
+    <div class="main-inner">
       <header class="topbar">
         <div class="page-title">
-          <h1>تعديل حملة راجعة</h1>
-          <p>تعديل المحتوى بناءً على ملاحظات الامتثال ثم إعادة إرساله للمراجعة.</p>
+          <h1>الحملات الراجعة</h1>
+          <p>معالجة الحملات التي أعادها مسؤول الامتثال قبل إعادة إرسالها.</p>
         </div>
 
-        <div class="top-actions">
-          <a class="btn btn-secondary" href="marketing-dashboard.html">العودة للوحة التسويق</a>
-          <a class="btn btn-primary" href="campaign-workspace.html">إنشاء حملة جديدة</a>
-        </div>
+        <a class="btn btn-secondary" href="marketing-dashboard.html">العودة للوحة</a>
       </header>
 
-      <section class="empty-state" id="emptyState">
-        <div>
-          <div class="empty-icon">↺</div>
-          <h2 id="emptyTitle">لا توجد حملة مختارة للتعديل</h2>
-          <p id="emptyText">
-            إذا كانت هناك حملات تحتاج تعديل، ستظهر هنا. افتحي الحملة المطلوبة ثم عدليها وأعيدي إرسالها.
-          </p>
-
-          <div class="select-list" id="revisionList"></div>
-        </div>
+      <section class="page-banner">
+        <span class="eyebrow">مسار المعالجة</span>
+        <h2>معالجة المحتوى وإعادة فحصه</h2>
+        <p>تُعرض هنا الحملة المعادة مع ملاحظات الامتثال، ثم يُعدّل المحتوى ويُحفظ، وبعدها تُشغّل إعادة الفحص قبل إعادة الإرسال للاعتماد.</p>
       </section>
 
-      <section id="workspace" style="display:none;">
-        <section class="hero">
-          <div>
-            <span class="eyebrow">حملة تحتاج تعديل</span>
-            <h2 id="heroTitle">—</h2>
-            <p>
-              راجعي ملاحظات الامتثال والصياغة المقترحة، ثم عدلي المحتوى وأعيدي إرساله للمراجعة.
-            </p>
+      <section class="content-stack">
+        <section class="section-card">
+          <div class="card-head">
+            <h3>الحملة الراجعة</h3>
+            <p>اختيار الحملة وعرض بياناتها الأساسية قبل معالجة الملاحظات.</p>
           </div>
 
-          <div class="hero-card">
-            <div class="hero-row">
-              <span>حالة الحملة</span>
-              <strong id="heroStatus">—</strong>
-            </div>
-
-            <div class="hero-row">
-              <span>درجة الجاهزية</span>
-              <strong id="heroReadiness">0%</strong>
-            </div>
-
-            <div class="hero-row">
-              <span>مستوى الخطر</span>
-              <strong id="heroRisk">—</strong>
-            </div>
-          </div>
-        </section>
-
-        <section class="layout">
-          <div>
-            <section class="panel">
-              <div class="panel-head">
-                <div>
-                  <h3>بيانات الحملة</h3>
-                  <p>معلومات الحملة التي أعادها الامتثال للتعديل.</p>
+          <div class="card-body">
+            <div class="campaign-layout">
+              <div class="campaign-picker">
+                <div class="field">
+                  <label for="campaignSelect">اختر الحملة</label>
+                  <select id="campaignSelect" onchange="selectCampaignFromDropdown()"></select>
                 </div>
               </div>
 
-              <div class="panel-body">
-                <div class="details-grid">
-                  <div class="detail">
-                    <span>رقم الحملة</span>
-                    <strong id="campaignId">—</strong>
+              <div class="campaign-showcase">
+                <div class="campaign-hero-card">
+                  <span class="small">الحملة المحددة</span>
+                  <h3 id="campaignTitleView">—</h3>
+                  <p id="campaignDescriptionView">اختر حملة لعرض تفاصيلها.</p>
+
+                  <div class="campaign-hero-footer">
+                    <span class="mini-pill" id="heroProduct">—</span>
+                    <span class="mini-pill" id="heroChannel">—</span>
+                  </div>
+                </div>
+
+                <div class="campaign-details">
+                  <div class="detail-box">
+                    <span>المنتج المالي</span>
+                    <strong id="metaProduct">—</strong>
                   </div>
 
-                  <div class="detail">
-                    <span>نوع المنتج</span>
-                    <strong id="productType">—</strong>
-                  </div>
-
-                  <div class="detail">
+                  <div class="detail-box">
                     <span>نوع المحتوى</span>
-                    <strong id="contentType">—</strong>
+                    <strong id="metaContentType">—</strong>
                   </div>
 
-                  <div class="detail">
+                  <div class="detail-box">
                     <span>قناة النشر</span>
-                    <strong id="channel">—</strong>
+                    <strong id="metaChannel">—</strong>
                   </div>
 
-                  <div class="detail">
-                    <span>الجمهور المستهدف</span>
-                    <strong id="audience">—</strong>
-                  </div>
-
-                  <div class="detail">
-                    <span>المرجع المتوقع</span>
-                    <strong id="regulator">—</strong>
+                  <div class="detail-box">
+                    <span>الحالة</span>
+                    <strong id="metaStatus">—</strong>
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          </div>
+        </section>
 
-            <section class="panel">
-              <div class="panel-head">
-                <div>
-                  <h3>قبل / بعد</h3>
-                  <p>مقارنة بين النص الأصلي والصياغة المقترحة من الامتثال.</p>
-                </div>
-              </div>
-
-              <div class="panel-body">
-                <div class="text-grid">
-                  <div class="text-box">
-                    <div class="text-box-title">النص الحالي</div>
-                    <div class="text-box-content" id="currentText">—</div>
-                  </div>
-
-                  <div class="text-box">
-                    <div class="text-box-title">الصياغة المقترحة من الامتثال</div>
-                    <div class="text-box-content" id="suggestedText">—</div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section class="panel">
-              <div class="panel-head">
-                <div>
-                  <h3>ملاحظات الامتثال</h3>
-                  <p>سبب طلب التعديل أو الملاحظة المطلوبة من التسويق.</p>
-                </div>
-              </div>
-
-              <div class="panel-body">
-                <div class="list" id="complianceNotesList"></div>
-              </div>
-            </section>
+        <section class="section-card">
+          <div class="card-head">
+            <h3>ملاحظات الامتثال</h3>
+            <p>الملاحظات التي يجب معالجتها قبل إعادة الفحص.</p>
           </div>
 
-          <aside>
-            <section class="panel">
-              <div class="panel-head">
+          <div class="card-body">
+            <div id="reviewNotes" class="notes-list"></div>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="card-head">
+            <h3>تعديل المحتوى</h3>
+            <p>تحديث النص بناءً على الملاحظات وحفظ النسخة المعدلة.</p>
+          </div>
+
+          <div class="card-body">
+            <div class="edit-form">
+              <div class="field">
+                <label for="title">اسم الحملة</label>
+                <input id="title" type="text" placeholder="اسم الحملة"/>
+              </div>
+
+              <div class="field">
+                <label for="contentText">المحتوى بعد التعديل</label>
+                <textarea id="contentText" placeholder="اكتب النص المعدل هنا..."></textarea>
+              </div>
+            </div>
+
+            <div class="center-actions">
+              <button class="btn btn-secondary" type="button" onclick="saveRevision()">حفظ التعديل</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="card-head">
+            <h3>إعادة الفحص والاعتماد</h3>
+            <p>تشغيل الفحص على النسخة المعدلة، ثم إعادة إرسال الحملة للاعتماد بعد ظهور النتيجة.</p>
+          </div>
+
+          <div class="card-body">
+            <div class="check-panel">
+              <div id="checkResultEmpty" class="empty-state">
                 <div>
-                  <h3>تعديل المحتوى</h3>
-                  <p>عدلي النص ثم أعيديه للامتثال.</p>
+                  <h4>لم يتم تشغيل إعادة الفحص بعد</h4>
+                  <p>بعد حفظ التعديل، شغّل إعادة الفحص لعرض الجاهزية ومستوى الخطر والملاحظات المحدثة.</p>
                 </div>
               </div>
 
-              <div class="panel-body">
-                <div class="field">
-                  <label for="editedText">النص المعدل</label>
-                  <textarea id="editedText" placeholder="اكتبي النص المعدل هنا..."></textarea>
+              <div id="checkResultGrid" class="result-grid">
+                <div class="result-item">
+                  <span>الجاهزية الجديدة</span>
+                  <strong id="resultReadiness">—</strong>
                 </div>
 
-                <div class="field">
-                  <label for="marketingNotes">ملاحظات التسويق بعد التعديل</label>
-                  <textarea id="marketingNotes" placeholder="مثال: تم تعديل عبارة الوعد المباشر وإضافة توضيح الشروط والأحكام..."></textarea>
+                <div class="result-item">
+                  <span>مستوى الخطر</span>
+                  <strong id="resultRisk">—</strong>
                 </div>
 
-                <div class="action-row">
-                  <button class="btn btn-primary" onclick="resubmitToCompliance()">إعادة إرسال للامتثال</button>
-                  <button class="btn btn-secondary" onclick="saveAsDraft()">حفظ كمسودة تعديل</button>
-                  <button class="btn btn-secondary" onclick="clearSelectedCampaign()">اختيار حملة أخرى</button>
+                <div class="result-item">
+                  <span>عدد الملاحظات</span>
+                  <strong id="resultNotes">—</strong>
                 </div>
-
-                <div class="note" id="noteBox"></div>
               </div>
-            </section>
-          </aside>
+
+              <div class="center-actions">
+                <button class="btn btn-secondary" id="recheckButton" type="button" onclick="rerunCheck()">إعادة الفحص</button>
+                <button class="btn btn-primary" id="sendButton" type="button" onclick="sendForApproval()">إرسال للاعتماد</button>
+              </div>
+
+              <div class="message" id="messageBox"></div>
+            </div>
+          </div>
         </section>
       </section>
-    </main>
-  </div>
+    </div>
+  </main>
+</div>
 
-  <script>
-    const STORAGE_KEY = "mutamad_campaigns";
-    const EDIT_KEY = "mutamad_current_marketing_edit_id";
-    const ROLE_KEY = "mutamad_demo_role";
+<script src="assets/mutamad-app.js"></script>
+<script>
+  const STORAGE_KEY = "mutamad_campaigns";
+  const EDIT_KEY = "mutamad_current_marketing_edit_id";
+  const CURRENT_KEY = "mutamad_current_campaign_id";
+  const ROLE_KEY = "mutamad_role";
 
-    let campaigns = [];
-    let campaign = null;
+  let campaigns = [];
+  let selectedCampaignId = "";
 
-    function getCampaigns() {
-      const stored = localStorage.getItem(STORAGE_KEY);
+  function getCampaigns() {
+    const stored = localStorage.getItem(STORAGE_KEY);
 
-      if (!stored) return [];
+    if (!stored) return [];
 
-      try {
-        const parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
+    try {
+      const parsed = JSON.parse(stored);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function setCampaigns(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  function todayText() {
+    return new Date().toLocaleDateString("ar-SA", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+  }
+
+  function escapeHtml(value) {
+    return String(value || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function safeValue(value, fallback = "—") {
+    return value && String(value).trim() !== "" ? value : fallback;
+  }
+
+  function getEditableCampaigns() {
+    return campaigns.filter(function(item) {
+      return item.status === "needs_revision" ||
+             item.status === "revision_draft" ||
+             item.status === "revision_checked";
+    });
+  }
+
+  function statusLabel(status) {
+    const labels = {
+      needs_revision: "راجعة للتعديل",
+      revision_draft: "مسودة تعديل",
+      revision_checked: "تمت إعادة الفحص",
+      pending_compliance: "قيد الاعتماد",
+      approved: "معتمدة",
+      rejected: "غير معتمدة",
+      draft: "مسودة"
+    };
+
+    return labels[status] || "غير محدد";
+  }
+
+  function riskLabel(risk) {
+    const labels = {
+      low: "منخفض",
+      medium: "متوسط",
+      high: "عالي",
+      unknown: "غير محدد",
+      "": "غير محدد"
+    };
+
+    return labels[risk] || "غير محدد";
+  }
+
+  function initPage() {
+    campaigns = getCampaigns();
+
+    const editable = getEditableCampaigns();
+    const storedId = localStorage.getItem(EDIT_KEY);
+
+    if (storedId && editable.some(item => item.id === storedId)) {
+      selectedCampaignId = storedId;
+    } else if (editable.length) {
+      selectedCampaignId = editable[0].id;
     }
 
-    function saveCampaigns() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(campaigns));
+    renderCampaignSelect(editable);
+
+    if (selectedCampaignId) {
+      loadSelectedCampaign();
+    } else {
+      clearPage();
+    }
+  }
+
+  function renderCampaignSelect(editable) {
+    const select = document.getElementById("campaignSelect");
+    select.innerHTML = "";
+
+    if (!editable.length) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "لا توجد حملات راجعة";
+      select.appendChild(option);
+      return;
     }
 
-    function safeValue(value, fallback = "—") {
-      return value && String(value).trim() !== "" ? value : fallback;
+    editable.forEach(function(item) {
+      const option = document.createElement("option");
+      option.value = item.id;
+      option.textContent = safeValue(item.title, "حملة بدون عنوان") + " - " + statusLabel(item.status);
+      option.selected = item.id === selectedCampaignId;
+      select.appendChild(option);
+    });
+  }
+
+  function selectCampaignFromDropdown() {
+    selectedCampaignId = document.getElementById("campaignSelect").value;
+    localStorage.setItem(EDIT_KEY, selectedCampaignId);
+    localStorage.setItem(CURRENT_KEY, selectedCampaignId);
+    loadSelectedCampaign();
+  }
+
+  function loadSelectedCampaign() {
+    const campaign = campaigns.find(function(item) {
+      return item.id === selectedCampaignId;
+    });
+
+    if (!campaign) {
+      clearPage();
+      return;
     }
 
-    function formatDateTime() {
-      return new Date().toLocaleString("ar-SA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      });
-    }
+    localStorage.setItem(EDIT_KEY, campaign.id);
+    localStorage.setItem(CURRENT_KEY, campaign.id);
 
-    function statusLabel(status) {
-      const labels = {
-        draft: "مسودة",
-        pending_compliance: "بانتظار الامتثال",
-        approved: "معتمد",
-        needs_revision: "تحتاج تعديل",
-        rejected: "مرفوض",
-        revision_draft: "مسودة تعديل"
-      };
+    document.getElementById("title").value = campaign.title || "";
+    document.getElementById("contentText").value = campaign.content_text || "";
 
-      return labels[status] || "غير محدد";
-    }
+    document.getElementById("campaignTitleView").textContent = safeValue(campaign.title, "حملة بدون عنوان");
+    document.getElementById("campaignDescriptionView").textContent =
+      safeValue(campaign.product_type_label) + " · " + safeValue(campaign.content_type) + " · " + safeValue(campaign.channel);
 
-    function riskLabel(risk) {
-      const labels = {
-        low: "منخفض",
-        medium: "متوسط",
-        high: "عالي",
-        unknown: "غير محدد",
-        "": "غير محدد"
-      };
+    document.getElementById("heroProduct").textContent = safeValue(campaign.product_type_label);
+    document.getElementById("heroChannel").textContent = safeValue(campaign.channel);
 
-      return labels[risk] || "غير محدد";
-    }
+    document.getElementById("metaProduct").textContent = safeValue(campaign.product_type_label);
+    document.getElementById("metaContentType").textContent = safeValue(campaign.content_type);
+    document.getElementById("metaChannel").textContent = safeValue(campaign.channel);
+    document.getElementById("metaStatus").textContent = statusLabel(campaign.status);
 
-    function showNote(type, message) {
-      const note = document.getElementById("noteBox");
-      note.className = "note " + type;
-      note.textContent = message;
-    }
+    renderReviewNotes(campaign);
+    renderCheckResult(campaign);
+    updateButtonStates(campaign);
+  }
 
-    function roleGuard() {
-      const role = localStorage.getItem(ROLE_KEY);
+  function clearPage() {
+    document.getElementById("title").value = "";
+    document.getElementById("contentText").value = "";
 
-      const allowedMarketingRoles = [
-        "marketing",
-        "marketer",
-        "marketing_officer",
-        "مسؤول التسويق",
-        "التسويق"
-      ];
+    document.getElementById("campaignTitleView").textContent = "—";
+    document.getElementById("campaignDescriptionView").textContent = "لا توجد حملة محددة.";
+    document.getElementById("heroProduct").textContent = "—";
+    document.getElementById("heroChannel").textContent = "—";
 
-      if (!role) return true;
-      if (allowedMarketingRoles.includes(role)) return true;
+    document.getElementById("metaProduct").textContent = "—";
+    document.getElementById("metaContentType").textContent = "—";
+    document.getElementById("metaChannel").textContent = "—";
+    document.getElementById("metaStatus").textContent = "—";
 
-      document.getElementById("workspace").style.display = "none";
-      document.getElementById("emptyState").style.display = "grid";
-      document.getElementById("emptyTitle").textContent = "غير مصرح بفتح صفحة التعديل";
-      document.getElementById("emptyText").textContent = "هذه الصفحة مخصصة لمسؤول التسويق فقط.";
-      document.getElementById("revisionList").innerHTML = `
-        <a class="btn btn-primary" href="login.html">العودة لتسجيل الدخول</a>
-      `;
+    document.getElementById("reviewNotes").innerHTML = `
+      <div class="empty-state">
+        <div>
+          <h4>لا توجد حملات راجعة</h4>
+          <p>لا توجد حاليًا حملات معادة تتطلب معالجة.</p>
+        </div>
+      </div>
+    `;
 
-      return false;
-    }
+    resetCheckResult();
+    updateButtonStates(null);
+  }
 
-    function loadPage() {
-      if (!roleGuard()) return;
+  function renderReviewNotes(campaign) {
+    const container = document.getElementById("reviewNotes");
+    const notes = Array.isArray(campaign.review_notes) ? campaign.review_notes : [];
 
-      campaigns = getCampaigns();
-
-      const selectedId = localStorage.getItem(EDIT_KEY);
-      const revisionCampaigns = campaigns.filter(item => item.status === "needs_revision" || item.status === "revision_draft");
-
-      if (selectedId) {
-        campaign = campaigns.find(item => item.id === selectedId);
-      }
-
-      if (!campaign && revisionCampaigns.length === 1) {
-        campaign = revisionCampaigns[0];
-        localStorage.setItem(EDIT_KEY, campaign.id);
-      }
-
-      if (!campaign) {
-        showRevisionSelection(revisionCampaigns);
-        return;
-      }
-
-      renderCampaign();
-    }
-
-    function showRevisionSelection(revisionCampaigns) {
-      document.getElementById("workspace").style.display = "none";
-      document.getElementById("emptyState").style.display = "grid";
-
-      const list = document.getElementById("revisionList");
-      list.innerHTML = "";
-
-      if (!revisionCampaigns.length) {
-        document.getElementById("emptyTitle").textContent = "لا توجد حملات تحتاج تعديل";
-        document.getElementById("emptyText").textContent = "عند إرجاع حملة من الامتثال بحالة تحتاج تعديل ستظهر هنا.";
-        list.innerHTML = `
-          <a class="btn btn-primary" href="marketing-dashboard.html">العودة للوحة التسويق</a>
-        `;
-        return;
-      }
-
-      document.getElementById("emptyTitle").textContent = "اختاري حملة للتعديل";
-      document.getElementById("emptyText").textContent = "هذه الحملات أعادها الامتثال وتحتاج تعديل من التسويق.";
-
-      revisionCampaigns.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "select-card";
-
-        card.innerHTML = `
-          <strong>${safeValue(item.title, "حملة بدون عنوان")}</strong>
-          <p>
-            رقم الحملة: ${safeValue(item.id)}
-            <br />
-            نوع المنتج: ${safeValue(item.product_type_label)}
-            <br />
-            آخر تحديث: ${safeValue(item.updated_at)}
-          </p>
-          <button onclick="selectCampaign('${item.id}')">فتح للتعديل</button>
-        `;
-
-        list.appendChild(card);
-      });
-    }
-
-    function selectCampaign(id) {
-      localStorage.setItem(EDIT_KEY, id);
-      location.reload();
-    }
-
-    function clearSelectedCampaign() {
-      localStorage.removeItem(EDIT_KEY);
-      location.reload();
-    }
-
-    function renderCampaign() {
-      document.getElementById("emptyState").style.display = "none";
-      document.getElementById("workspace").style.display = "block";
-
-      document.getElementById("heroTitle").textContent = safeValue(campaign.title, "حملة بدون عنوان");
-      document.getElementById("heroStatus").textContent = statusLabel(campaign.status);
-      document.getElementById("heroReadiness").textContent = Number(campaign.readiness_score || 0) + "%";
-      document.getElementById("heroRisk").textContent = riskLabel(campaign.risk_level || "unknown");
-
-      document.getElementById("campaignId").textContent = safeValue(campaign.id);
-      document.getElementById("productType").textContent = safeValue(campaign.product_type_label);
-      document.getElementById("contentType").textContent = safeValue(campaign.content_type);
-      document.getElementById("channel").textContent = safeValue(campaign.channel);
-      document.getElementById("audience").textContent = safeValue(campaign.audience);
-      document.getElementById("regulator").textContent = safeValue(campaign.regulator);
-
-      document.getElementById("currentText").textContent = safeValue(campaign.content_text, "لا يوجد نص محفوظ.");
-      document.getElementById("suggestedText").textContent =
-        campaign.final_text ||
-        campaign.suggested_rewrite ||
-        "لا توجد صياغة مقترحة محفوظة من الامتثال.";
-
-      document.getElementById("editedText").value =
-        campaign.marketing_edited_text ||
-        campaign.final_text ||
-        campaign.suggested_rewrite ||
-        campaign.content_text ||
-        "";
-
-      document.getElementById("marketingNotes").value = campaign.marketing_revision_notes || "";
-
-      renderComplianceNotes();
-    }
-
-    function renderComplianceNotes() {
-      const list = document.getElementById("complianceNotesList");
-      list.innerHTML = "";
-
-      const notes = campaign.compliance_notes || "";
-
-      if (!notes) {
-        list.innerHTML = `
-          <div class="list-item">
-            <strong>لا توجد ملاحظات امتثال محفوظة</strong>
-            <p>قد تكون الحملة أعيدت للتعديل دون ملاحظة مفصلة.</p>
+    if (!notes.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div>
+            <h4>لا توجد ملاحظات مسجلة</h4>
+            <p>لم تُسجّل ملاحظات امتثال على هذه الحملة.</p>
           </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = `
-        <div class="list-item">
-          <strong>ملاحظة الامتثال</strong>
-          <p>${notes}</p>
         </div>
       `;
+      return;
     }
 
-    function saveAsDraft() {
-      if (!campaign) {
-        return;
-      }
+    container.innerHTML = notes.map(function(note) {
+      return `
+        <div class="note-item">
+          <strong>${escapeHtml(safeValue(note.title, "ملاحظة"))}</strong>
+          <p>${escapeHtml(safeValue(note.description))}</p>
+        </div>
+      `;
+    }).join("");
+  }
 
-      const editedText = document.getElementById("editedText").value.trim();
-      const marketingNotes = document.getElementById("marketingNotes").value.trim();
+  function resetCheckResult() {
+    document.getElementById("checkResultEmpty").style.display = "grid";
+    document.getElementById("checkResultGrid").classList.remove("show");
+    document.getElementById("resultReadiness").textContent = "—";
+    document.getElementById("resultRisk").textContent = "—";
+    document.getElementById("resultNotes").textContent = "—";
+  }
 
-      if (!editedText) {
-        showNote("warning", "اكتبي النص المعدل قبل حفظ المسودة.");
-        return;
-      }
+  function renderCheckResult(campaign) {
+    if (campaign.status !== "revision_checked" && !campaign.last_recheck_at) {
+      resetCheckResult();
+      return;
+    }
 
-      const index = campaigns.findIndex(item => item.id === campaign.id);
+    const notes = Array.isArray(campaign.review_notes) ? campaign.review_notes : [];
 
-      if (index === -1) {
-        showNote("error", "تعذر العثور على الحملة.");
-        return;
-      }
+    document.getElementById("checkResultEmpty").style.display = "none";
+    document.getElementById("checkResultGrid").classList.add("show");
+    document.getElementById("resultReadiness").textContent = campaign.readiness_score ? campaign.readiness_score + "%" : "—";
+    document.getElementById("resultRisk").textContent = riskLabel(campaign.risk_level);
+    document.getElementById("resultNotes").textContent = notes.length;
+  }
 
-      const now = formatDateTime();
+  function updateButtonStates(campaign) {
+    const recheckButton = document.getElementById("recheckButton");
+    const sendButton = document.getElementById("sendButton");
 
-      campaigns[index] = {
-        ...campaigns[index],
+    if (!campaign) {
+      recheckButton.disabled = true;
+      sendButton.disabled = true;
+      return;
+    }
+
+    recheckButton.disabled = false;
+    sendButton.disabled = campaign.status !== "revision_checked";
+  }
+
+  function saveRevision() {
+    if (!selectedCampaignId) {
+      showMessage("error", "يرجى اختيار حملة قبل الحفظ.");
+      return;
+    }
+
+    const title = document.getElementById("title").value.trim();
+    const contentText = document.getElementById("contentText").value.trim();
+
+    if (!title || !contentText) {
+      showMessage("error", "يرجى تعبئة اسم الحملة والمحتوى.");
+      return;
+    }
+
+    campaigns = campaigns.map(function(item) {
+      if (item.id !== selectedCampaignId) return item;
+
+      return {
+        ...item,
+        title,
+        content_text: contentText,
         status: "revision_draft",
-        marketing_edited_text: editedText,
-        marketing_revision_notes: marketingNotes,
-        updated_at: now,
-        timeline: [
-          ...(campaigns[index].timeline || []),
-          {
-            action: "حفظ التسويق مسودة تعديل للحملة",
-            at: now
-          }
-        ]
+        last_recheck_at: "",
+        updated_at: todayText(),
+        updatedAt: new Date().toISOString()
       };
+    });
 
-      saveCampaigns();
-      campaign = campaigns[index];
+    setCampaigns(campaigns);
+    showMessage("success", "تم حفظ التعديل. يمكنك الآن تشغيل إعادة الفحص.");
+    initPage();
+  }
 
-      renderCampaign();
-      showNote("success", "تم حفظ مسودة التعديل.");
+  function rerunCheck() {
+    if (!selectedCampaignId) {
+      showMessage("error", "يرجى اختيار حملة قبل إعادة الفحص.");
+      return;
     }
 
-    function resubmitToCompliance() {
-      if (!campaign) {
-        return;
-      }
+    const title = document.getElementById("title").value.trim();
+    const contentText = document.getElementById("contentText").value.trim();
 
-      const editedText = document.getElementById("editedText").value.trim();
-      const marketingNotes = document.getElementById("marketingNotes").value.trim();
+    if (!title || !contentText) {
+      showMessage("error", "يرجى تعبئة اسم الحملة والمحتوى قبل إعادة الفحص.");
+      return;
+    }
 
-      if (!editedText) {
-        showNote("warning", "اكتبي النص المعدل قبل إعادة الإرسال.");
-        return;
-      }
+    const result = runLocalCheck(contentText);
 
-      const index = campaigns.findIndex(item => item.id === campaign.id);
+    campaigns = campaigns.map(function(item) {
+      if (item.id !== selectedCampaignId) return item;
 
-      if (index === -1) {
-        showNote("error", "تعذر العثور على الحملة.");
-        return;
-      }
-
-      const now = formatDateTime();
-
-      const previousVersion = {
-        content_text: campaigns[index].content_text || "",
-        final_text: campaigns[index].final_text || "",
-        compliance_notes: campaigns[index].compliance_notes || "",
-        updated_at: campaigns[index].updated_at || ""
+      return {
+        ...item,
+        title,
+        content_text: contentText,
+        readiness_score: result.readiness,
+        risk_level: result.risk,
+        review_notes: result.notes,
+        status: "revision_checked",
+        last_recheck_at: new Date().toISOString(),
+        updated_at: todayText(),
+        updatedAt: new Date().toISOString()
       };
+    });
 
-      campaigns[index] = {
-        ...campaigns[index],
-        content_text: editedText,
-        marketing_edited_text: "",
-        marketing_revision_notes: marketingNotes,
+    setCampaigns(campaigns);
+    showMessage("success", "تمت إعادة الفحص وظهرت النتيجة الجديدة.");
+    initPage();
+  }
+
+  function runLocalCheck(text) {
+    const normalized = text.toLowerCase();
+
+    const riskyTerms = [
+      "مضمون",
+      "بدون فوائد",
+      "فوري",
+      "الأفضل",
+      "أعلى عائد",
+      "ربح مؤكد",
+      "بدون أي رسوم"
+    ];
+
+    const disclosureTerms = [
+      "تطبق الشروط",
+      "الشروط والأحكام",
+      "الرسوم",
+      "هامش الربح",
+      "مدة التمويل",
+      "الأهلية"
+    ];
+
+    let notes = [];
+
+    riskyTerms.forEach(function(term) {
+      if (normalized.includes(term.toLowerCase())) {
+        notes.push({
+          title: "صياغة عالية الحساسية",
+          description: "توجد عبارة تحتاج إلى ضبط قبل الاعتماد: " + term
+        });
+      }
+    });
+
+    const hasDisclosure = disclosureTerms.some(function(term) {
+      return normalized.includes(term.toLowerCase());
+    });
+
+    if (!hasDisclosure) {
+      notes.push({
+        title: "إفصاح غير مكتمل",
+        description: "ينبغي تضمين إشارة واضحة إلى الشروط أو الرسوم أو معلومات المنتج الأساسية."
+      });
+    }
+
+    let readiness = 92 - (notes.length * 14);
+
+    if (readiness < 45) {
+      readiness = 45;
+    }
+
+    let risk = "low";
+
+    if (notes.length >= 3) {
+      risk = "high";
+    } else if (notes.length >= 1) {
+      risk = "medium";
+    }
+
+    return {
+      readiness,
+      risk,
+      notes
+    };
+  }
+
+  function sendForApproval() {
+    if (!selectedCampaignId) {
+      showMessage("error", "يرجى اختيار حملة قبل الإرسال.");
+      return;
+    }
+
+    const campaign = campaigns.find(function(item) {
+      return item.id === selectedCampaignId;
+    });
+
+    if (!campaign) {
+      showMessage("error", "لم يتم العثور على الحملة.");
+      return;
+    }
+
+    if (campaign.status !== "revision_checked") {
+      showMessage("error", "يرجى تشغيل إعادة الفحص قبل إرسال الحملة للاعتماد.");
+      return;
+    }
+
+    campaigns = campaigns.map(function(item) {
+      if (item.id !== selectedCampaignId) return item;
+
+      return {
+        ...item,
         status: "pending_compliance",
-        compliance_decision: "",
-        compliance_decision_label: "",
-        report_ready: false,
-        reviewed_at: "",
-        updated_at: now,
-        revision_history: [
-          ...(campaigns[index].revision_history || []),
-          previousVersion
-        ],
-        timeline: [
-          ...(campaigns[index].timeline || []),
-          {
-            action: "عدّل التسويق المحتوى وأعاد إرساله للامتثال",
-            at: now
-          }
-        ]
+        updated_at: todayText(),
+        updatedAt: new Date().toISOString()
       };
+    });
 
-      saveCampaigns();
+    setCampaigns(campaigns);
+    localStorage.removeItem(EDIT_KEY);
+    localStorage.setItem(CURRENT_KEY, selectedCampaignId);
 
-      localStorage.removeItem(EDIT_KEY);
+    showMessage("success", "تم إرسال الحملة للاعتماد.");
 
-      showNote("success", "تمت إعادة إرسال الحملة للامتثال بنجاح.");
-      setTimeout(() => {
-        window.location.href = "marketing-dashboard.html";
-      }, 900);
-    }
+    setTimeout(function() {
+      window.location.href = "marketing-dashboard.html";
+    }, 700);
+  }
 
-    function logout() {
-      localStorage.removeItem(ROLE_KEY);
-      window.location.href = "login.html";
-    }
+  function showMessage(type, message) {
+    const box = document.getElementById("messageBox");
+    box.className = "message " + type;
+    box.textContent = message;
+  }
 
-    loadPage();
-  </script>
+  function logout() {
+    localStorage.removeItem(ROLE_KEY);
+    window.location.href = "login.html";
+  }
+
+  initPage();
+</script>
 </body>
 </html>

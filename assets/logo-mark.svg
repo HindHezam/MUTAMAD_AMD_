@@ -1,0 +1,13 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="مُعتمد">
+  <defs>
+    <linearGradient id="mkR" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2CB7A7"/><stop offset="0.55" stop-color="#3a5a72"/><stop offset="1" stop-color="#022A42"/>
+    </linearGradient>
+    <linearGradient id="mkC" x1="18" y1="40" x2="48" y2="22" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2CB7A7"/><stop offset="1" stop-color="#1E9084"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 6 a26 26 0 1 0 18.4 7.6" stroke="url(#mkR)" stroke-width="6.4" stroke-linecap="round" fill="none"/>
+  <circle cx="52" cy="13.5" r="4.4" fill="#2CB7A7"/>
+  <path d="M20.5 33.5 L29 42 L47 21.5" stroke="url(#mkC)" stroke-width="6.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

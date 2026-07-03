@@ -1023,15 +1023,11 @@
 </div>
 </div>
 <div class="panel-body">
-<div class="form-grid">
-<div class="field full">
-<label for="webhookUrl">n8n Webhook URL</label>
-<input id="webhookUrl" placeholder="https://..." type="text"/>
-</div>
-<div class="field full">
-<label for="webhookSecret">مفتاح الربط الداخلي</label>
-<input id="webhookSecret" placeholder="اختياري" type="text"/>
-</div>
+<input id="webhookUrl" type="hidden" value="https://hind7777.app.n8n.cloud/webhook/mutamad-analyze"/>
+<input id="webhookSecret" type="hidden" value="MUTAMAD_AMD_2026"/>
+<div class="empty-state" style="text-align:right">
+  <h4>محرك الذكاء الاصطناعي مفعل</h4>
+  <p>تم ربط المنصة بمحرك الفحص الذكي عبر n8n. لا يتم عرض رابط الربط أو المفاتيح الداخلية داخل الواجهة.</p>
 </div>
 <div class="action-row">
 <button class="btn btn-primary" onclick="saveSettings()">حفظ الربط</button>
@@ -1090,13 +1086,6 @@
     const SETTINGS_KEY = "mutamad_settings";
     const USERS_KEY = "mutamad_users";
     const CAMPAIGNS_KEY = "mutamad_campaigns";
-    const DEFAULT_SETTINGS = {
-  ai_webhook_url: "https://hind7777.app.n8n.cloud/webhook/mutamad-analyze",
-  webhookSecret: "MUTAMAD_AMD_2026",
-  readiness_pass: 70,
-  readiness_review: 50,
-  sources: ["SAMA"]
-};
 
     const defaultSettings = {
       organizationName: "",
@@ -1112,8 +1101,9 @@
       sourceCommerce: false,
       sourceMedia: false,
       sourcePrivacy: false,
-      webhookUrl: "",
-      webhookSecret: ""
+      webhookUrl: "https://hind7777.app.n8n.cloud/webhook/mutamad-analyze",
+      webhookSecret: "MUTAMAD_AMD_2026",
+      ai_webhook_url: "https://hind7777.app.n8n.cloud/webhook/mutamad-analyze"
     };
 
     function getSettings() {
@@ -1202,10 +1192,10 @@
       document.getElementById("sourceCommerce").checked = Boolean(settings.sourceCommerce);
       document.getElementById("sourceMedia").checked = Boolean(settings.sourceMedia);
       document.getElementById("sourcePrivacy").checked = Boolean(settings.sourcePrivacy);
-      document.getElementById("webhookUrl").value = settings.webhookUrl;
-      document.getElementById("webhookSecret").value = settings.webhookSecret;
+      document.getElementById("webhookUrl").value = settings.webhookUrl || settings.ai_webhook_url || defaultSettings.webhookUrl;
+      document.getElementById("webhookSecret").value = settings.webhookSecret || defaultSettings.webhookSecret;
 
-      document.getElementById("webhookStatus").textContent = settings.webhookUrl ? "مفعل" : "غير مفعل";
+      document.getElementById("webhookStatus").textContent = (settings.webhookUrl || settings.ai_webhook_url || defaultSettings.webhookUrl) ? "مفعل" : "غير مفعل";
     }
 
     function saveSettings() {
@@ -1230,7 +1220,13 @@
       fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ad_text: "اختبار اتصال من منصة مُعتمد", product_type: "personal_finance", channel: "test" })
+        body: JSON.stringify({
+          ad_text: "اختبار اتصال من منصة مُعتمد",
+          content_text: "اختبار اتصال من منصة مُعتمد",
+          product_type: "personal_finance",
+          channel: "test",
+          internal_key: document.getElementById("webhookSecret").value.trim() || "MUTAMAD_AMD_2026"
+        })
       }).then(function (res) {
         if (!res.ok) throw new Error("HTTP " + res.status);
         return res.json();
@@ -1375,7 +1371,7 @@
           : "لا يوجد مستخدمون محفوظون بعد.";
 
       document.getElementById("webhookStatus").textContent =
-        settings.webhookUrl ? "مفعل" : "غير مفعل";
+        (settings.webhookUrl || settings.ai_webhook_url || defaultSettings.webhookUrl) ? "مفعل" : "غير مفعل";
     }
 
     function loadAll() {
@@ -1392,7 +1388,7 @@
     }
 
     function logout() {
-      localStorage.removeItem("mutamad_demo_role");
+      localStorage.removeItem("mutamad_role");
       window.location.href = "login.html";
     }
 

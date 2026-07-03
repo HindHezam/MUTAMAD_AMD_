@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لوحة المدير | مُعتمد</title>
 
-  <style>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>لوحة المدير | مُعتمد</title>
+<style>
     @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
 
     :root {
-      --navy: #071B33;
-      --navy-2: #0B2A44;
-      --navy-3: #123E6B;
-      --teal: #19A89D;
-      --teal-dark: #0F766E;
-      --gold: #C8A24A;
+      --navy: #002134;
+      --navy-2: #002134;
+      --navy-3: #023a55;
+      --teal: #837FD8;
+      --teal-dark: #023a55;
+      --gold: #966769;
       --bg: #F4F7FA;
       --white: #FFFFFF;
-      --text: #102033;
-      --muted: #667085;
-      --line: #E5ECF2;
+      --text: #002134;
+      --muted: #6B7392;
+      --line: #E3E6F0;
       --soft: #EEF3F7;
-      --teal-soft: #E7F8F5;
-      --red: #D92D20;
+      --teal-soft: #EEEBF6;
+      --red: #C0463A;
       --red-soft: #FFF1F0;
-      --orange: #F79009;
+      --orange: #966769;
       --orange-soft: #FFF6E6;
-      --green: #12B76A;
+      --green: #3E7C68;
       --green-soft: #ECFDF3;
-      --blue: #2E90FA;
-      --blue-soft: #EAF3FF;
-      --purple: #7A5AF8;
-      --purple-soft: #F1EFFF;
-      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
-      --shadow-soft: 0 10px 26px rgba(7, 27, 51, 0.07);
+      --blue: #837FD8;
+      --blue-soft: #ECEBF9;
+      --purple: #966769;
+      --purple-soft: #F0E6E6;
+      --shadow: 0 18px 45px rgba(0,33,52, 0.10);
+      --shadow-soft: 0 10px 26px rgba(0,33,52, 0.07);
       --radius: 24px;
     }
 
@@ -47,8 +47,8 @@
       min-height: 100vh;
       font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
       background:
-        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.10), transparent 28%),
-        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
+        radial-gradient(circle at 88% 6%, rgba(131,127,216,0.10), transparent 28%),
+        radial-gradient(circle at 10% 96%, rgba(231,143,129,0.08), transparent 25%),
         var(--bg);
       color: var(--text);
       direction: rtl;
@@ -77,8 +77,8 @@
       height: 100vh;
       padding: 24px 18px;
       background:
-        radial-gradient(circle at 20% 12%, rgba(25,168,157,0.22), transparent 30%),
-        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
+        radial-gradient(circle at 20% 12%, rgba(131,127,216,0.22), transparent 30%),
+        linear-gradient(180deg, #002134 0%, #002134 54%, #002134 100%);
       color: var(--white);
       overflow-y: auto;
     }
@@ -105,9 +105,9 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(25,168,157,0.13);
-      color: #D7F3EE;
-      border: 1px solid rgba(25,168,157,0.25);
+      background: rgba(131,127,216,0.13);
+      color: #EEEBF6;
+      border: 1px solid rgba(131,127,216,0.25);
       font-size: 12px;
       font-weight: 700;
       margin-bottom: 18px;
@@ -152,7 +152,7 @@
       display: grid;
       place-items: center;
       background: rgba(255,255,255,0.08);
-      color: #D7F3EE;
+      color: #EEEBF6;
       font-size: 13px;
       font-weight: 900;
     }
@@ -273,7 +273,7 @@
     .btn-primary {
       color: white;
       background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
+      box-shadow: 0 14px 28px rgba(131,127,216,0.22);
     }
 
     .btn-secondary {
@@ -391,51 +391,116 @@
       font-size: 12px;
     }
 
+    .report-request {
+      display: grid;
+      grid-template-columns: 1.4fr 1.4fr auto;
+      gap: 14px;
+      align-items: end;
+    }
+    .rr-field { display: grid; gap: 7px; }
+    .rr-field label { color: var(--navy); font-weight: 700; font-size: 13.5px; }
+    .rr-field select,
+    .rr-field input {
+      min-height: 46px;
+      padding: 10px 13px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .rr-field select:focus,
+    .rr-field input:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(131,127,216,0.14);
+    }
+    .rr-note {
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      display: none;
+    }
+    .rr-note.show { display: block; }
+    .rr-note.success { color: #0B7A4B; }
+    .rr-note.error { color: #B42318; }
+    @media (max-width: 860px) {
+      .report-request { grid-template-columns: 1fr; }
+      .report-request .btn { width: 100%; }
+    }
     .panel-body {
       padding: 20px;
     }
 
     .bar-chart {
-      height: 260px;
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 12px;
-      align-items: end;
-      padding-top: 14px;
+      gap: 14px;
+      padding-top: 6px;
     }
 
-    .bar-col {
+    .bar-row {
       display: grid;
-      gap: 9px;
-      justify-items: center;
-      align-items: end;
-      min-width: 0;
-    }
-
-    .bar-stick {
-      width: 100%;
-      max-width: 44px;
-      height: var(--h, 8%);
-      min-height: 8px;
-      border-radius: 12px 12px 5px 5px;
-      background: linear-gradient(180deg, #4B6475, #233746);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
-      transition: 0.2s ease;
-    }
-
-    .bar-col:hover .bar-stick {
-      transform: translateY(-3px);
-      background: linear-gradient(180deg, var(--teal), var(--teal-dark));
+      grid-template-columns: minmax(120px, 160px) 1fr 52px;
+      align-items: center;
+      gap: 14px;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #FFFFFF, #F8FBFD);
     }
 
     .bar-label {
-      font-size: 10px;
+      color: var(--navy);
+      font-size: 13.5px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .bar-track {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: #E8EEF3;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(15,23,42,0.06);
+    }
+
+    .bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--w, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, #0E5A74, #2FC8BC);
+    }
+
+    .bar-fill.pending { background: linear-gradient(90deg, #6B7C8E, #8FA5B7); }
+    .bar-fill.revision { background: linear-gradient(90deg, #C58517, #F0B651); }
+    .bar-fill.approved { background: linear-gradient(90deg, #0E7A59, #3ECF9D); }
+    .bar-fill.rejected { background: linear-gradient(90deg, #A63D2B, #E97860); }
+    .bar-fill.risk { background: linear-gradient(90deg, #8E2C2C, #D95D5D); }
+    .bar-fill.report { background: linear-gradient(90deg, #0B4F6C, #3D9ED0); }
+
+    .bar-count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 44px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 12px;
+      background: #F1F6FA;
+      border: 1px solid #D8E3EB;
+      color: var(--navy);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .bar-share {
       color: var(--muted);
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       text-align: center;
-      white-space: nowrap;
-      transform: rotate(-24deg);
-      transform-origin: center;
     }
 
     .donut-layout {
@@ -893,9 +958,23 @@
       }
 
       .bar-chart {
-        grid-template-columns: repeat(4, 1fr);
-        height: auto;
-        min-height: 260px;
+        min-height: auto;
+      }
+
+      .bar-row {
+        grid-template-columns: 100px 1fr 42px;
+        gap: 10px;
+        padding: 10px;
+      }
+
+      .bar-label {
+        font-size: 12px;
+      }
+
+      .bar-count {
+        min-width: 38px;
+        height: 32px;
+        font-size: 14px;
       }
 
       .hbar-item {
@@ -914,290 +993,250 @@
       }
     }
   </style>
+<link rel="icon" type="image/png" href="lo.png" />
+<link href="assets/mutamad-theme.css" rel="stylesheet"/>  <link rel="stylesheet" href="assets/mutamad-government.css" />
 </head>
+<body class="executive-page">
+<div class="app">
+<aside class="sidebar">
+<div class="brand">
+<img alt="شعار مُعتمد" src="lo.png"/>
+<span class="brand-word">مُعتمد</span>
+</div>
+<div class="role-pill">مدير المنصة</div>
+<nav class="nav"><a class="active" href="executive-dashboard.html"><span class="nav-icon">▦</span> لوحة المدير</a><a href="reports.html"><span class="nav-icon">▤</span> التقارير التنفيذية</a><a href="admin-settings.html"><span class="nav-icon">⚙</span> الإعدادات</a><a href="index.html"><span class="nav-icon">⌂</span> الرئيسية</a></nav>
+<div class="sidebar-card"><h3>مساحة الإدارة</h3><p>متابعة المؤشرات التنفيذية والتقارير والإعدادات العامة للمنصة.</p></div>
+<button class="logout" onclick="logout()">تسجيل الخروج</button>
+</aside>
+<main class="main">
+<header class="topbar">
+<div class="page-title">
+<h1>لوحة المدير</h1>
+<p>نظرة تنفيذية موجزة على الاعتمادات والمخاطر والتقارير الجاهزة.</p>
+</div>
+<div class="top-actions">
+<span class="badge">مؤشرات محدثة من بيانات المنصة</span>
 
-<body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
-      </div>
-
-      <div class="role-pill">مدير المنصة</div>
-
-      <nav class="nav">
-        <a class="active" href="executive-dashboard.html">
-          <span class="nav-icon">▦</span>
-          نظرة عامة
-        </a>
-
-        <a href="reports.html">
-          <span class="nav-icon">▤</span>
-          أرشيف التقارير
-        </a>
-
-        <a href="#campaignsPanel" onclick="scrollToSection('campaignsPanel')">
-          <span class="nav-icon">⌕</span>
-          الحملات
-        </a>
-
-        <a href="#riskPanel" onclick="scrollToSection('riskPanel')">
-          <span class="nav-icon">!</span>
-          المخاطر
-        </a>
-
-        <a href="admin-settings.html">
-          <span class="nav-icon">⚙</span>
-          الإعدادات
-        </a>
-
-        <a href="index.html">
-          <span class="nav-icon">⌂</span>
-          الرئيسية
-        </a>
-      </nav>
-
-      <div class="sidebar-card">
-        <h3>لوحة بيانات المدير</h3>
-        <p>تعرض مؤشرات الحملات، المخاطر، الجاهزية، التقارير، وأحدث القرارات.</p>
-      </div>
-
-      <button class="logout" onclick="logout()">تسجيل الخروج</button>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div class="page-title">
-          <h1>لوحة المدير</h1>
-          <p>نظرة تنفيذية على الحملات، الاعتمادات، المخاطر، والتقارير.</p>
-        </div>
-
-        <div class="top-actions">
-          <span class="badge">بيانات فعلية من الحملات المحفوظة</span>
-          <button class="btn btn-secondary" onclick="refreshData()">تحديث البيانات</button>
-          <a class="btn btn-primary" href="reports.html">فتح أرشيف التقارير</a>
-        </div>
-      </header>
-
-      <section class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>إجمالي الحملات</span>
-            <div class="metric-icon">▤</div>
-          </div>
-          <div>
-            <div class="metric-value" id="totalCampaigns">0</div>
-            <div class="metric-note" id="totalNote">لا توجد بيانات بعد</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>بانتظار الامتثال</span>
-            <div class="metric-icon">⧗</div>
-          </div>
-          <div>
-            <div class="metric-value" id="pendingCampaigns">0</div>
-            <div class="metric-note warn" id="pendingNote">طلبات تحتاج مراجعة</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>معتمدة</span>
-            <div class="metric-icon">✓</div>
-          </div>
-          <div>
-            <div class="metric-value" id="approvedCampaigns">0</div>
-            <div class="metric-note good" id="approvedNote">قرارات مكتملة</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>متوسط الجاهزية</span>
-            <div class="metric-icon">%</div>
-          </div>
-          <div>
-            <div class="metric-value" id="avgReadiness">0%</div>
-            <div class="metric-note" id="avgNote">متوسط كل الحملات</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>عالية الخطورة</span>
-            <div class="metric-icon">!</div>
-          </div>
-          <div>
-            <div class="metric-value" id="highRiskCampaigns">0</div>
-            <div class="metric-note bad" id="riskNote">تحتاج انتباه</div>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-head">
-            <span>تقارير متاحة</span>
-            <div class="metric-icon">▦</div>
-          </div>
-          <div>
-            <div class="metric-value" id="reportsCount">0</div>
-            <div class="metric-note" id="reportsNote">قرارات يمكن فتح تقريرها</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="dashboard-grid">
-        <section class="panel">
-          <div class="panel-head">
-            <div>
-              <h3>الحملات حسب الحالة</h3>
-              <p>رسم أعمدة يوضح حجم كل حالة داخل المنصة.</p>
-            </div>
-            <button class="btn btn-secondary" onclick="scrollToSection('campaignsPanel')">عرض الحملات</button>
-          </div>
-
-          <div class="panel-body">
-            <div class="bar-chart" id="statusBarChart"></div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <div>
-              <h3>توزيع المخاطر</h3>
-              <p>نسبة الحملات حسب مستوى الخطر.</p>
-            </div>
-          </div>
-
-          <div class="panel-body">
-            <div class="donut-layout">
-              <div class="donut" id="riskDonut">
-                <div class="donut-center">
-                  <strong id="riskDonutTotal">0</strong>
-                  <span>حملة</span>
-                </div>
-              </div>
-
-              <div class="legend" id="riskLegend"></div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section class="lower-grid">
-        <section class="panel" id="riskPanel">
-          <div class="panel-head">
-            <div>
-              <h3>تحليل الملاحظات المتكررة</h3>
-              <p>أكثر نوع ملاحظة ظهر في نتائج الفحص، إن وجدت.</p>
-            </div>
-          </div>
-
-          <div class="panel-body">
-            <div class="analysis-card">
-              <div class="issue-box">
-                <div>
-                  <span>أكثر ملاحظة تكرارًا</span>
-                  <strong id="topIssueName">لا توجد ملاحظات بعد</strong>
-                </div>
-                <div>
-                  <div class="big" id="topIssueCount">0</div>
-                  <span>عدد مرات الظهور</span>
-                </div>
-              </div>
-
-              <div class="mini-stats">
-                <div class="mini-box">
-                  <span>تعديل مطلوب</span>
-                  <strong id="revisionCount">0</strong>
-                </div>
-
-                <div class="mini-box">
-                  <span>مرفوضة</span>
-                  <strong id="rejectedCount">0</strong>
-                </div>
-
-                <div class="mini-box">
-                  <span>متوسط المخاطر</span>
-                  <strong id="riskScore">0%</strong>
-                </div>
-
-                <div class="mini-box">
-                  <span>اعتماد فعلي</span>
-                  <strong id="approvalRate">0%</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <div>
-              <h3>الجاهزية حسب المنتج</h3>
-              <p>متوسط الجاهزية لكل نوع منتج محفوظ.</p>
-            </div>
-          </div>
-
-          <div class="panel-body">
-            <div class="horizontal-bars" id="productReadiness"></div>
-          </div>
-        </section>
-      </section>
-
-      <section class="panel" id="campaignsPanel">
-        <div class="panel-head">
-          <div>
-            <h3>متابعة الحملات</h3>
-            <p>جدول مدير مختصر للحملات مع إمكانية فتح التقرير للحملات التي صدر عليها قرار.</p>
-          </div>
-        </div>
-
-        <div class="table-tools">
-          <input class="search" id="searchInput" type="text" placeholder="ابحث باسم الحملة أو المنتج أو القناة..." />
-
-          <button class="filter-btn active" data-filter="all">الكل</button>
-          <button class="filter-btn" data-filter="pending_compliance">بانتظار الامتثال</button>
-          <button class="filter-btn" data-filter="approved">معتمد</button>
-          <button class="filter-btn" data-filter="needs_revision">تحتاج تعديل</button>
-          <button class="filter-btn" data-filter="rejected">مرفوض</button>
-          <button class="filter-btn" data-filter="high">عالية الخطورة</button>
-        </div>
-
-        <div class="table-wrap" id="tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>الحملة</th>
-                <th>نوع المنتج</th>
-                <th>القناة</th>
-                <th>الحالة</th>
-                <th>الجاهزية</th>
-                <th>الخطر</th>
-                <th>آخر تحديث</th>
-                <th>التقرير</th>
-              </tr>
-            </thead>
-
-            <tbody id="campaignTable"></tbody>
-          </table>
-        </div>
-
-        <div class="empty-state" id="emptyState">
-          <div>
-            <div class="empty-icon">▤</div>
-            <h4>لا توجد حملات بعد</h4>
-            <p>بعد إنشاء أول حملة من حساب التسويق ستظهر هنا تلقائيًا.</p>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script>
+<a class="btn btn-primary" href="reports.html">فتح التقارير التنفيذية</a>
+</div>
+</header>
+<section class="metrics-grid">
+<div class="metric-card">
+<div class="metric-head">
+<span>إجمالي الحملات</span>
+<div class="metric-icon">▤</div>
+</div>
+<div>
+<div class="metric-value" id="totalCampaigns">0</div>
+<div class="metric-note" id="totalNote">لا توجد بيانات بعد</div>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-head">
+<span>بانتظار الامتثال</span>
+<div class="metric-icon">⧗</div>
+</div>
+<div>
+<div class="metric-value" id="pendingCampaigns">0</div>
+<div class="metric-note warn" id="pendingNote">طلبات تحتاج مراجعة</div>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-head">
+<span>معتمدة</span>
+<div class="metric-icon">✓</div>
+</div>
+<div>
+<div class="metric-value" id="approvedCampaigns">0</div>
+<div class="metric-note good" id="approvedNote">قرارات مكتملة</div>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-head">
+<span>متوسط الجاهزية</span>
+<div class="metric-icon">%</div>
+</div>
+<div>
+<div class="metric-value" id="avgReadiness">0%</div>
+<div class="metric-note" id="avgNote">متوسط كل الحملات</div>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-head">
+<span>عالية الخطورة</span>
+<div class="metric-icon">!</div>
+</div>
+<div>
+<div class="metric-value" id="highRiskCampaigns">0</div>
+<div class="metric-note bad" id="riskNote">تحتاج انتباه</div>
+</div>
+</div>
+<div class="metric-card">
+<div class="metric-head">
+<span>تقارير متاحة</span>
+<div class="metric-icon">▦</div>
+</div>
+<div>
+<div class="metric-value" id="reportsCount">0</div>
+<div class="metric-note" id="reportsNote">قرارات يمكن فتح تقريرها</div>
+</div>
+</div>
+</section>
+<section class="dashboard-grid">
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>الحملات حسب الحالة</h3>
+<p>عرض موجز يوضح توزيع الحملات حسب حالتها الحالية داخل المسار.</p>
+</div>
+<button class="btn btn-secondary" onclick="scrollToSection('campaignsPanel')">الانتقال للجدول</button>
+</div>
+<div class="panel-body">
+<div class="bar-chart" id="statusBarChart"></div>
+</div>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>توزيع المخاطر</h3>
+<p>توزيع الحملات حسب مستوى الخطر.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="donut-layout">
+<div class="donut" id="riskDonut">
+<div class="donut-center">
+<strong id="riskDonutTotal">0</strong>
+<span>حملة</span>
+</div>
+</div>
+<div class="legend" id="riskLegend"></div>
+</div>
+</div>
+</section>
+</section>
+<section class="lower-grid">
+<section class="panel" id="riskPanel">
+<div class="panel-head">
+<div>
+<h3>تحليل الملاحظات المتكررة</h3>
+<p>أكثر أنواع الملاحظات ظهورًا في نتائج الفحص، إن وجدت.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="analysis-card">
+<div class="issue-box">
+<div>
+<span>أكثر ملاحظة تكرارًا</span>
+<strong id="topIssueName">لا توجد ملاحظات بعد</strong>
+</div>
+<div>
+<div class="big" id="topIssueCount">0</div>
+<span>عدد مرات الظهور</span>
+</div>
+</div>
+<div class="mini-stats">
+<div class="mini-box">
+<span>تعديل مطلوب</span>
+<strong id="revisionCount">0</strong>
+</div>
+<div class="mini-box">
+<span>مرفوضة</span>
+<strong id="rejectedCount">0</strong>
+</div>
+<div class="mini-box">
+<span>متوسط المخاطر</span>
+<strong id="riskScore">0%</strong>
+</div>
+<div class="mini-box">
+<span>اعتماد فعلي</span>
+<strong id="approvalRate">0%</strong>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>الجاهزية حسب المنتج</h3>
+<p>متوسط الجاهزية حسب نوع المنتج.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="horizontal-bars" id="productReadiness"></div>
+</div>
+</section>
+</section>
+<section class="panel" id="campaignsPanel">
+<div class="panel-head">
+<div>
+<h3>متابعة الحملات</h3>
+<p>جدول تنفيذي مختصر للحملات مع إمكانية فتح التقرير للحملات التي صدر بشأنها قرار.</p>
+</div>
+</div>
+<div class="table-tools">
+<input class="search" id="searchInput" placeholder="ابحث باسم الحملة أو المنتج أو القناة..." type="text"/>
+<button class="filter-btn active" data-filter="all">الكل</button>
+<button class="filter-btn" data-filter="pending_compliance">بانتظار الامتثال</button>
+<button class="filter-btn" data-filter="approved">معتمد</button>
+<button class="filter-btn" data-filter="needs_revision">تحتاج تعديل</button>
+<button class="filter-btn" data-filter="rejected">مرفوض</button>
+<button class="filter-btn" data-filter="high">عالية الخطورة</button>
+</div>
+<div class="table-wrap" id="tableWrap">
+<table>
+<thead>
+<tr>
+<th>الحملة</th>
+<th>نوع المنتج</th>
+<th>القناة</th>
+<th>الحالة</th>
+<th>الجاهزية</th>
+<th>الخطر</th>
+<th>آخر تحديث</th>
+<th>التقرير</th>
+</tr>
+</thead>
+<tbody id="campaignTable"></tbody>
+</table>
+</div>
+<div class="empty-state" id="emptyState">
+<div>
+<div class="empty-icon">▤</div>
+<h4>لا توجد حملات بعد</h4>
+<p>بعد إنشاء أول حملة من حساب التسويق ستظهر المؤشرات هنا تلقائيًا.</p>
+</div>
+</div>
+</section>
+<section class="panel" id="reportRequestPanel">
+<div class="panel-head">
+<div>
+<h3>إنشاء تقرير</h3>
+<p>اختر أي حملة من الحملات المسجلة لإصدار تقرير رسمي يُحفظ مباشرةً ضمن صفحة التقارير التنفيذية.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="report-request">
+<div class="rr-field">
+<label for="reportCampaignSelect">الحملة</label>
+<select id="reportCampaignSelect"></select>
+</div>
+<div class="rr-field">
+<label for="reportManagerNote">ملاحظة المدير (اختياري)</label>
+<input id="reportManagerNote" type="text" placeholder="ملاحظة إدارية تظهر داخل التقرير."/>
+</div>
+<button class="btn btn-primary" type="button" onclick="requestCampaignReport()">إنشاء التقرير وفتح صفحة التقارير</button>
+</div>
+<div id="reportRequestNote" class="rr-note"></div>
+</div>
+</section>
+</main>
+</div>
+<script src="assets/mutamad-app.js"></script>
+<script>
     const STORAGE_KEY = "mutamad_campaigns";
-    const ROLE_KEY = "mutamad_demo_role";
+    const ROLE_KEY = "mutamad_role";
     const REVIEW_KEY_PRIMARY = "mutamad_current_review_id";
     const REVIEW_KEY_SECONDARY = "mutamad_review_campaign_id";
 
@@ -1280,6 +1319,7 @@
       renderTopIssue();
       renderProductReadiness();
       renderCampaigns();
+      renderReportRequest();
     }
 
     function updateMetrics() {
@@ -1319,41 +1359,34 @@
       const chart = document.getElementById("statusBarChart");
       chart.innerHTML = "";
 
+      const total = campaigns.length;
+      const readyReports = campaigns.filter(c => ["approved", "needs_revision", "rejected"].includes(c.status)).length;
+      const revisionTotal = countStatus("needs_revision") + countStatus("revision_draft");
+      const highRiskTotal = countRisk("high");
+
       const data = [
-        { label: "مسودة", status: "draft" },
-        { label: "قيد الفحص", status: "checking" },
-        { label: "بانتظار", status: "pending_compliance" },
-        { label: "تعديل", status: "needs_revision" },
-        { label: "مسودة تعديل", status: "revision_draft" },
-        { label: "معتمد", status: "approved" },
-        { label: "مرفوض", status: "rejected" },
-        { label: "تقارير", status: "reports" }
+        { label: "قيد المراجعة", count: countStatus("pending_compliance"), tone: "pending" },
+        { label: "تحتاج تعديل", count: revisionTotal, tone: "revision" },
+        { label: "معتمدة", count: countStatus("approved"), tone: "approved" },
+        { label: "مرفوضة", count: countStatus("rejected"), tone: "rejected" },
+        { label: "عالية الخطورة", count: highRiskTotal, tone: "risk" },
+        { label: "تقارير جاهزة", count: readyReports, tone: "report" }
       ];
 
-      const max = Math.max(
-        ...data.map(item => item.status === "reports"
-          ? campaigns.filter(c => ["approved", "needs_revision", "rejected"].includes(c.status)).length
-          : countStatus(item.status)
-        ),
-        1
-      );
-
       data.forEach(item => {
-        const count = item.status === "reports"
-          ? campaigns.filter(c => ["approved", "needs_revision", "rejected"].includes(c.status)).length
-          : countStatus(item.status);
+        const share = total ? Math.round((item.count / total) * 100) : 0;
 
-        const height = Math.max(6, Math.round((count / max) * 100));
-
-        const div = document.createElement("div");
-        div.className = "bar-col";
-
-        div.innerHTML = `
-          <div class="bar-stick" title="${item.label}: ${count}" style="--h:${height}%"></div>
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
           <div class="bar-label">${item.label}</div>
+          <div class="bar-track" title="${item.label}: ${item.count} من أصل ${total || 0}">
+            <span class="bar-fill ${item.tone}" style="--w:${Math.max(share, item.count ? 8 : 0)}%"></span>
+          </div>
+          <div class="bar-count">${item.count}</div>
         `;
 
-        chart.appendChild(div);
+        chart.appendChild(row);
       });
     }
 
@@ -1380,9 +1413,9 @@
       const legend = document.getElementById("riskLegend");
       legend.innerHTML = "";
 
-      addLegend("منخفض", low, "#12B76A", total);
-      addLegend("متوسط", medium, "#F79009", total);
-      addLegend("عالي", high, "#D92D20", total);
+      addLegend("منخفض", low, "#3E7C68", total);
+      addLegend("متوسط", medium, "#966769", total);
+      addLegend("عالي", high, "#C0463A", total);
       addLegend("غير محدد", unknown, "#D8E0E8", total);
     }
 
@@ -1444,7 +1477,7 @@
             <div>
               <div class="empty-icon">%</div>
               <h4>لا توجد بيانات جاهزية</h4>
-              <p>بعد إنشاء حملات ستظهر متوسطات الجاهزية حسب المنتج.</p>
+              <p>بعد إنشاء الحملات ستظهر متوسطات الجاهزية حسب نوع المنتج.</p>
             </div>
           </div>
         `;
@@ -1607,8 +1640,16 @@
     searchInput.addEventListener("input", applyTableFilter);
 
     function openFinalReport(campaignId) {
-      localStorage.setItem(REVIEW_KEY_PRIMARY, campaignId);
-      localStorage.setItem(REVIEW_KEY_SECONDARY, campaignId);
+      const campaign = getCampaigns().find(c => c.id === campaignId);
+      if (!campaign) { return; }
+      // أنشئ (أو أعد استخدام) تقريرًا للحملة عبر العقد الموحّد ثم افتح التقرير النهائي
+      const existing = Mutamad.getReports().find(r => r.campaign_id === campaignId);
+      if (existing) {
+        Mutamad.setCurrentReport(existing.id);
+      } else {
+        const report = Mutamad.buildCampaignReport(campaign, {});
+        Mutamad.commitReport(report);
+      }
       window.location.href = "final-report.html";
     }
 
@@ -1626,6 +1667,33 @@
     function logout() {
       localStorage.removeItem(ROLE_KEY);
       window.location.href = "login.html";
+    }
+
+    function renderReportRequest() {
+      const select = document.getElementById("reportCampaignSelect");
+      if (!select) return;
+      select.innerHTML = campaigns.length
+        ? campaigns.map(c => `<option value="${c.id}">${Mutamad.escapeHtml((c.title || c.id) + ' — ' + Mutamad.statusLabel(c.status || 'draft'))}</option>`).join("")
+        : '<option value="">لا توجد حملات متاحة</option>';
+    }
+
+    function requestCampaignReport() {
+      const select = document.getElementById("reportCampaignSelect");
+      const note = document.getElementById("reportRequestNote");
+      const id = select.value;
+      if (!id) {
+        note.className = "rr-note error show";
+        note.textContent = "يرجى اختيار حملة لإنشاء التقرير.";
+        return;
+      }
+      const campaign = Mutamad.getCampaigns().find(c => c.id === id);
+      const report = Mutamad.buildCampaignReport(campaign, {
+        manager_note: document.getElementById("reportManagerNote").value
+      });
+      Mutamad.commitReport(report);
+      note.className = "rr-note success show";
+      note.textContent = "تم إنشاء التقرير وحفظه. يتم تحويلك إلى صفحة التقارير...";
+      setTimeout(function () { window.location.href = "reports.html"; }, 700);
     }
 
     refreshData();

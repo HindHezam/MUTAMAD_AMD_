@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مساحة فحص المحتوى | مُعتمد</title>
 
-  <style>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>مساحة فحص المحتوى | مُعتمد</title>
+<style>
     @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap");
 
     :root {
-      --navy: #071B33;
-      --navy-2: #0B2A44;
-      --navy-3: #123E6B;
-      --teal: #19A89D;
-      --teal-dark: #0F766E;
-      --gold: #C8A24A;
+      --navy: #002134;
+      --navy-2: #002134;
+      --navy-3: #023a55;
+      --teal: #837FD8;
+      --teal-dark: #023a55;
+      --gold: #966769;
       --bg: #F6F8FA;
       --white: #FFFFFF;
-      --text: #102033;
-      --muted: #667085;
-      --line: #E5ECF2;
+      --text: #002134;
+      --muted: #6B7392;
+      --line: #E3E6F0;
       --soft: #EEF3F7;
-      --teal-soft: #E7F8F5;
-      --red: #D92D20;
+      --teal-soft: #EEEBF6;
+      --red: #C0463A;
       --red-soft: #FFF1F0;
-      --orange: #F79009;
+      --orange: #966769;
       --orange-soft: #FFF6E6;
-      --green: #12B76A;
+      --green: #3E7C68;
       --green-soft: #ECFDF3;
-      --blue-soft: #EAF3FF;
-      --shadow: 0 18px 45px rgba(7, 27, 51, 0.10);
-      --shadow-soft: 0 10px 28px rgba(7, 27, 51, 0.07);
+      --blue-soft: #ECEBF9;
+      --shadow: 0 18px 45px rgba(0,33,52, 0.10);
+      --shadow-soft: 0 10px 28px rgba(0,33,52, 0.07);
     }
 
     * {
@@ -43,8 +43,8 @@
       min-height: 100vh;
       font-family: "IBM Plex Sans Arabic", Arial, sans-serif;
       background:
-        radial-gradient(circle at 88% 6%, rgba(25,168,157,0.09), transparent 28%),
-        radial-gradient(circle at 10% 96%, rgba(200,162,74,0.08), transparent 25%),
+        radial-gradient(circle at 88% 6%, rgba(131,127,216,0.09), transparent 28%),
+        radial-gradient(circle at 10% 96%, rgba(231,143,129,0.08), transparent 25%),
         var(--bg);
       color: var(--text);
       direction: rtl;
@@ -75,8 +75,8 @@
       height: 100vh;
       padding: 24px 18px;
       background:
-        radial-gradient(circle at 15% 20%, rgba(25,168,157,0.18), transparent 32%),
-        linear-gradient(180deg, #06172B 0%, #071B33 54%, #08223A 100%);
+        radial-gradient(circle at 15% 20%, rgba(131,127,216,0.18), transparent 32%),
+        linear-gradient(180deg, #002134 0%, #002134 54%, #002134 100%);
       color: var(--white);
       overflow-y: auto;
     }
@@ -103,9 +103,9 @@
       gap: 8px;
       padding: 8px 12px;
       border-radius: 999px;
-      background: rgba(25,168,157,0.13);
-      color: #D7F3EE;
-      border: 1px solid rgba(25,168,157,0.25);
+      background: rgba(131,127,216,0.13);
+      color: #EEEBF6;
+      border: 1px solid rgba(131,127,216,0.25);
       font-size: 12px;
       font-weight: 700;
       margin-bottom: 18px;
@@ -150,7 +150,7 @@
       display: grid;
       place-items: center;
       background: rgba(255,255,255,0.08);
-      color: #D7F3EE;
+      color: #EEEBF6;
       font-size: 13px;
       font-weight: 800;
     }
@@ -271,7 +271,7 @@
     .btn-primary {
       color: white;
       background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-      box-shadow: 0 14px 28px rgba(25,168,157,0.22);
+      box-shadow: 0 14px 28px rgba(131,127,216,0.22);
     }
 
     .btn-secondary {
@@ -288,10 +288,10 @@
     }
 
     .workspace-grid {
-      display: grid;
-      grid-template-columns: 1fr 390px;
+      display: flex;
+      flex-direction: column;
       gap: 18px;
-      align-items: start;
+      align-items: stretch;
     }
 
     .panel {
@@ -380,7 +380,7 @@
     .field select:focus,
     .field textarea:focus {
       border-color: var(--teal);
-      box-shadow: 0 0 0 4px rgba(25,168,157,0.12);
+      box-shadow: 0 0 0 4px rgba(131,127,216,0.12);
     }
 
     .rules-scope {
@@ -524,8 +524,8 @@
       padding: 20px;
       border-radius: 26px;
       background:
-        radial-gradient(circle at 20% 18%, rgba(25,168,157,0.17), transparent 28%),
-        linear-gradient(135deg, #071B33, #0B2A44);
+        radial-gradient(circle at 20% 18%, rgba(131,127,216,0.17), transparent 28%),
+        linear-gradient(135deg, #002134, #002134);
       color: white;
       box-shadow: var(--shadow);
     }
@@ -556,7 +556,7 @@
       content: "";
       width: 108px;
       height: 108px;
-      background: #0B2A44;
+      background: #002134;
       border-radius: 50%;
       position: absolute;
     }
@@ -837,363 +837,261 @@
       }
     }
   </style>
+<link rel="icon" type="image/png" href="lo.png" />
+<link href="assets/mutamad-theme.css" rel="stylesheet"/>  <link rel="stylesheet" href="assets/mutamad-government.css" />
 </head>
-
-<body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="assets/logo-approved-reference.jpeg" alt="شعار مُعتمد" />
-      </div>
-
-      <div class="role-pill">مسؤول التسويق</div>
-
-      <nav class="nav">
-        <a href="marketing-dashboard.html">
-          <span class="nav-icon">▦</span>
-          لوحة التسويق
-        </a>
-
-        <a class="active" href="campaign-workspace.html">
-          <span class="nav-icon">＋</span>
-          فحص محتوى جديد
-        </a>
-
-        <a href="marketing-dashboard.html">
-          <span class="nav-icon">□</span>
-          المسودات
-        </a>
-
-        <a href="marketing-dashboard.html">
-          <span class="nav-icon">↗</span>
-          بانتظار الامتثال
-        </a>
-
-        <a href="marketing-dashboard.html">
-          <span class="nav-icon">!</span>
-          يحتاج تعديل
-        </a>
-
-        <a href="index.html">
-          <span class="nav-icon">⌂</span>
-          الصفحة الرئيسية
-        </a>
-      </nav>
-
-      <div class="sidebar-card">
-        <h3>مساحة فحص المحتوى</h3>
-        <p>نوع المنتج يحدد نطاق القواعد التي سيُفحص المحتوى بناءً عليها عند ربط محرك الفحص.</p>
-      </div>
-
-      <button class="logout" onclick="logout()">تسجيل الخروج</button>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <div class="page-title">
-          <h1>مساحة فحص المحتوى</h1>
-          <p>إنشاء حملة حقيقية محفوظة، مع تحديد نوع المنتج ونطاق القواعد المرتبطة به.</p>
-        </div>
-
-        <div class="top-actions">
-          <span class="badge" id="campaignStatusBadge">حملة جديدة</span>
-          <a class="btn btn-secondary" href="marketing-dashboard.html">العودة للوحة</a>
-        </div>
-      </header>
-
-      <section class="workspace-grid">
-        <div class="main-stack">
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>بيانات الحملة</h3>
-                <p>البيانات تحفظ محليًا الآن، ولاحقًا تحفظ في قاعدة البيانات.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <form id="campaignForm">
-                <div class="form-grid">
-                  <div class="field">
-                    <label for="title">اسم الحملة</label>
-                    <input id="title" type="text" placeholder="مثال: حملة منتج تمويلي جديد" required />
-                  </div>
-
-                  <div class="field">
-                    <label for="contentType">نوع المحتوى</label>
-                    <select id="contentType" required>
-                      <option value="">اختاري نوع المحتوى</option>
-                      <option value="إعلان نصي">إعلان نصي</option>
-                      <option value="إعلان نصي + صورة">إعلان نصي + صورة</option>
-                      <option value="منشور تواصل اجتماعي">منشور تواصل اجتماعي</option>
-                      <option value="بريد تسويقي">بريد تسويقي</option>
-                      <option value="نشرة أو ملف PDF">نشرة أو ملف PDF</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label for="productType">نوع المنتج / الإعلان</label>
-                    <select id="productType" required>
-                      <option value="">اختاري نوع المنتج</option>
-                      <option value="personal_finance">تمويل شخصي</option>
-                      <option value="real_estate_finance">تمويل عقاري</option>
-                      <option value="business_finance">تمويل منشآت</option>
-                      <option value="credit_card">بطاقة ائتمانية</option>
-                      <option value="saving_account">حساب / ادخار</option>
-                      <option value="payment_service">خدمة دفع / محفظة</option>
-                      <option value="investment_product">منتج استثماري</option>
-                      <option value="general_awareness">محتوى توعوي عام</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label for="channel">قناة النشر</label>
-                    <select id="channel" required>
-                      <option value="">اختاري القناة</option>
-                      <option value="Instagram">Instagram</option>
-                      <option value="X">X</option>
-                      <option value="LinkedIn">LinkedIn</option>
-                      <option value="Snapchat">Snapchat</option>
-                      <option value="Email">Email</option>
-                      <option value="Website">Website</option>
-                    </select>
-                  </div>
-
-                  <div class="rules-scope" id="rulesScope">
-                    <h4>نطاق القواعد المرتبطة</h4>
-                    <p id="rulesScopeText">
+<body class="campaign-page">
+<div class="app">
+<aside class="sidebar">
+<div class="brand">
+<img alt="شعار مُعتمد" src="lo.png"/>
+<span class="brand-word">مُعتمد</span>
+</div>
+<div class="role-pill">مسؤول التسويق</div>
+<nav class="nav"><a href="marketing-dashboard.html"><span class="nav-icon">▦</span> لوحة التسويق</a><a class="active" href="campaign-workspace.html"><span class="nav-icon">＋</span> فحص محتوى جديد</a><a href="marketing-edit.html"><span class="nav-icon">↺</span> الحملات الراجعة</a><a href="index.html"><span class="nav-icon">⌂</span> الرئيسية</a></nav>
+<div class="sidebar-card"><h3>مساحة التسويق</h3><p>إدارة المحتوى، إحالته للمراجعة، ومعالجة الحملات المعادة للتعديل.</p></div>
+<button class="logout" onclick="logout()">تسجيل الخروج</button>
+</aside>
+<main class="main">
+<header class="topbar">
+<div class="page-title">
+<h1>مساحة فحص المحتوى</h1>
+<p>إنشاء حملة محفوظة مع تحديد نوع المنتج ونطاق القواعد المرتبط بها.</p>
+</div>
+<div class="top-actions">
+<span class="badge" id="campaignStatusBadge">حملة جديدة</span>
+<a class="btn btn-secondary" href="marketing-dashboard.html">العودة للوحة</a>
+</div>
+</header>
+<section class="workspace-grid">
+<div class="main-stack">
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>بيانات الحملة</h3>
+<p>أدخل بيانات الحملة ومحتواها تمهيدًا لإحالتها إلى الامتثال.</p>
+</div>
+</div>
+<div class="panel-body">
+<form id="campaignForm">
+<div class="form-grid">
+<div class="field">
+<label for="title">اسم الحملة</label>
+<input id="title" placeholder="مثال: حملة منتج تمويلي جديد" required="" type="text"/>
+</div>
+<div class="field">
+<label for="contentType">نوع المحتوى</label>
+<select id="contentType" required="">
+<option value="">اختاري نوع المحتوى</option>
+<option value="إعلان نصي">إعلان نصي</option>
+<option value="إعلان نصي + صورة">إعلان نصي + صورة</option>
+<option value="منشور تواصل اجتماعي">منشور تواصل اجتماعي</option>
+<option value="بريد تسويقي">بريد تسويقي</option>
+<option value="نشرة أو ملف PDF">نشرة أو ملف PDF</option>
+</select>
+</div>
+<div class="field">
+<label for="productType">نوع المنتج / الإعلان</label>
+<select id="productType" required="">
+<option value="">اختاري نوع المنتج</option>
+<option value="personal_finance">تمويل شخصي</option>
+<option value="real_estate_finance">تمويل عقاري</option>
+<option value="business_finance">تمويل منشآت</option>
+<option value="credit_card">بطاقة ائتمانية</option>
+<option value="saving_account">حساب / ادخار</option>
+<option value="payment_service">خدمة دفع / محفظة</option>
+<option value="investment_product">منتج استثماري</option>
+<option value="general_awareness">محتوى توعوي عام</option>
+</select>
+</div>
+<div class="field">
+<label for="channel">قناة النشر</label>
+<select id="channel" required="">
+<option value="">اختاري القناة</option>
+<option value="Instagram">Instagram</option>
+<option value="X">X</option>
+<option value="LinkedIn">LinkedIn</option>
+<option value="Snapchat">Snapchat</option>
+<option value="Email">Email</option>
+<option value="Website">Website</option>
+</select>
+</div>
+<div class="rules-scope" id="rulesScope">
+<h4>نطاق القواعد المرتبطة</h4>
+<p id="rulesScopeText">
                       اختاري نوع المنتج حتى يظهر نطاق القواعد التي سيتم فحص المحتوى بناءً عليها.
                     </p>
-
-                    <div class="rule-tags" id="ruleTags">
-                      <span class="rule-tag">بانتظار اختيار المنتج</span>
-                    </div>
-                  </div>
-
-                  <div class="field">
-                    <label for="regulator">المرجع التنظيمي المتوقع</label>
-                    <select id="regulator">
-                      <option value="">يحدد لاحقًا</option>
-                      <option value="SAMA">SAMA</option>
-                      <option value="وزارة التجارة">وزارة التجارة</option>
-                      <option value="الإعلام">الإعلام</option>
-                      <option value="أكثر من مرجع">أكثر من مرجع</option>
-                    </select>
-                  </div>
-
-                  <div class="field">
-                    <label for="audience">الجمهور المستهدف</label>
-                    <input id="audience" type="text" placeholder="مثال: عملاء أفراد / منشآت صغيرة" />
-                  </div>
-
-                  <div class="field">
-                    <label for="objective">هدف الحملة</label>
-                    <input id="objective" type="text" placeholder="مثال: التعريف بخدمة / تفعيل عرض" />
-                  </div>
-
-                  <div class="field">
-                    <label for="campaignOwner">مالك الحملة</label>
-                    <input id="campaignOwner" type="text" placeholder="اسم مسؤول التسويق أو الفريق" />
-                  </div>
-
-                  <div class="field full">
-                    <label for="contentText">نص المحتوى المراد فحصه</label>
-                    <textarea id="contentText" placeholder="اكتبي هنا نص الإعلان أو المنشور أو الرسالة التسويقية..." required></textarea>
-                  </div>
-
-                  <div class="field full">
-                    <label>ملف أو صورة مرفقة</label>
-                    <div class="upload-box">
-                      <div class="upload-icon">⇧</div>
-                      <strong>رفع ملف للمراجعة</strong>
-                      <p>في النسخة الحالية يتم حفظ اسم الملف فقط. لاحقًا يتم رفع الملف إلى Storage أو إرساله لمحرك الفحص.</p>
-
-                      <label class="upload-label" for="fileInput">اختيار ملف</label>
-                      <input id="fileInput" type="file" accept="image/*,.pdf,.doc,.docx" />
-
-                      <div class="file-name" id="fileName">لم يتم اختيار ملف</div>
-                    </div>
-                  </div>
-
-                  <div class="field full">
-                    <label for="notes">ملاحظات داخلية لفريق التسويق</label>
-                    <textarea id="notes" placeholder="أي ملاحظات تريدين حفظها مع الحملة..."></textarea>
-                  </div>
-                </div>
-
-                <div class="action-row">
-                  <button class="btn btn-primary" type="submit">حفظ كمسودة</button>
-                  <button class="btn btn-secondary" type="button" onclick="prepareForAnalysis()">تجهيز للفحص</button>
-                  <button class="btn btn-secondary" type="button" onclick="sendToCompliance()">إرسال لمسؤول الامتثال</button>
-                  <button class="btn btn-danger" type="button" onclick="resetForm()">مسح النموذج</button>
-                </div>
-
-                <div class="status-note" id="statusNote"></div>
-              </form>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>نتيجة الفحص</h3>
-                <p>هذه المنطقة فارغة حتى يتم ربط محرك الفحص الذكي أو حفظ نتيجة حقيقية.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <div class="analysis-empty" id="analysisEmpty">
-                <div class="empty-icon">AI</div>
-                <h4>لم يتم تشغيل الفحص بعد</h4>
-                <p>
-                  عند ربط Webhook الخاص بهند لاحقًا، سيُرسل نوع المنتج مع المحتوى حتى يتم اختيار القواعد المناسبة.
+<div class="rule-tags" id="ruleTags">
+<span class="rule-tag">بانتظار اختيار المنتج</span>
+</div>
+</div>
+<div class="field">
+<label for="regulator">المرجع التنظيمي المتوقع</label>
+<select id="regulator">
+<option value="">يحدد لاحقًا</option>
+<option value="SAMA">SAMA</option>
+<option value="وزارة التجارة">وزارة التجارة</option>
+<option value="الإعلام">الإعلام</option>
+<option value="أكثر من مرجع">أكثر من مرجع</option>
+</select>
+</div>
+<div class="field">
+<label for="audience">الجمهور المستهدف</label>
+<input id="audience" placeholder="مثال: عملاء أفراد / منشآت صغيرة" type="text"/>
+</div>
+<div class="field">
+<label for="objective">هدف الحملة</label>
+<input id="objective" placeholder="مثال: التعريف بخدمة / تفعيل عرض" type="text"/>
+</div>
+<div class="field">
+<label for="campaignOwner">مالك الحملة</label>
+<input id="campaignOwner" placeholder="اسم مسؤول التسويق أو الفريق" type="text"/>
+</div>
+<div class="field full">
+<label for="contentText">نص المحتوى المراد فحصه</label>
+<textarea id="contentText" placeholder="اكتبي هنا نص الإعلان أو المنشور أو الرسالة التسويقية..." required=""></textarea>
+</div>
+<div class="field full">
+<label>ملف أو صورة مرفقة</label>
+<div class="upload-box">
+<div class="upload-icon">⇧</div>
+<strong>رفع ملف للمراجعة</strong>
+<p>أرفق ملفًا أو صورة تدعم مراجعة المحتوى عند الحاجة.</p>
+<label class="upload-label" for="fileInput">اختيار ملف</label>
+<input accept="image/*,.pdf,.doc,.docx" id="fileInput" type="file"/>
+<div class="file-name" id="fileName">لم يتم اختيار ملف</div>
+</div>
+</div>
+<div class="field full">
+<label for="notes">ملاحظات داخلية لفريق التسويق</label>
+<textarea id="notes" placeholder="أي ملاحظات تريدين حفظها مع الحملة..."></textarea>
+</div>
+</div>
+<div class="action-row action-row-center campaign-primary-actions">
+<button class="btn btn-primary" type="submit">حفظ كمسودة</button>
+<button class="btn btn-copper" onclick="prepareForAnalysis()" type="button">تشغيل الفحص الذكي</button>
+<button class="btn btn-secondary" onclick="sendToCompliance()" type="button">إرسال لمسؤول الامتثال</button>
+<button class="btn btn-ghost" onclick="resetForm()" type="button">مسح النموذج</button>
+</div>
+<div class="status-note" id="statusNote"></div>
+</form>
+</div>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>نتيجة الفحص</h3>
+<p>تظهر هنا نتيجة الفحص والملاحظات النظامية حال توفرها.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="analysis-empty" id="analysisEmpty">
+<div class="empty-icon">AI</div>
+<h4>لم يتم تشغيل الفحص بعد</h4>
+<p>
+                  عند تفعيل الربط، يرسل النظام نوع المنتج والمحتوى والقناة لاختيار القواعد المناسبة.
                 </p>
-              </div>
-
-              <div class="result-section" id="resultSection">
-                <div class="result-grid">
-                  <div class="result-box">
-                    <strong>ملخص النتيجة</strong>
-                    <p id="analysisSummary">لا توجد نتيجة محفوظة بعد.</p>
-                  </div>
-
-                  <div class="result-box">
-                    <strong>الملاحظات التنظيمية</strong>
-                    <p id="findingsText">لا توجد ملاحظات محفوظة بعد.</p>
-                  </div>
-
-                  <div class="result-box">
-                    <strong>المراجع المرتبطة</strong>
-                    <p id="referencesText">لا توجد مراجع محفوظة بعد.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>قبل / بعد</h3>
-                <p>المقارنة تظهر بعد وجود صياغة بديلة من محرك الفحص أو تعديل الامتثال.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <div class="compare-grid">
-                <div class="compare-card">
-                  <div class="compare-title">النص الأصلي</div>
-                  <div class="compare-content" id="originalPreview">سيظهر النص الأصلي هنا بعد الكتابة أو الحفظ.</div>
-                </div>
-
-                <div class="compare-card">
-                  <div class="compare-title">الصياغة المقترحة</div>
-                  <div class="compare-content" id="suggestedPreview">لا توجد صياغة مقترحة بعد.</div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <aside class="side-stack">
-          <div class="summary-card">
-            <div class="summary-top">
-              <span>ملخص الحملة</span>
-              <strong id="summaryId">لم تحفظ بعد</strong>
-            </div>
-
-            <div class="ring" id="readinessRing" style="--progress:0%;">
-              <div class="ring-content">
-                <strong id="readinessScore">0%</strong>
-                <span>درجة الجاهزية</span>
-              </div>
-            </div>
-
-            <p class="summary-note" id="summaryNote">
+</div>
+<div class="result-section" id="resultSection">
+<div class="result-grid">
+<div class="result-box">
+<strong>ملخص النتيجة</strong>
+<p id="analysisSummary">لا توجد نتيجة محفوظة بعد.</p>
+</div>
+<div class="result-box">
+<strong>التوصيات التصحيحية</strong>
+<p id="recommendationsText">لا توجد توصيات بعد.</p>
+</div>
+</div>
+<div class="findings-wrap" id="findingsWrap" style="margin-top:16px;"></div>
+</div>
+</div>
+</section>
+<section class="panel">
+<div class="panel-head">
+<div>
+<h3>قبل / بعد</h3>
+<p>تظهر المقارنة بعد توفر صياغة بديلة من محرك الفحص أو بعد إدخال تعديل من الامتثال.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="compare-grid">
+<div class="compare-card">
+<div class="compare-title">النص الأصلي</div>
+<div class="compare-content" id="originalPreview">سيظهر النص الأصلي هنا بعد الكتابة أو الحفظ.</div>
+</div>
+<div class="compare-card">
+<div class="compare-title">الصياغة المقترحة</div>
+<div class="compare-content" id="suggestedPreview">لا توجد صياغة مقترحة بعد.</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<aside class="side-stack">
+<div class="summary-card">
+<div class="summary-top">
+<span>ملخص الحملة</span>
+<strong id="summaryId">لم تحفظ بعد</strong>
+</div>
+<div class="ring" id="readinessRing" style="--progress:0%;">
+<div class="ring-content">
+<strong id="readinessScore">0%</strong>
+<span>درجة الجاهزية</span>
+</div>
+</div>
+<p class="summary-note" id="summaryNote">
               درجة الجاهزية تظهر بعد ربط الفحص أو حفظ نتيجة تحليل حقيقية.
             </p>
+<div class="info-list">
+<div class="info-item">
+<span>الحالة</span>
+<strong id="summaryStatus">مسودة غير محفوظة</strong>
+</div>
+<div class="info-item">
+<span>مستوى الخطر</span>
+<strong id="summaryRisk">غير محدد</strong>
+</div>
+<div class="info-item">
+<span>نوع المنتج</span>
+<strong id="summaryProduct">—</strong>
+</div>
+<div class="info-item">
+<span>القناة</span>
+<strong id="summaryChannel">—</strong>
+</div>
+<div class="info-item">
+<span>نوع المحتوى</span>
+<strong id="summaryType">—</strong>
+</div>
+</div>
+</div>
+<div class="panel">
+<div class="panel-head">
+<div>
+<h3>سجل الإجراءات</h3>
+<p>يعرض السجل الإجرائي ما حدث داخل هذه الحملة.</p>
+</div>
+</div>
+<div class="panel-body">
+<div class="timeline" id="timeline">
+<div class="time-item">
+<div class="dot">1</div>
+<div>
+<strong>لم يتم إنشاء الحملة بعد</strong>
+<span>بعد الحفظ ستظهر الإجراءات هنا.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-            <div class="info-list">
-              <div class="info-item">
-                <span>الحالة</span>
-                <strong id="summaryStatus">مسودة غير محفوظة</strong>
-              </div>
-
-              <div class="info-item">
-                <span>مستوى الخطر</span>
-                <strong id="summaryRisk">غير محدد</strong>
-              </div>
-
-              <div class="info-item">
-                <span>نوع المنتج</span>
-                <strong id="summaryProduct">—</strong>
-              </div>
-
-              <div class="info-item">
-                <span>القناة</span>
-                <strong id="summaryChannel">—</strong>
-              </div>
-
-              <div class="info-item">
-                <span>نوع المحتوى</span>
-                <strong id="summaryType">—</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>سجل الإجراءات</h3>
-                <p>يعرض ما حدث داخل هذه الحملة.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <div class="timeline" id="timeline">
-                <div class="time-item">
-                  <div class="dot">1</div>
-                  <div>
-                    <strong>لم يتم إنشاء الحملة بعد</strong>
-                    <span>بعد الحفظ ستظهر الإجراءات هنا.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-head">
-              <div>
-                <h3>تجهيز الربط مع هند</h3>
-                <p>مكان الربط المستقبلي بدون تفعيل حاليًا.</p>
-              </div>
-            </div>
-
-            <div class="panel-body">
-              <div class="integration-note">
-                <strong>البيانات المرسلة للفحص لاحقًا</strong>
-                <p>
-                  سيتم إرسال نوع المنتج مع النص حتى تختار هند القواعد المناسبة داخل n8n.
-                </p>
-
-                <div class="code">
-{
-  "product_type": "personal_finance",
-  "content_text": "...",
-  "channel": "...",
-  "regulator": "SAMA"
-}
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
-      </section>
-    </main>
-  </div>
-
-  <script>
+</aside>
+</section>
+</main>
+</div>
+<script src="assets/mutamad-app.js"></script>
+<script>
     const STORAGE_KEY = "mutamad_campaigns";
 
     const campaignForm = document.getElementById("campaignForm");
@@ -1415,16 +1313,108 @@
       }
 
       const campaignData = getFormData("draft");
-
       upsertCampaign(campaignData);
 
-      showNote(
-        "warning",
-        "تم تجهيز الحملة للفحص. سيتم إرسال نوع المنتج ونطاق القواعد مع المحتوى عند تفعيل الربط مع هند."
-      );
+      const empty = document.getElementById("analysisEmpty");
+      const result = document.getElementById("resultSection");
+      empty.style.display = "block";
+      empty.querySelector("h4").textContent = "جارٍ تشغيل الفحص الذكي…";
+      empty.querySelector("p").textContent = "يحلّل النظام المحتوى، يطابقه مع قواعد SAMA، ويقترح صياغة بديلة.";
+      result.classList.remove("active");
+      showNote("warning", "بدأ الفحص الذكي للمحتوى…");
 
-      document.getElementById("analysisEmpty").style.display = "block";
-      document.getElementById("resultSection").classList.remove("active");
+      Mutamad.analyze({
+        content_text: campaignData.content_text,
+        product_type: campaignData.product_type,
+        channel: campaignData.channel
+      }).then(function (out) {
+        applyAnalysis(campaignData.id, out);
+        empty.style.display = "none";
+        result.classList.add("active");
+        showNote("success", "اكتمل الفحص. راجعي الملاحظات والصياغة المقترحة ثم أرسلي للامتثال.");
+      }).catch(function () {
+        empty.querySelector("h4").textContent = "تعذّر تشغيل الفحص";
+        empty.querySelector("p").textContent = "حدثت مشكلة أثناء الفحص. أعيدي المحاولة، أو تحققي من إعدادات الربط.";
+        showNote("error", "تعذّر إكمال الفحص. حاولي مرة أخرى.");
+      });
+    }
+
+    function applyAnalysis(campaignId, out) {
+      const campaigns = getCampaigns();
+      const idx = campaigns.findIndex(c => c.id === campaignId);
+      if (idx < 0) return;
+
+      campaigns[idx].readiness_score = out.readiness_score;
+      campaigns[idx].risk_level = out.risk_level;       // english key for charts
+      campaigns[idx].status_label = out.status_label;    // arabic label
+      campaigns[idx].analysis_summary = out.summary;
+      campaigns[idx].findings = out.findings || [];
+      campaigns[idx].recommendations = out.recommendations || [];
+      campaigns[idx].suggested_rewrite = out.suggested_rewrite || "";
+      campaigns[idx].references = (out.findings || []).map(f => f.rule_reference);
+      if (out.report_html) {
+        campaigns[idx].report_html = out.report_html;
+        campaigns[idx].report_filename = out.report_filename || "mutamad-report.html";
+      }
+      campaigns[idx].ai_engine = out.engine || "local";
+      campaigns[idx].updated_at = formatDateTime();
+      campaigns[idx].timeline = [
+        ...(campaigns[idx].timeline || []),
+        { action: `اكتمل الفحص الذكي — الجاهزية ${out.readiness_score}% (${out.status_label})`, at: formatDateTime() }
+      ];
+      saveCampaigns(campaigns);
+
+      renderAnalysis(out, campaigns[idx].content_text);
+      renderTimeline(campaignId);
+
+      // update side summary
+      document.getElementById("readinessScore").textContent = out.readiness_score + "%";
+      document.getElementById("readinessRing").style.setProperty("--progress", out.readiness_score + "%");
+      document.getElementById("summaryRisk").textContent = out.status_label;
+      document.getElementById("summaryNote").textContent =
+        `رُصدت ${out.violations_count} ملاحظة تنظيمية بمحرك ${out.engine === "n8n" ? "الفحص الذكي" : "الفحص المحلي"}.`;
+    }
+
+    function renderAnalysis(out, originalText) {
+      document.getElementById("analysisSummary").textContent = out.summary;
+
+      const recEl = document.getElementById("recommendationsText");
+      if (out.recommendations && out.recommendations.length) {
+        recEl.innerHTML = '<ul class="rec-list">' +
+          out.recommendations.map(r => `<li>${Mutamad.escapeHtml(r)}</li>`).join("") + "</ul>";
+      } else {
+        recEl.textContent = "لا توجد توصيات تصحيحية مطلوبة.";
+      }
+
+      const wrap = document.getElementById("findingsWrap");
+      if (out.findings && out.findings.length) {
+        wrap.innerHTML =
+          `<div class="engine-chip">محرك ${out.engine === "n8n" ? "n8n الذكي" : "الفحص المحلي"} · ${out.findings.length} ملاحظة</div>` +
+          out.findings.map(function (f) {
+            const cls = Mutamad.riskClass(f.risk_level);
+            return `
+            <div class="finding-card ${cls}">
+              <div class="finding-top">
+                <span class="finding-claim">${Mutamad.escapeHtml(f.claim_text)}</span>
+                <span class="finding-tag ${cls}">${Mutamad.escapeHtml(f.risk_level)}</span>
+              </div>
+              <div class="finding-reason">${Mutamad.escapeHtml(f.reason)}</div>
+              <div class="finding-meta">
+                <span><b>القاعدة:</b> ${Mutamad.escapeHtml(f.violation_id)}</span>
+                <span><b>المصدر:</b> ${Mutamad.escapeHtml(f.rule_source || "SAMA")}</span>
+                <span><b>الثقة:</b> ${Mutamad.escapeHtml(f.confidence || "—")}</span>
+              </div>
+              <div class="finding-meta"><span>${Mutamad.escapeHtml(f.rule_reference)}</span></div>
+            </div>`;
+          }).join("");
+      } else {
+        wrap.innerHTML = `<div class="finding-card low"><div class="finding-claim">لم تُرصد مخالفات واضحة</div><div class="finding-reason">المحتوى مهيأ للمراجعة النهائية.</div></div>`;
+      }
+
+      // before/after
+      document.getElementById("originalPreview").textContent = originalText || "—";
+      document.getElementById("suggestedPreview").textContent =
+        out.suggested_rewrite || "لا توجد صياغة مقترحة.";
     }
 
     function sendToCompliance() {
@@ -1434,6 +1424,17 @@
       }
 
       const campaignData = getFormData("pending_compliance");
+      // preserve any analysis already produced for this campaign
+      const existing = getCampaigns().find(c => c.id === campaignData.id);
+      if (existing && existing.findings && existing.findings.length) {
+        campaignData.readiness_score = existing.readiness_score;
+        campaignData.risk_level = existing.risk_level;
+        campaignData.analysis_summary = existing.analysis_summary;
+        campaignData.findings = existing.findings;
+        campaignData.recommendations = existing.recommendations;
+        campaignData.suggested_rewrite = existing.suggested_rewrite;
+        campaignData.references = existing.references;
+      }
 
       upsertCampaign(campaignData);
       showNote("success", "تم إرسال الحملة لمسؤول الامتثال. ستظهر حالتها في لوحة التسويق كـ بانتظار الامتثال.");
@@ -1482,7 +1483,7 @@
       document.getElementById("readinessScore").textContent = Number(campaign.readiness_score || 0) + "%";
       document.getElementById("readinessRing").style.setProperty("--progress", Number(campaign.readiness_score || 0) + "%");
       document.getElementById("summaryNote").textContent =
-        "لا توجد نتيجة فحص محفوظة بعد. ستتغير الدرجة عند ربط محرك الفحص الذكي.";
+        "لا توجد نتيجة فحص محفوظة بعد.";
     }
 
     function renderTimeline(campaignId) {
@@ -1550,7 +1551,7 @@
     }
 
     function logout() {
-      localStorage.removeItem("mutamad_demo_role");
+      localStorage.removeItem("mutamad_role");
       window.location.href = "login.html";
     }
   </script>
